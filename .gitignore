@@ -1,4 +1,7 @@
 /backend/node_modules
 /backend/package-lock.json
+/telegram/package-lock.json
+/telegram/node_modules
 .git
 /frontend/node_modules
+/frontend/package-lock.json
