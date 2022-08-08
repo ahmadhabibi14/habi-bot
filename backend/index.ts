@@ -2,11 +2,15 @@ import express from "express"
 import cors from "cors"
 import router from "./src/router"
 import bot from "./telegram/bot"
+import {ConnectToMongoDb} from "./src/db/Service"
 
 const screetPath = `/telegraf/${bot.secretPathComponent()}`
-const port: number = 8888
+bot.telegram.setWebhook(`https://----.localtunnel.me/${screetPath}`)
+const port: number = 8887
 const app = express()
 
+//MongoDb Connect
+ConnectToMongoDb()
 app.use(bot.webhookCallback(screetPath))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))

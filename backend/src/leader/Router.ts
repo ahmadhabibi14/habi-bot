@@ -1,5 +1,5 @@
 import {getLeader} from "./Controller"
 
-export function TeknisiRoute(Router:any ){
-  Router.get("/h",getLeader)
+export function LeaderRoute(Router:any ){
+  Router.get("/leader/signup",getLeader)
 }

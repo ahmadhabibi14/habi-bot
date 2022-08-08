@@ -16,8 +16,9 @@ exports.getLeader = void 0;
 const Service_1 = __importDefault(require("./Service"));
 function getLeader(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        let Leader = yield Service_1.default.getLeaders();
-        res.send();
+        const leaderProp = req.body;
+        let Leader = yield Service_1.default.getLeaderByNik(leaderProp.Nik);
+        res.send(Leader);
     });
 }
 exports.getLeader = getLeader;

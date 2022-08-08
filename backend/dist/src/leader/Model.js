@@ -25,14 +25,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LeaderModel = void 0;
 const mongo = __importStar(require("mongoose"));
-const Schema = new mongo.Schema({
-    NIK: Number,
-    Nama: String,
-    IDTelegram: String,
-    NamaMitra: String,
-    Sektor: String,
-    Witel: String,
-    Regional: String
+const LeaderSchema = new mongo.Schema({
+    NIK: { type: Number, required: true },
+    Nama: { type: String, required: true },
+    IDTelegram: { type: String, required: true },
+    NamaMitra: { type: String, required: true },
+    Sektor: { type: String, required: true },
+    Witel: { type: String, required: true },
+    Regional: { type: String, required: true },
+    Password: { type: String, required: true },
 });
-const LeaderModel = new mongo.Model(Schema);
+const LeaderModel = mongo.model('leader', LeaderSchema);
 exports.LeaderModel = LeaderModel;

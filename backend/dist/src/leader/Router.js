@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TeknisiRoute = void 0;
+exports.LeaderRoute = void 0;
 const Controller_1 = require("./Controller");
-function TeknisiRoute(Router) {
-    Router.get("/h", Controller_1.getLeader);
+function LeaderRoute(Router) {
+    Router.get("/leader/signup", Controller_1.getLeader);
 }
-exports.TeknisiRoute = TeknisiRoute;
+exports.LeaderRoute = LeaderRoute;

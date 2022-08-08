@@ -7,9 +7,13 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const router_1 = __importDefault(require("./src/router"));
 const bot_1 = __importDefault(require("./telegram/bot"));
+const Service_1 = require("./src/db/Service");
 const screetPath = `/telegraf/${bot_1.default.secretPathComponent()}`;
-const port = 8888;
+bot_1.default.telegram.setWebhook(`https://----.localtunnel.me/${screetPath}`);
+const port = 8887;
 const app = (0, express_1.default)();
+//MongoDb Connect
+(0, Service_1.ConnectToMongoDb)();
 app.use(bot_1.default.webhookCallback(screetPath));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));

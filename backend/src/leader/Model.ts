@@ -1,23 +1,24 @@
 import * as mongo from "mongoose"
-const Schema = new mongo.Schema(
-  {
-    NIK : Number,
-    Nama : String,
-    IDTelegram: String,
-    NamaMitra: String,
-    Sektor: String,
-    Witel : String,
-    Regional: String
-  }
-)
-type Leader = {
-    NIK : Number,
-    Nama : String,
-    IDTelegram: String,
-    NamaMitra: String,
-    Sektor: String,
-    Witel : String,
-    Regional: String 
+interface Leader {
+    NIK : number,
+    Nama : string,
+    IDTelegram: string,
+    NamaMitra: string,
+    Sektor: string,
+    Witel : string,
+    Regional: string,
+    Password: string,
 }
-const LeaderModel = new mongo.Model(Schema)
+
+const LeaderSchema = new mongo.Schema<Leader>({
+  NIK : {type : Number, required: true},
+  Nama : {type : String, required: true},
+  IDTelegram : {type : String, required: true},
+  NamaMitra : {type : String, required: true},
+  Sektor : {type : String, required: true},
+  Witel : {type : String, required: true},
+  Regional : {type : String, required: true},
+  Password : {type : String, required: true},
+})
+const LeaderModel = mongo.model<Leader>('leader',LeaderSchema)
 export {LeaderModel,Leader}
