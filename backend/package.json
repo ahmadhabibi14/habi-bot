@@ -5,7 +5,10 @@
     "@types/mysql": "^2.15.21",
     "cors": "^2.8.5",
     "express": "^4.18.1",
-    "mysql": "^2.18.1"
+    "mongoose": "^6.5.1",
+    "mysql": "^2.18.1",
+    "telegraf": "^4.8.6",
+    "typescript": "^4.7.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.19",
@@ -18,8 +21,8 @@
   "scripts": {
     "start": "node dist/",
     "build": "tsc -p ./tsconfig.json",
-    "dev" : "nodemon  --exec 'npm run build && npm run start || echo tscError' -e 'ts'"
-    },
+    "dev": "nodemon  --exec 'npm run build && npm run start || echo Error' -e 'ts'"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
