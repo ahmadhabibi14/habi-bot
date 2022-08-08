@@ -1,5 +1,7 @@
-import {getLeader} from "./Controller"
+import {getLeader,createLeader,loginWithToken} from "./Controller"
 
 export function LeaderRoute(Router:any ){
-  Router.get("/leader/signup",getLeader)
+  Router.post("/leader/login",getLeader)
+  Router.post("/leader/signup",createLeader)
+  Router.get("/leader/login",loginWithToken)
 }
