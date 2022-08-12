@@ -24,8 +24,8 @@ function validatedPass(pass: string,hasspass: string): boolean{
   return true
 }
 
-function jwtNik(nik: number,pass: string): string {
-  return jwt.sign({nik,pass},"xdxrc")
+function jwtNik(nik: number): string {
+  return jwt.sign({data: nik},"xdxrc")
 }
 /*
   SIGN UP SERVICE
@@ -71,6 +71,7 @@ function newLeader(
   }
   return true
 }
+
 const services = {
   getLeaderByNik,
   hashingPassword,

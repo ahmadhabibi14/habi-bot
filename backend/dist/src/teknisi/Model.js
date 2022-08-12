@@ -23,15 +23,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TeknisiModel = void 0;
 const mongo = __importStar(require("mongoose"));
-const Schema = new mongo.Schema({
-    NIK: Number,
-    Nama: String,
-    IDTelegram: String,
-    NamaMitra: String,
-    Sektor: String,
-    Witel: String,
-    Regional: String
+const TeknisiSchema = new mongo.Schema({
+    NIK: { type: Number, required: true },
+    Nama: { type: String, required: true },
+    IDTelegram: { type: String, required: true },
+    NamaMitra: { type: String, required: true },
+    Sektor: { type: String, required: true },
+    Witel: { type: String, required: true },
+    Regional: { type: String, required: true },
+    Handle: [{ type: mongo.Schema.Types.Mixed }],
+    point: { type: Number, required: true }
 });
-const teknisi = new mongo.Model(Schema);
-exports.default = teknisi;
+const TeknisiModel = mongo.model('Teknisi', TeknisiSchema);
+exports.TeknisiModel = TeknisiModel;
