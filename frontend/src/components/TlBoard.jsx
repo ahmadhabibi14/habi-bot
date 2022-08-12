@@ -2,8 +2,22 @@ import React from "react";
 
 function TlBoard() {
   return (
-    <div>
-      <h2>TL Board</h2>
+    <div className="flex flex-col space-y-4">
+      {/* Info PRofil Leader */}
+      <div className="flex flex-row space-x-4 justify-end items-center">
+        <p className="text-lg">Selamat Datang, Bang Jamet</p>
+        <img src={process.env.PUBLIC_URL + "images/profile.svg"} width="45" />
+      </div>
+      {/* END */}
+
+      {/* Title */}
+      <h2 className="text-2xl font-bold ml-24">TL BOARD</h2>
+
+      {/* Tempat Tabel data-data dari teknisi nya */}
+      <div className="min-w-8/12 border-2 border-slate-900 flex flex-col">
+        <h3 className="text-slate-50 bg-slate-900">Input Performansi</h3>
+        <div></div>
+      </div>
     </div>
   );
 }
