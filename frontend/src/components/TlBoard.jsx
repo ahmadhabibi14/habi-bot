@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
-function form() {
+function TlBoard() {
   return (
-    <div>form</div>
-  )
+    <div>
+      <h2>TL Board</h2>
+    </div>
+  );
 }
 
-export default form
+export default TlBoard;
