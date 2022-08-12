@@ -1,15 +1,36 @@
 import * as mongo from "mongoose"
-const Schema = new mongo.Schema(
-  {
-    NIK : Number,
-    Nama : String,
-    IDTelegram: String,
-    NamaMitra: String,
-    Sektor: String,
-    Witel : String,
-    Regional: String
-  }
-)
+import {
+  TiketRegular,
+  TutupODP,
+  LaporLangsung,
+  TiketSQM,
+  Proman,
+  Unspect,
+  Valins
+  
+} from "../performansi/Model"
+interface Teknisi {
+    NIK : number,
+    Nama : string,
+    IDTelegram: string,
+    NamaMitra: string,
+    Sektor: string,
+    Witel : string,
+    Regional: string,
+    Handle: Array<TiketRegular | TiketSQM | TutupODP | LaporLangsung | Proman | Unspect | Valins>,
+    point : number
+}
 
-const teknisi = new mongo.Model(Schema)
-export default teknisi
+const TeknisiSchema = new mongo.Schema<Teknisi>({
+  NIK : {type : Number, required: true},
+  Nama : {type : String, required: true},
+  IDTelegram : {type : String, required: true},
+  NamaMitra : {type : String, required: true},
+  Sektor : {type : String, required: true},
+  Witel : {type : String, required: true},
+  Regional : {type : String, required: true},
+  Handle : [{type : mongo.Schema.Types.Mixed}],
+  point : {type : Number, required: true}
+})
+const TeknisiModel = mongo.model<Teknisi>('Teknisi',TeknisiSchema)
+export {TeknisiModel,Teknisi}
