@@ -6,7 +6,7 @@ function TlBoard() {
       {/* Info PRofil Leader */}
       <div className="flex flex-row space-x-4 justify-end items-center">
         <p className="text-lg">Selamat Datang, Bang Jamet</p>
-        <img src={process.env.PUBLIC_URL + "images/profile.svg"} width="45" />
+        <img src="/images/profile.svg" width="45" />
       </div>
       {/* END */}
 
