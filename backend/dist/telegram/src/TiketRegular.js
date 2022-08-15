@@ -57,6 +57,8 @@ exports.TiketRegularInsiden.enter(ctx => {
         no_speedy: "",
         nama_pelanggan: "",
         perbaikan: "",
+        done: false,
+        date: new Date(),
         point: 1
     };
     TiketRegularTmp.set(TiketRegularProperties, id);

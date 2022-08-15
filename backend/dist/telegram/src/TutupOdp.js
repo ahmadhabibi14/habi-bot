@@ -25,6 +25,8 @@ const TutupODPProperties = {
     id_generate: "",
     nama_odp: "",
     alamat_odp: "",
+    done: false,
+    date: new Date(),
     point: 0.25
 };
 exports.TutupODPIdGenerate.enter(ctx => {

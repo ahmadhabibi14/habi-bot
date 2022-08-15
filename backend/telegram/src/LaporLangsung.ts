@@ -20,6 +20,8 @@ const LaporLangsungProperties: LaporLangsung = {
   nama_pelanggan : "",
   cp_pelanggan : "",
   perbaikan : "",
+  done : false,
+  date : new Date(),
   point : 1
 }
 
