@@ -28,6 +28,7 @@ function saveData(id, data) {
 const PromanProperties = {
     type: "Proman",
     id_generate: "",
+    done: false,
     nama_odp: "",
     distribusi: "",
     kapasitas_port: "",
@@ -35,6 +36,7 @@ const PromanProperties = {
     status_port_kosong: "",
     odp_gendong: "",
     hasil_ukur_opm: "",
+    date: new Date(),
     point: 1
 };
 exports.PromanIdGenerate.enter(ctx => {

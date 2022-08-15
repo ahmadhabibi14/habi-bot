@@ -4,6 +4,8 @@ interface TiketRegular {
   no_speedy  : string,
   nama_pelanggan : string,
   perbaikan : string,
+  done : boolean,
+  date : Date,
   point : number
 }
 
@@ -14,6 +16,8 @@ interface LaporLangsung {
   nama_pelanggan : string,
   cp_pelanggan : string,
   perbaikan : string,
+  done : boolean,
+  date : Date,
   point : number
 }
 
@@ -22,6 +26,8 @@ interface TutupODP{
   id_generate : string,
   nama_odp : string,
   alamat_odp : string, 
+  date : Date,
+  done : boolean,
   point : number
 }
 
@@ -31,6 +37,8 @@ interface TiketSQM {
   no_speedy : string,
   nama_pelanggan : string,
   perbaikan : string,
+  done: boolean,
+  date : Date,
   point : number 
 }
 
@@ -43,23 +51,29 @@ interface Proman {
   status_port_isi : string,
   status_port_kosong : string,
   odp_gendong : string,
+  done : boolean,
   hasil_ukur_opm : string,
+  date : Date,
   point : number
 }
 
 interface Unspect {
-  name: string,
+  type: string,
   id_generate : string,
   no_speedy : string,
   odp : string,
+  done : boolean,
   perbaikan : string,
+  date : Date,
   point : number 
 }
 
 interface Valins {
-  name: string,
+  type: string,
   id_valins : string,
   nama_odp : string,
+  done : boolean,
+  date : Date,
   point : number
 }
 type Task = TiketSQM | LaporLangsung | TutupODP | TiketRegular | Proman | Unspect | Valins

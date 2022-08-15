@@ -22,11 +22,13 @@ function saveData(id, data) {
     });
 }
 const UnspectProperties = {
-    name: "Unspect",
+    type: "Unspect",
     id_generate: "",
     no_speedy: "",
     odp: "",
+    done: false,
     perbaikan: "",
+    date: new Date(),
     point: 1
 };
 exports.UnspectIdGenerate.enter(ctx => {
@@ -49,7 +51,7 @@ exports.UnspectNoSpeedy.on("text", ctx => {
     ctx.scene.enter("UnspectODP");
 });
 exports.UnspectODP.enter(ctx => {
-    ctx.reply("masukan odp");
+    ctx.reply("masukan ODP");
 });
 exports.UnspectODP.on("text", ctx => {
     if (ctx.update.message) {

@@ -12,11 +12,13 @@ async function saveData(id: string,data: Unspect){
 }
 
 const UnspectProperties: Unspect = {
-  name: "Unspect",
+  type: "Unspect",
   id_generate : "",
   no_speedy : "",
   odp : "",
+  done : false,
   perbaikan : "",
+  date : new Date(),
   point : 1
 }
 
@@ -42,7 +44,7 @@ UnspectNoSpeedy.on("text",ctx =>{
 })
 
 UnspectODP.enter(ctx => {
-  ctx.reply("masukan odp")
+  ctx.reply("masukan ODP")
 })
 UnspectODP.on("text",ctx =>{
   if(ctx.update.message){

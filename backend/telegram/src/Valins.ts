@@ -10,9 +10,11 @@ async function saveData(id: string,data: Valins){
 }
 
 const ValinsProperties = {
-  name: "Valins",
+  type: "Valins",
   id_valins : "",
   nama_odp : "",
+  date : new Date(),
+  done : false,
   point : 1
 }
 

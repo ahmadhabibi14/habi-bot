@@ -77,6 +77,47 @@ bot.command("id", ctx => {
         ctx.reply(`id kamu ${msg}, minta leader mendaftarkan-nya`);
     }
 });
+bot.command("task", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+    let teknisiTasks;
+    if (!sessionID && ctx.update.message && ctx.update.message.from) {
+        sessionID = ctx.update.message.from.id;
+    }
+    if (ctx.update && ctx.update.message && sessionID != ctx.update.message.from.id) {
+        ctx.reply("teknisi lain sedang menggunakan layanan");
+        ctx.reply("silahkan tunggu...");
+        let watch = setInterval(() => {
+            if (sessionID == 0) {
+                ctx.reply("teknisi sudah selesai menggunakan, dan kini bot siap di gunakan olehmu");
+                clearInterval(watch);
+            }
+        }, 100);
+    }
+    else {
+        // Teknisi
+        if (ctx.update.message.from) {
+            let teknisi = yield (0, Service_1.getTeknisi)(0, ctx.update.message.from.id.toString());
+            if (!teknisi) {
+                ctx.reply("kamu bukan teknisi");
+                return;
+            }
+            teknisiTasks = teknisi.Handle;
+            console.log(teknisiTasks);
+            for (let task of teknisiTasks) {
+                /*
+                //if(task instanceof TiketRegular && task.type === "tiketRegular"){
+                if("type" in task && task.type === "tiketRegular"){
+                  "`jenis\t: "+" tiket regular\n"+
+                  "no IN\t:"+task.no_insiden+"\n"+
+                  "no speedy\t:"+task.no_speedy+"\n"+
+                  "nama pelanggan \t:"+task.nama_pelanggan+"\n"+
+                  "perbaikan\t:"+task.perbaikan+"\n"+
+                  "selesai\t:"+task.done ? "selesai" : "belum`"
+                }
+                */
+            }
+        }
+    }
+}));
 bot.command("start", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
     //SESSION ID
     if (!sessionID && ctx.update.message && ctx.update.message.from) {
@@ -98,6 +139,7 @@ bot.command("start", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
             let teknisi = yield (0, Service_1.getTeknisi)(0, ctx.update.message.from.id.toString());
             if (!teknisi) {
                 ctx.reply("kamu bukan teknisi");
+                return;
             }
         }
         ctx.scene.enter("Start");

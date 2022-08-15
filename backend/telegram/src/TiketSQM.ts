@@ -17,6 +17,8 @@ const TiketSQMProperties = {
   no_speedy : "",
   nama_pelanggan : "",
   perbaikan : "",
+  done : false,
+  date : new Date(),
   point : 0.1 
 }
 
