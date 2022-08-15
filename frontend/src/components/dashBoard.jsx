@@ -64,10 +64,14 @@ function Dashboard() {
             {data.map((user) => {
               return (
                 <tr>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.address.street}</td>
-                  <td>{user.company.name}</td>
+                  <td className="border border-slate-900">{user.name}</td>
+                  <td className="border border-slate-900">{user.email}</td>
+                  <td className="border border-slate-900">
+                    {user.address.street}
+                  </td>
+                  <td className="border border-slate-900">
+                    {user.company.name}
+                  </td>
                 </tr>
               );
             })}
