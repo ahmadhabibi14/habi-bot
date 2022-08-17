@@ -67,5 +67,4 @@ export async function getAll(): Promise<Teknisi[]> {
   let Teknisies = await TeknisiModel.find({})
   return Teknisies
 }
-
 //export function updatePoint()

@@ -1,6 +1,6 @@
 import {Scenes} from  "telegraf"
 import {TiketSQM} from "../../src/performansi/Model"
-import {updateHandle} from "../../src/teknisi/Service"
+import {updateHandle,getAll,updateUser} from "../../src/teknisi/Service"
 
 export const TiketSQMNoInsiden = new Scenes.BaseScene<Scenes.SceneContext>("TiketSQMNoInsiden")
 export const TiketSQMNoSpeedy = new Scenes.BaseScene<Scenes.SceneContext>("TiketSQMNoSpeedy")
@@ -19,7 +19,7 @@ const TiketSQMProperties = {
   perbaikan : "",
   done : false,
   date : new Date(),
-  point : 0.1 
+  point : 0.5 
 }
 
 TiketSQMNoInsiden.enter(ctx => {
@@ -85,9 +85,35 @@ TiketSQMPerbaikan.on("callback_query",async ctx => {
   }
   switch(ctx.callbackQuery.data){
       case "submit": 
+          let data = TiketSQMProperties
+          let ids = data.no_speedy
+          let same = false
+          let teknisies: any = await getAll()
+          for(let i = 0; i < teknisies.length - 1;i++){
+            let teknisi = teknisies[i]
+            for(let task of teknisi.Handle){
+              let sd = 1000 * 60 * 60 * 24 * 60
+              if(task.type != "tiketRegular"){
+                continue
+              }
+              if(
+                  task.no_speedy == data.no_speedy && 
+                  task.date.getTime() - Date.now() < sd && 
+                  task.done == false
+              ){
+                //console.log("sama")
+                teknisi.point -= 2
+                await updateUser(teknisi,id)
+                same = true
+                ctx.reply("saving data...")
+                ctx.scene.enter("Close")
+                break
+              }
+            }
+          } 
         await saveData(id,TiketSQMProperties)
         await ctx.reply("saving data...")
-        ctx.scene.enter("Close")
+        ctx.scene.enter("Close")          
         break
       case "cancel":
         ctx.reply("membatalkan...")

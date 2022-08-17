@@ -15,7 +15,7 @@ const ValinsProperties = {
   nama_odp : "",
   date : new Date(),
   done : false,
-  point : 1
+  point : 0.25
 }
 
 ValinsIdValins.enter(ctx => {

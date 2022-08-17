@@ -1,7 +1,7 @@
 import {Response,Request} from "express"
 import Service from "./Service"
 import jwt from "jsonwebtoken"
-import {getTeknisi,newTeknisi} from "../teknisi/Service"
+import {getTeknisi,newTeknisi,getAll} from "../teknisi/Service"
 // LOGIN
 export async function getLeader(req: Request,res: Response){
   const leaderProp = req.body
@@ -164,4 +164,10 @@ export async function getTeknisiData(req: Request,res: Response){
     res.sendStatus(500)
     return 
   }
+}
+
+export async function getTeknisiTen(req: Request,res: Response){
+  const {from,to} = req.body
+  const teknisi = await getAll()
+  res.json(teknisi.slice(from,to))
 }

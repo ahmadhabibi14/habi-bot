@@ -29,7 +29,7 @@ const UnspectProperties = {
     done: false,
     perbaikan: "",
     date: new Date(),
-    point: 1
+    point: 0.7
 };
 exports.UnspectIdGenerate.enter(ctx => {
     ctx.reply("kamu memilih Unspect");

@@ -19,7 +19,7 @@ const UnspectProperties: Unspect = {
   done : false,
   perbaikan : "",
   date : new Date(),
-  point : 1
+  point : 0.7
 }
 
 UnspectIdGenerate.enter(ctx => {

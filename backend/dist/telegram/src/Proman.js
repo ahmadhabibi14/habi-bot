@@ -37,7 +37,7 @@ const PromanProperties = {
     odp_gendong: "",
     hasil_ukur_opm: "",
     date: new Date(),
-    point: 1
+    point: 0.5
 };
 exports.PromanIdGenerate.enter(ctx => {
     ctx.reply("kamu memilih Proman");

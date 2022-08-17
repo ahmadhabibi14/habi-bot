@@ -161,11 +161,26 @@ exports.TiketRegularPerbaikan.on("callback_query", (ctx) => __awaiter(void 0, vo
                 let data = TiketRegularTmp.get(id);
                 if (data != undefined) {
                     let ids = data.no_speedy;
+                    let same = false;
                     let teknisies = yield (0, Service_1.getAll)();
-                    for (let teknisi of teknisies) {
-                        for (let task of teknisi) {
-                            if (task.no_speedy == data.no_speedy && )
-                                ;
+                    for (let i = 0; i < teknisies.length - 1; i++) {
+                        let teknisi = teknisies[i];
+                        for (let task of teknisi.Handle) {
+                            let sd = 1000 * 60 * 60 * 24 * 60;
+                            if (task.type != "tiketRegular") {
+                                continue;
+                            }
+                            if (task.no_speedy == data.no_speedy &&
+                                task.date.getTime() - Date.now() < sd &&
+                                task.done == false) {
+                                //console.log("sama")
+                                teknisi.point -= 2;
+                                yield (0, Service_1.updateUser)(teknisi, id);
+                                same = true;
+                                ctx.reply("saving data...");
+                                ctx.scene.enter("Close");
+                                break;
+                            }
                         }
                     }
                     yield saveData(id, data);

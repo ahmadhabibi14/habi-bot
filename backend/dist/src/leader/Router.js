@@ -7,6 +7,7 @@ function LeaderRoute(Router) {
     Router.post("/leader/signup", Controller_1.createLeader);
     Router.get("/leader/login", Controller_1.loginWithToken);
     Router.get("/leader/logout", Controller_1.logout);
+    Router.post("/leader/teknisi", Controller_1.isLoginAndLeader, Controller_1.getTeknisiTen);
     // LEADER CRUD
     Router.post("/leader/create/teknisi", Controller_1.isLoginAndLeader, Controller_1.createTeknisi);
     Router.post("/leader/info/teknisi", Controller_1.isLoginAndLeader, Controller_1.getTeknisiData);

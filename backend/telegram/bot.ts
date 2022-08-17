@@ -140,8 +140,8 @@ bot.command("task",async ctx => {
         return 
       }
       teknisiTasks = teknisi.Handle
-      console.log(teknisiTasks)
       let i = 0
+      let rep = ""
       for(let task of teknisiTasks){
         i++
         //if(task instanceof TiketRegular && task.type === "tiketRegular"){
@@ -149,12 +149,12 @@ bot.command("task",async ctx => {
         if(!task.done){
           done = "belum"
         }
-        ctx.reply(          
+        rep = rep +         
           "Jenis : "+task.type +"\n"+
           "Id : "+i.toString()+"\n"+
-          "Selesai : "+done+""
-        )
+          "Selesai : "+done+""+"\n\n"
       }
+      ctx.reply(rep)
       i = 0
     }
   } 
