@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const telegraf_1 = require("telegraf");
 const config_1 = require("../config");
+const Service_1 = require("../src/teknisi/Service");
 const TiketRegular_1 = require("./src/TiketRegular");
 const LaporLangsung_1 = require("./src/LaporLangsung");
 const TutupOdp_1 = require("./src/TutupOdp");
@@ -18,7 +19,7 @@ const TiketSQM_1 = require("./src/TiketSQM");
 const Proman_1 = require("./src/Proman");
 const Unspect_1 = require("./src/Unspect");
 const Valins_1 = require("./src/Valins");
-const Service_1 = require("../src/teknisi/Service");
+const Service_2 = require("../src/teknisi/Service");
 //Standard Declration
 const bot = new telegraf_1.Telegraf(config_1.botToken);
 let sessionID = 0;
@@ -95,26 +96,46 @@ bot.command("task", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
     else {
         // Teknisi
         if (ctx.update.message.from) {
-            let teknisi = yield (0, Service_1.getTeknisi)(0, ctx.update.message.from.id.toString());
+            let teknisi = yield (0, Service_2.getTeknisi)(0, ctx.update.message.from.id.toString());
             if (!teknisi) {
                 ctx.reply("kamu bukan teknisi");
                 return;
             }
             teknisiTasks = teknisi.Handle;
             console.log(teknisiTasks);
+            let i = 0;
             for (let task of teknisiTasks) {
-                /*
+                i++;
                 //if(task instanceof TiketRegular && task.type === "tiketRegular"){
-                if("type" in task && task.type === "tiketRegular"){
-                  "`jenis\t: "+" tiket regular\n"+
-                  "no IN\t:"+task.no_insiden+"\n"+
-                  "no speedy\t:"+task.no_speedy+"\n"+
-                  "nama pelanggan \t:"+task.nama_pelanggan+"\n"+
-                  "perbaikan\t:"+task.perbaikan+"\n"+
-                  "selesai\t:"+task.done ? "selesai" : "belum`"
+                let done = "sudah";
+                if (!task.done) {
+                    done = "belum";
                 }
-                */
+                ctx.reply("Jenis : " + task.type + "\n" +
+                    "Id : " + i.toString() + "\n" +
+                    "Selesai : " + done + "");
             }
+            i = 0;
+        }
+    }
+}));
+bot.command("selesai", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+    if (ctx.update.message.from) {
+        let teknisi = yield (0, Service_2.getTeknisi)(0, ctx.update.message.from.id.toString());
+        let id = ctx.update.message.text;
+        id = id.split("/selesai ")[1];
+        if (!teknisi) {
+            ctx.reply("kamu bukan teknisi");
+            return;
+        }
+        try {
+            console.log(id);
+            teknisi.Handle[Number(id) - 1].done = true;
+            yield (0, Service_1.updateUser)(teknisi, sessionID.toString());
+            ctx.reply("task " + id + " sudah di selesaikan");
+        }
+        catch (_a) {
+            ctx.reply("task id salah");
         }
     }
 }));
@@ -136,7 +157,7 @@ bot.command("start", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
     else {
         // Teknisi
         if (ctx.update.message.from) {
-            let teknisi = yield (0, Service_1.getTeknisi)(0, ctx.update.message.from.id.toString());
+            let teknisi = yield (0, Service_2.getTeknisi)(0, ctx.update.message.from.id.toString());
             if (!teknisi) {
                 ctx.reply("kamu bukan teknisi");
                 return;

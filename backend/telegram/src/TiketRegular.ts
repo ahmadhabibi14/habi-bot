@@ -1,6 +1,6 @@
 import {Scenes} from  "telegraf"
 import {TiketRegular} from "../../src/performansi/Model"
-import {updateHandle} from "../../src/teknisi/Service"
+import {updateHandle,getAll} from "../../src/teknisi/Service"
 
 export const TiketRegularInsiden = new Scenes.BaseScene<Scenes.SceneContext>("TiketRegularInsiden")
 export const TiketRegularSpeedy = new Scenes.BaseScene<Scenes.SceneContext>("TiketRegularSpeedy")
@@ -163,6 +163,13 @@ TiketRegularPerbaikan.on("callback_query",async ctx=>{
       case "submit": 
         let data = TiketRegularTmp.get(id)
         if(data != undefined){
+          let ids = data.no_speedy
+          let teknisies = await getAll()
+          for(let teknisi of teknisies ){
+            for(let task of teknisi){
+              if(task.no_speedy == data.no_speedy && )
+            }
+          }
           await saveData(id,data)
           await ctx.reply("saving data...")
           ctx.scene.enter("Close")

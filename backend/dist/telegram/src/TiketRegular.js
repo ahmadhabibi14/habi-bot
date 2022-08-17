@@ -160,6 +160,14 @@ exports.TiketRegularPerbaikan.on("callback_query", (ctx) => __awaiter(void 0, vo
             case "submit":
                 let data = TiketRegularTmp.get(id);
                 if (data != undefined) {
+                    let ids = data.no_speedy;
+                    let teknisies = yield (0, Service_1.getAll)();
+                    for (let teknisi of teknisies) {
+                        for (let task of teknisi) {
+                            if (task.no_speedy == data.no_speedy && )
+                                ;
+                        }
+                    }
                     yield saveData(id, data);
                     yield ctx.reply("saving data...");
                     ctx.scene.enter("Close");

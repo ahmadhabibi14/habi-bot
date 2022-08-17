@@ -33,7 +33,7 @@ function getLeader(req, res) {
             }
         }
         let jwtNik = Service_1.default.jwtNik(leaderProp.NIK);
-        res.cookie("token", jwtNik, { httpOnly: true });
+        res.cookie("token", jwtNik);
         if (typeof Leader != "string") {
             let toSend = {
                 NIK: Leader.NIK,

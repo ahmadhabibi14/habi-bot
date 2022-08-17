@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateHandle = exports.newTeknisi = exports.getTeknisi = void 0;
+exports.getAll = exports.updateUser = exports.updateHandle = exports.newTeknisi = exports.getTeknisi = void 0;
 const Model_1 = require("./Model");
 function getTeknisi(Nik, IDTelegram) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -73,4 +73,25 @@ function updateHandle(Handle, IdT) {
     });
 }
 exports.updateHandle = updateHandle;
+function updateUser(User, IdT) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let TeknisiOld = yield getTeknisi(0, IdT);
+        if (!TeknisiOld) {
+            return null;
+        }
+        let Update = yield Model_1.TeknisiModel.findOneAndUpdate({ IDTelegram: IdT }, User);
+        if (!Update) {
+            return null;
+        }
+        return true;
+    });
+}
+exports.updateUser = updateUser;
+function getAll() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let Teknisies = yield Model_1.TeknisiModel.find({});
+        return Teknisies;
+    });
+}
+exports.getAll = getAll;
 //export function updatePoint()

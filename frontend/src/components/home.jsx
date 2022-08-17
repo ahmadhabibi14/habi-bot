@@ -1,4 +1,5 @@
-import { Outlet, Link, NavLink } from "react-router-dom";
+import { Outlet, Link, NavLink,useNavigate } from "react-router-dom";
+import  Login from "./login.jsx"
 
 function Home() {
   return (

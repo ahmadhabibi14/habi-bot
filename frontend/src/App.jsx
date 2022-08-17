@@ -1,6 +1,11 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 function App() {
+  if(!localStorage.getItem("Lxpx")){
+    window.location.href = "/login"
+    console.log(localStorage.getItem("Lxpx"))
+  }
+
   return (
     <section className="flex flex-row space-x-4 p-6 text-slate-900">
       {/* Navigasi Bar */}

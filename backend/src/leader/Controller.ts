@@ -19,7 +19,7 @@ export async function getLeader(req: Request,res: Response){
     }
   }
   let jwtNik = Service.jwtNik(leaderProp.NIK)
-  res.cookie("token",jwtNik,{httpOnly: true})
+  res.cookie("token",jwtNik)
   if(typeof Leader != "string"){
     let toSend = {
       NIK : Leader.NIK,
