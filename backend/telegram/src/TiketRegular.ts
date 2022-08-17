@@ -167,7 +167,9 @@ TiketRegularPerbaikan.on("callback_query",async ctx=>{
           let teknisies = await getAll()
           for(let teknisi of teknisies ){
             for(let task of teknisi){
-              if(task.no_speedy == data.no_speedy && )
+              if(task.no_speedy == data.no_speedy ){
+                console.log("sama")
+              }
             }
           }
           await saveData(id,data)
