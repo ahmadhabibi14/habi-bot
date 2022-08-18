@@ -27,7 +27,7 @@ const PromanProperties = {
   odp_gendong : "",
   hasil_ukur_opm : "",
   date : new Date(),
-  point : 1
+  point : 0.5
 }
 
 PromanIdGenerate.enter(ctx => {

@@ -1,6 +1,7 @@
 import {Telegraf,Scenes,session} from "telegraf"
 import {botToken} from "../config"
 import {Task,TiketRegular} from "../src/performansi/Model"
+import {updateUser} from "../src/teknisi/Service"
 import {
   TiketRegularInsiden,
   TiketRegularSpeedy,
@@ -139,22 +140,44 @@ bot.command("task",async ctx => {
         return 
       }
       teknisiTasks = teknisi.Handle
-      console.log(teknisiTasks)
+      let i = 0
+      let rep = ""
       for(let task of teknisiTasks){
-        /*
+        i++
         //if(task instanceof TiketRegular && task.type === "tiketRegular"){
-        if("type" in task && task.type === "tiketRegular"){
-          "`jenis\t: "+" tiket regular\n"+
-          "no IN\t:"+task.no_insiden+"\n"+
-          "no speedy\t:"+task.no_speedy+"\n"+
-          "nama pelanggan \t:"+task.nama_pelanggan+"\n"+
-          "perbaikan\t:"+task.perbaikan+"\n"+
-          "selesai\t:"+task.done ? "selesai" : "belum`"
+        let done = "sudah"
+        if(!task.done){
+          done = "belum"
         }
-        */
+        rep = rep +         
+          "Jenis : "+task.type +"\n"+
+          "Id : "+i.toString()+"\n"+
+          "Selesai : "+done+""+"\n\n"
       }
+      ctx.reply(rep)
+      i = 0
     }
   } 
+})
+bot.command("selesai",async ctx => {
+  if(ctx.update.message.from){
+    let teknisi = await getTeknisi(0,ctx.update.message.from.id.toString())
+    let id = ctx.update.message.text 
+    id = id.split("/selesai ")[1]
+    if(!teknisi){
+      ctx.reply("kamu bukan teknisi")
+      return
+    }
+    try{
+      console.log(id)
+      teknisi.Handle[Number(id)-1].done = true
+      await updateUser(teknisi,sessionID.toString())
+      ctx.reply("task "+id+" sudah di selesaikan")
+    }catch{
+      ctx.reply("task id salah")
+    }
+  }
+
 })
 bot.command("start",async ctx => {
   //SESSION ID

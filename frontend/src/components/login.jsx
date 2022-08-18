@@ -1,84 +1,65 @@
-import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-	// React States
-	const [errorMessages, setErrorMessages] = useState({});
-	const [isSubmitted, setIsSubmitted] = useState(false);
-
-	// USER DATA
-	const database = {
-		username: "admin",
-		password: "password",
-	};
-
-	// Kalo error pesan di dalam object ini muncul
-	const errors = {
-		uname: "invalid username",
-		pass: "invalid password",
-	};
-
-	const handleSubmit = (event) => {
-		// Prevent page reload
-		event.preventDefault();
-
-		var { uname, pass } = document.forms[0];
-
-		// Find user login info
-		const userData = database.find((user) => user.username === uname.value);
-
-		// Compare user info
-		if (userData) {
-			if (userData.password !== pass.value) {
-				// Invalid password
-				setErrorMessages({ name: "pass", message: errors.pass });
-			} else {
-				setIsSubmitted(true);
-			}
-		} else {
-			// Username not found
-			setErrorMessages({ name: "uname", message: errors.uname });
+	let server = "http://localhost:8887";
+	let inputNIK = "";
+	let error = "";
+	let inputPass = "";
+	function updateNik(v) {
+		inputNIK = v;
+	}
+	function updatePass(v) {
+		inputPass = v;
+	}
+	async function Masuk() {
+		let leaderInfo = await fetch(server + "/leader/login", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				NIK: inputNIK,
+				Password: inputPass,
+			}),
+		});
+		let res = await leaderInfo.json();
+		if (leaderInfo.status != 200) {
+			return alert(res.msg);
 		}
-	};
-
-	// Generate JSX code for error message
-	const renderErrorMessage = (name) => {
-		name === errorMessages.name && (
-			<div className="error">{errorMessages.message}</div>
-		);
-	};
-
-	// JSX code for login form
-	const renderForm = (
+		localStorage.setItem("Lxpx", JSON.stringify(res));
+		window.location.href = "/dashboard";
+	}
+	return (
 		<div className="flex justify-center items-center min-h-screen">
 			<div className="flex flex-col space-y-3 p-4">
-				<form
-					onSubmit={handleSubmit()}
-					className="flex flex-col space-y-3 border-2 shadow-lg border-slate-200 p-8 rounded-lg bg-slate-100"
-				>
+				<p>{error}</p>
+				<form className="flex flex-col space-y-3 border-2 shadow-lg border-slate-200 p-8 rounded-lg bg-slate-100">
 					<div className="flex flex-col space-y-2">
-						<label className="text-slate-900">Username</label>
+						<label className="text-slate-900">NIK</label>
 						<input
 							type="text"
-							name="uname"
+							name="nik"
 							className="rounded-lg py-2 px-4 border-2 border-slate-200"
-							required
+							onChange={(e) => updateNik(e.target.value)}
 						/>
-						{renderErrorMessage("uname")}
 					</div>
 					<div className="flex flex-col space-y-2">
 						<label className="text-slate-900">Kata Sandi</label>
 						<input
 							type="password"
-							name="pass"
+							name="password"
 							className="rounded-lg py-2 px-4 border-2 border-slate-200"
-							required
+							onChange={(e) => updatePass(e.target.value)}
 						/>
-						{renderErrorMessage("pass")}
 					</div>
 					<div>
-						<button className="py-1.5 px-4 bg-blue-500 border-2 border-blue-500 rounded-lg text-slate-50 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-900">
-							<input type="submit" value="Log In" />
+						<button
+							className="py-2 px-4 bg-blue-400 border-2 border-blue-400 rounded-lg hover:bg-slate-50 hover:text-blue-400 text-slate-50"
+							type="button"
+							onClick={(e) => Masuk()}
+						>
+							Masuk
 						</button>
 					</div>
 					<div className="pt-4">
@@ -86,7 +67,7 @@ function Login() {
 							Belum punya akun ?{" "}
 							<Link
 								to="/signup"
-								className="text-blue-500 underline hover:text-purple-500"
+								className="text-blue-400 underline hover:text-purple-500"
 							>
 								Daftar
 							</Link>
@@ -96,8 +77,6 @@ function Login() {
 			</div>
 		</div>
 	);
-
-	return <>{isSubmitted ? <Navigate to="/dashboard" /> : renderForm}</>;
 }
 
 export default Login;

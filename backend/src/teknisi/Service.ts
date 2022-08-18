@@ -51,4 +51,20 @@ export async function updateHandle(Handle: Task,IdT: string): Promise<null | boo
   }
   return true
 }
+
+export async function updateUser(User: Teknisi,IdT: string): Promise<null | boolean>{
+  let TeknisiOld = await getTeknisi(0,IdT)
+  if(!TeknisiOld){
+    return null
+  }
+  let Update = await TeknisiModel.findOneAndUpdate({IDTelegram: IdT},User)
+  if(!Update){
+    return null 
+  }
+  return true
+}
+export async function getAll(): Promise<Teknisi[]> {
+  let Teknisies = await TeknisiModel.find({})
+  return Teknisies
+}
 //export function updatePoint()

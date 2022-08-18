@@ -29,7 +29,7 @@ const TiketSQMProperties = {
     perbaikan: "",
     done: false,
     date: new Date(),
-    point: 0.1
+    point: 0.5
 };
 exports.TiketSQMNoInsiden.enter(ctx => {
     ctx.reply("Kamu memilih tiket sqm");
@@ -88,6 +88,30 @@ exports.TiketSQMPerbaikan.on("callback_query", (ctx) => __awaiter(void 0, void 0
     }
     switch (ctx.callbackQuery.data) {
         case "submit":
+            let data = TiketSQMProperties;
+            let ids = data.no_speedy;
+            let same = false;
+            let teknisies = yield (0, Service_1.getAll)();
+            for (let i = 0; i < teknisies.length - 1; i++) {
+                let teknisi = teknisies[i];
+                for (let task of teknisi.Handle) {
+                    let sd = 1000 * 60 * 60 * 24 * 60;
+                    if (task.type != "tiketRegular") {
+                        continue;
+                    }
+                    if (task.no_speedy == data.no_speedy &&
+                        task.date.getTime() - Date.now() < sd &&
+                        task.done == false) {
+                        //console.log("sama")
+                        teknisi.point -= 2;
+                        yield (0, Service_1.updateUser)(teknisi, id);
+                        same = true;
+                        ctx.reply("saving data...");
+                        ctx.scene.enter("Close");
+                        break;
+                    }
+                }
+            }
             yield saveData(id, TiketSQMProperties);
             yield ctx.reply("saving data...");
             ctx.scene.enter("Close");
