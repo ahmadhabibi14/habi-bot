@@ -26,18 +26,20 @@ function Dashboard() {
   return (
     <div className="flex flex-col space-y-4">
       {/* Input Tanggal */}
-      <div className="flex flex-row space-x-4 justify-end">
+      <div className="flex flex-row space-x-6 justify-end">
         <select
           name="Dates"
           id="SelectDates"
-          className="py-2 px-4 bg-inherit border-2 border-slate-900 rounded-none"
+          className="py-2 px-3 bg-inherit border-2 border-slate-900 rounded-lg"
         >
           <option value="">JAN 21</option>
           <option value="FEB 18">FEB 18</option>
           <option value="JUL 05">JUL 05</option>
         </select>
 
-        <button className="py-2 px-4 border-2 border-slate-900">Filter</button>
+        <button className="py-1.5 px-4 rounded-lg hover:bg-transparent hover:text-slate-900 border-2 border-slate-900 bg-slate-900 text-slate-50">
+          Filter
+        </button>
       </div>
       {/* END */}
 
@@ -52,7 +54,9 @@ function Dashboard() {
             <tr>
               {[["Name"], ["Email"], ["Address"], ["Company"]].map(
                 ([isiData]) => (
-                  <td className="bg-slate-900 text-slate-50">{isiData}</td>
+                  <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    {isiData}
+                  </td>
                 )
               )}
             </tr>
@@ -64,12 +68,16 @@ function Dashboard() {
             {data.map((user) => {
               return (
                 <tr>
-                  <td className="border border-slate-900">{user.name}</td>
-                  <td className="border border-slate-900">{user.email}</td>
-                  <td className="border border-slate-900">
+                  <td className="px-2 py-1 border border-slate-900">
+                    {user.name}
+                  </td>
+                  <td className="px-2 py-1 border border-slate-900">
+                    {user.email}
+                  </td>
+                  <td className="px-2 py-1 border border-slate-900">
                     {user.address.street}
                   </td>
-                  <td className="border border-slate-900">
+                  <td className="px-2 py-1 border border-slate-900">
                     {user.company.name}
                   </td>
                 </tr>
