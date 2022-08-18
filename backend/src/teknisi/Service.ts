@@ -1,5 +1,6 @@
 import {Teknisi,TeknisiModel} from "./Model"
 import {Task} from "../performansi/Model"
+import {broadcast} from "../../telegram/bot"
 
 export async function getTeknisi(Nik: number,IDTelegram?: string): Promise<Teknisi | null | undefined>{
   if(Nik != 0){
@@ -67,4 +68,43 @@ export async function getAll(): Promise<Teknisi[]> {
   let Teknisies = await TeknisiModel.find({})
   return Teknisies
 }
+
+export async function addLeadTask(obj : {
+  idGenerate: string, 
+  namaTeknisi: string, 
+  keterangan: string,
+  type: string
+}): Promise<boolean>{
+    let po = obj.type == "gamasTypeA" ? 2 
+      : obj.type == "gamasTypeB" ? 3 
+      : obj.type == "gamasTypeC" ? 4 
+      : obj.type == "tugasTl" ? 1
+      : 0
+    let newTask: Task = {
+      type : obj.type,
+      id_generate : obj.idGenerate,
+      nama : obj.namaTeknisi,
+      keterangan : obj.keterangan,
+      point : po,
+      done : false,
+      date: new Date()
+    } 
+    let teknisi: any
+    try {
+      teknisi = await TeknisiModel.findOne({Nama : obj.namaTeknisi})
+    }catch(e){
+      console.log(e)
+      return false 
+    }
+    if(!teknisi){
+      return false 
+    }
+
+    teknisi.Handle.push(newTask)
+    broadcast.emit("send",Number(teknisi.IDTelegram),"kamu mendapatkan tugas baru")
+    await updateUser(teknisi,teknisi.IDTelegram)
+    return true
+  }
+
+  broadcast.emit("send",1276258511,"hi")
 //export function updatePoint()

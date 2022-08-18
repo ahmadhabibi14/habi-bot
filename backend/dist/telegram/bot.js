@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.broadcast = void 0;
 const telegraf_1 = require("telegraf");
 const config_1 = require("../config");
 const Service_1 = require("../src/teknisi/Service");
@@ -19,9 +20,11 @@ const TiketSQM_1 = require("./src/TiketSQM");
 const Proman_1 = require("./src/Proman");
 const Unspect_1 = require("./src/Unspect");
 const Valins_1 = require("./src/Valins");
+const events_1 = require("events");
 const Service_2 = require("../src/teknisi/Service");
 //Standard Declration
 const bot = new telegraf_1.Telegraf(config_1.botToken);
+exports.broadcast = new events_1.EventEmitter();
 let sessionID = 0;
 //Control Flow
 const Start = new telegraf_1.Scenes.BaseScene("Start");
@@ -220,5 +223,8 @@ Start.on("callback_query", (ctx) => {
 Close.enter(ctx => {
     sessionID = 0;
     ctx.scene.leave();
+});
+exports.broadcast.on("send", (id, message) => {
+    bot.telegram.sendMessage(id, message);
 });
 exports.default = bot;

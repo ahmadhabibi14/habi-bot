@@ -6,8 +6,8 @@ import {
   TiketSQM,
   Proman,
   Unspect,
-  Valins
-  
+  Valins,
+  Task
 } from "../performansi/Model"
 interface Teknisi {
     NIK : number,
@@ -17,7 +17,7 @@ interface Teknisi {
     Sektor: string,
     Witel : string,
     Regional: string,
-    Handle: Array<TiketRegular | TiketSQM | TutupODP | LaporLangsung | Proman | Unspect | Valins>,
+    Handle: Array<Task>,
     point : number
 }
 

@@ -1,7 +1,7 @@
 import {Response,Request} from "express"
 import Service from "./Service"
 import jwt from "jsonwebtoken"
-import {getTeknisi,newTeknisi,getAll} from "../teknisi/Service"
+import {getTeknisi,newTeknisi,addLeadTask,getAll} from "../teknisi/Service"
 // LOGIN
 export async function getLeader(req: Request,res: Response){
   const leaderProp = req.body
@@ -170,4 +170,13 @@ export async function getTeknisiTen(req: Request,res: Response){
   const {from,to} = req.body
   const teknisi = await getAll()
   res.json(teknisi.slice(from,to))
+}
+
+export async function addTask(req: Request,res: Response){
+  let succes = await addLeadTask(req.body)
+  if(succes){
+    res.json({msg : "succesfull set task"})  
+    return 
+  }
+  res.status(500).json({msg: "error set task"})
 }

@@ -11,6 +11,10 @@ function LeaderRoute(Router) {
     // LEADER CRUD
     Router.post("/leader/create/teknisi", Controller_1.isLoginAndLeader, Controller_1.createTeknisi);
     Router.post("/leader/info/teknisi", Controller_1.isLoginAndLeader, Controller_1.getTeknisiData);
+    // POST ADD TASK
+    Router.post("/leader/addtask", Controller_1.isLoginAndLeader, Controller_1.addTask);
+    // Filtering
+    Router.post("/", Controller_1.getTeknisiTen);
     // Router.delete("/leader/remove/teknisi")
 }
 exports.LeaderRoute = LeaderRoute;

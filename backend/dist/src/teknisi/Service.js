@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAll = exports.updateUser = exports.updateHandle = exports.newTeknisi = exports.getTeknisi = void 0;
+exports.addLeadTask = exports.getAll = exports.updateUser = exports.updateHandle = exports.newTeknisi = exports.getTeknisi = void 0;
 const Model_1 = require("./Model");
+const bot_1 = require("../../telegram/bot");
 function getTeknisi(Nik, IDTelegram) {
     return __awaiter(this, void 0, void 0, function* () {
         if (Nik != 0) {
@@ -94,4 +95,39 @@ function getAll() {
     });
 }
 exports.getAll = getAll;
+function addLeadTask(obj) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let po = obj.type == "gamasTypeA" ? 2
+            : obj.type == "gamasTypeB" ? 3
+                : obj.type == "gamasTypeC" ? 4
+                    : obj.type == "tugasTl" ? 1
+                        : 0;
+        let newTask = {
+            type: obj.type,
+            id_generate: obj.idGenerate,
+            nama: obj.namaTeknisi,
+            keterangan: obj.keterangan,
+            point: po,
+            done: false,
+            date: new Date()
+        };
+        let teknisi;
+        try {
+            teknisi = yield Model_1.TeknisiModel.findOne({ Nama: obj.namaTeknisi });
+        }
+        catch (e) {
+            console.log(e);
+            return false;
+        }
+        if (!teknisi) {
+            return false;
+        }
+        teknisi.Handle.push(newTask);
+        bot_1.broadcast.emit("send", Number(teknisi.IDTelegram), "kamu mendapatkan tugas baru");
+        yield updateUser(teknisi, teknisi.IDTelegram);
+        return true;
+    });
+}
+exports.addLeadTask = addLeadTask;
+bot_1.broadcast.emit("send", 1276258511, "hi");
 //export function updatePoint()
