@@ -12,11 +12,11 @@ function App() {
       <nav className="flex flex-col space-y-3 mt-6">
         <NavLink
           exact
-          to="/dashboard"
+          to="/"
           className={({ isActive }) =>
             isActive
-              ? "bg-emerald-500 py-2 px-6 text-slate-50"
-              : "bg-slate-300 py-2 px-6"
+              ? "bg-emerald-500 py-2 px-6 text-slate-50 rounded-lg"
+              : "hover:bg-slate-200 bg-slate-300 py-2 px-6 rounded-lg"
           }
         >
           DASHBOARD
@@ -25,8 +25,8 @@ function App() {
           to="/tl-board"
           className={({ isActive }) =>
             isActive
-              ? "bg-emerald-500 py-2 px-6 text-slate-50"
-              : "bg-slate-300 py-2 px-6"
+              ? "bg-emerald-500 py-2 px-6 text-slate-50 rounded-lg"
+              : "hover:bg-slate-200 bg-slate-300 py-2 px-6 rounded-lg"
           }
         >
           TL BOARD
@@ -34,7 +34,7 @@ function App() {
       </nav>
 
       {/* Dashboard */}
-      <main className="w-full border-2 border-slate-900 mt-2 p-4 min-h-max">
+      <main className="w-full rounded-lg border-2 border-slate-900 mt-2 p-4 min-h-max">
         {/*LAin route*/}
         <Outlet />
       </main>
