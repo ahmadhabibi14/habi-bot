@@ -14,7 +14,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<App />}>
-          <Route exact path="" element={<Dashboard />} />
+          <Route exact path="/dashboard" element={<Dashboard />} />
           <Route path="/tl-board" element={<TlBoard />} />
         </Route>
         <Route path="/login" element={<Login />} />
@@ -22,5 +22,4 @@ root.render(
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
- );
-
+);

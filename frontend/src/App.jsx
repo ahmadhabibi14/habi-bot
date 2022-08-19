@@ -1,9 +1,10 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate, Navigate } from "react-router-dom";
 
 function App() {
-  if(!localStorage.getItem("Lxpx")){
-    window.location.href = "/login"
-    console.log(localStorage.getItem("Lxpx"))
+  if (!localStorage.getItem("Lxpx")) {
+    // window.location.href = "/login";
+    return <Navigate to="/login" replace />;
+    console.log(localStorage.getItem("Lxpx"));
   }
 
   return (
@@ -12,7 +13,7 @@ function App() {
       <nav className="flex flex-col space-y-3 mt-6">
         <NavLink
           exact
-          to="/"
+          to="/dashboard"
           className={({ isActive }) =>
             isActive
               ? "bg-emerald-500 py-2 px-6 text-slate-50 rounded-lg"
