@@ -130,6 +130,19 @@ function Signup() {
 						/>
 					</div>
 
+					{/* KONFIRMASI KATA SANDI */}
+					<div className="flex flex-col space-y-2">
+						<label className="text-slate-900">
+							Konfirmasi Kata Sandi
+						</label>
+						<input
+							type="password"
+							name="password"
+							className="rounded-lg py-2 px-4 border-2 border-slate-200"
+							// onChange={(e) => confirmPass(e.target.value)}
+						/>
+					</div>
+
 					{/* TOMBOL DAFTAR */}
 					<div>
 						<button
