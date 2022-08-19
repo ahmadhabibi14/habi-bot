@@ -76,7 +76,46 @@ interface Valins {
   date : Date,
   point : number
 }
-type Task = TiketSQM | LaporLangsung | TutupODP | TiketRegular | Proman | Unspect | Valins
+
+interface GamasTypeA {
+  type: string,
+  id_generate : string,
+  nama: string,
+  keterangan: string,
+  date : Date,
+  point : number,
+  done: boolean
+}
+interface GamasTypeB {
+  type: string,
+  id_generate : string,
+  nama: string,
+  keterangan: string,
+  date : Date,
+  point : number,
+  done : boolean
+}
+interface GamasTypeC {
+  type: string,
+  id_generate : string,
+  nama: string,
+  keterangan: string,
+  date : Date,
+  point : number,
+  done : boolean
+}
+interface TugasTL {
+  type: string,
+  id_generate : string,
+  nama: string,
+  keterangan: string,
+  date : Date,
+  point : number,
+  done : boolean
+}
+
+
+type Task = TiketSQM | LaporLangsung | TutupODP | TiketRegular | Proman | Unspect | Valins | GamasTypeA | GamasTypeB | GamasTypeC | TugasTL
 export {
   TiketRegular,
   TutupODP,
@@ -85,5 +124,9 @@ export {
   Proman,
   Unspect,
   Valins,
+  GamasTypeA,
+  GamasTypeB,
+  GamasTypeC,
+  TugasTL,
   Task
 }

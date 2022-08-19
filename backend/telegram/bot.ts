@@ -52,11 +52,12 @@ import {
   ValinsIdValins,
   ValinsNamaOdp
 } from "./src/Valins"
-
+import {EventEmitter} from "events"
 import {getTeknisi} from "../src/teknisi/Service"
 
 //Standard Declration
 const bot  = new Telegraf<Scenes.SceneContext>(botToken)
+export const broadcast = new EventEmitter()
 let sessionID = 0
 
 //Control Flow
@@ -261,6 +262,10 @@ Start.on("callback_query",(ctx)=>{
 Close.enter(ctx =>{
   sessionID = 0
   ctx.scene.leave()
+})
+
+broadcast.on("send",(id,message)=>{
+  bot.telegram.sendMessage(id,message)
 })
 
 export default bot

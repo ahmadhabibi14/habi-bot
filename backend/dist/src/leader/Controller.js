@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTeknisiTen = exports.getTeknisiData = exports.createTeknisi = exports.isLoginAndLeader = exports.logout = exports.createLeader = exports.loginWithToken = exports.getLeader = void 0;
+exports.addTask = exports.getTeknisiTen = exports.getTeknisiData = exports.createTeknisi = exports.isLoginAndLeader = exports.logout = exports.createLeader = exports.loginWithToken = exports.getLeader = void 0;
 const Service_1 = __importDefault(require("./Service"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const Service_2 = require("../teknisi/Service");
@@ -184,3 +184,14 @@ function getTeknisiTen(req, res) {
     });
 }
 exports.getTeknisiTen = getTeknisiTen;
+function addTask(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let succes = yield (0, Service_2.addLeadTask)(req.body);
+        if (succes) {
+            res.json({ msg: "succesfull set task" });
+            return;
+        }
+        res.status(500).json({ msg: "error set task" });
+    });
+}
+exports.addTask = addTask;
