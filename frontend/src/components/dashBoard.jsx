@@ -5,12 +5,19 @@ function Dashboard() {
   // Hooks
   const [data, setData] = useState([]);
 
+  let server = "http://localhost:8887";
+
   // AMBIL JSON dari external
   const fetchData = () => {
-    axios.get("https://jsonplaceholder.typicode.com/users").then((json) => {
-      // console.log(json.data);
-      setData(json.data);
-    });
+    axios
+      .get(`${server}/leader/teknisi`)
+      .then((response) => {
+        console.log(response);
+        setData(response);
+      })
+      .catch((error) => {
+        console.error(`Error: ${error}`);
+      });
   };
 
   // Ini biar TABEL nya jalan otomatis saat web di load
