@@ -11,7 +11,7 @@ function Signup() {
 	const [inputWitel, setWitel] = useState("");
 	const [inputRegional, setRegional] = useState("");
 	const [buatPass, setBuatPass] = useState("");
-
+  const [firmPass,confirmPass] = useState("")
 	const navigate = useNavigate();
 
 	let server = "http://localhost:8887";
@@ -19,7 +19,6 @@ function Signup() {
 	function Daftar() {
 		axios
 			.post(server + "/leader/signup", {
-				body: JSON.stringify({
 					NIK: buatNIK,
 					Nama: inputNama,
 					IDTelegram: inputIdTele,
@@ -28,13 +27,13 @@ function Signup() {
 					Witel: inputWitel,
 					Regional: inputRegional,
 					Password: buatPass,
-				}),
-			})
+          ConfirmPassword: firmPass 
+			}, {withCredentials: true})
 			.then((response) => {
 				navigate("/login", { replace: true });
 			})
-			.catch((error) => {
-				return alert("error");
+			.catch((err) => {
+				return alert(err.response.data.msg);
 			});
 	}
 
@@ -139,7 +138,7 @@ function Signup() {
 							type="password"
 							name="password"
 							className="rounded-lg py-2 px-4 border-2 border-slate-200"
-							// onChange={(e) => confirmPass(e.target.value)}
+							onChange={(e) => confirmPass(e.target.value)}
 						/>
 					</div>
 
