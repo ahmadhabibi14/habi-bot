@@ -2,21 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function Dashboard() {
-  let datee = []
-  const [date,setDate] = useState([])
-  const [currentUser,setCurrentUser] = useState([])
-  let Handles = []
+  let datee = [];
+  const [date, setDate] = useState([]);
+  const [currentUser, setCurrentUser] = useState([]);
+  let Handles = [];
   // Hooks
   const [Data, setData] = useState([]);
   // MODAL HOOK
   const [isOpen, setIsOpen] = useState(false);
-  const [name,setName] = useState("")
-  const [nik,setNik] = useState("")
+  const [name, setName] = useState("");
+  const [nik, setNik] = useState("");
   // MODAL
-  const openModal = (data,Nama,NIK) => {
-    setCurrentUser(data)
-    setName(Nama)
-    setNik(NIK)
+  const openModal = (data, Nama, NIK) => {
+    setCurrentUser(data);
+    setName(Nama);
+    setNik(NIK);
     //console.log(data)
     setIsOpen(true);
   };
@@ -25,26 +25,24 @@ function Dashboard() {
     setIsOpen(false);
   };
   // FILTER
-  function Sektor(){
+  function Sektor() {
     axios
-      .get(`${server}/leader/sektor`,{withCredentials: true})
+      .get(`${server}/leader/sektor`, { withCredentials: true })
       .then((e) => {
-        console.log(e.data)
-      })
+        console.log(e.data);
+      });
   }
-  function Witel(){
-    axios
-      .get(`${server}/leader/witel`,{withCredentials: true})
-      .then((e) => {
-        console.log(e.data)
-      })
+  function Witel() {
+    axios.get(`${server}/leader/witel`, { withCredentials: true }).then((e) => {
+      console.log(e.data);
+    });
   }
-  function Regional(){
+  function Regional() {
     axios
-      .get(`${server}/leader/regional`,{withCredentials: true})
+      .get(`${server}/leader/regional`, { withCredentials: true })
       .then((e) => {
-        console.log(e.data)
-      })
+        console.log(e.data);
+      });
   }
 
   // AKHIR MODAL
@@ -54,11 +52,16 @@ function Dashboard() {
   // AMBIL JSON dari external
   const fetchData = () => {
     axios
-      .post(`${server}/leader/teknisi`,{
-        to: 10, from: 0
-      },{
-        withCredentials: true
-      })
+      .post(
+        `${server}/leader/teknisi`,
+        {
+          to: 10,
+          from: 0,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         console.log(response);
         setData(response.data);
@@ -93,8 +96,8 @@ function Dashboard() {
               <table className="w-full bg-slate-900 text-slate-50 border border-slate-900 mx-auto">
                 {/* Ket. Tabel */}
                 <thead>
-                  <p> Nama :  {name} </p>
-                  <p> Nik :  {nik} </p>
+                  <p> Nama : {name} </p>
+                  <p> Nik : {nik} </p>
                   <p> Tugas : </p>
                   <tr>
                     {[
@@ -159,11 +162,26 @@ function Dashboard() {
 
       {/* Title */}
       <h2 className="text-2xl font-bold ml-24">TABEL</h2>
-    <div className="mr-8">
-      <button onClick={() => Sektor()} className="mr-8 py-1.5 px-4 rounded-lg hover:bg-transparent hover:text-slate-900 border-2 border-slate-900 bg-slate-900 text-slate-50">Sektor</button>
-      <button onClick={() => Witel()} className="mr-8 py-1.5 px-4 rounded-lg hover:bg-transparent hover:text-slate-900 border-2 border-slate-900 bg-slate-900 text-slate-50">Witel</button>
-      <button onClick={() => Regional()} className="mr-8 py-1.5 px-4 rounded-lg hover:bg-transparent hover:text-slate-900 border-2 border-slate-900 bg-slate-900 text-slate-50">Regional</button>
-    </div>
+      <div className="mr-8">
+        <button
+          onClick={() => Sektor()}
+          className="mr-8 py-1.5 px-4 rounded-lg hover:bg-transparent hover:text-slate-900 border-2 border-slate-900 bg-slate-900 text-slate-50"
+        >
+          Sektor
+        </button>
+        <button
+          onClick={() => Witel()}
+          className="mr-8 py-1.5 px-4 rounded-lg hover:bg-transparent hover:text-slate-900 border-2 border-slate-900 bg-slate-900 text-slate-50"
+        >
+          Witel
+        </button>
+        <button
+          onClick={() => Regional()}
+          className="mr-8 py-1.5 px-4 rounded-lg hover:bg-transparent hover:text-slate-900 border-2 border-slate-900 bg-slate-900 text-slate-50"
+        >
+          Regional
+        </button>
+      </div>
 
       {/* Tempat Tabel data-data dari teknisi nya */}
       <div className="w-full">
@@ -171,8 +189,7 @@ function Dashboard() {
           {/* Ket. Tabel */}
           <thead>
             <tr>
-              {
-              [
+              {[
                 "NIK",
                 "Nama",
                 "Point",
@@ -189,61 +206,67 @@ function Dashboard() {
                 "T11",
                 "T12",
               ].map((isiData) => {
-                return <td className="bg-slate-900 text-slate-50 px-2 py-1">{isiData}</td>
+                return (
+                  <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    {isiData}
+                  </td>
+                );
               })}
             </tr>
             {
               //{/*USER MAPPED*/}
-              Data.map(e => {
+              Data.map((e) => {
                 return (
-                   <tr
-                    onClick={() => openModal(e.Handle,e.Nama,e.NIK)}    
-                  >
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{e.NIK}</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{e.Nama}</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{e.point}</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{
-                      e.Handle.filter(e => e.type == "tiketRegular").length
-                    }</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{
-                      e.Handle.filter(e => e.type == "LaporLangsung").length
-                    }</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{
-                      e.Handle.filter(e => e.type == "TiketSQM").length
-                    }</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{
-                      e.Handle.filter(e => e.type == "Proman").length
-                    }</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{
-                      e.Handle.filter(e => e.type == "TutupODP").length
-                    }</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{
-                      e.Handle.filter(e => e.type == "Valins").length
-                    }</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{
-                      e.Handle.filter(e => e.type == "Unspect").length
-                    }</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{
-                      e.Handle.filter(e => e.type == "gamasTipeA").length
-                    }</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{
-                      e.Handle.filter(e => e.type == "gamasTipeB").length
-                    }</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{
-                      e.Handle.filter(e => e.type == "gamasTipeC").length
-                    }</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{
-                      e.Handle.filter(e => e.type == "survey").length
-                    }</td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">{
-                      e.Handle.filter(e => e.type == "lapul").length
-                    }</td>
-
+                  <tr onClick={() => openModal(e.Handle, e.Nama, e.NIK)}>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.NIK}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Nama}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.point}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Handle.filter((e) => e.type == "tiketRegular").length}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Handle.filter((e) => e.type == "LaporLangsung").length}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Handle.filter((e) => e.type == "TiketSQM").length}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Handle.filter((e) => e.type == "Proman").length}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Handle.filter((e) => e.type == "TutupODP").length}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Handle.filter((e) => e.type == "Valins").length}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Handle.filter((e) => e.type == "Unspect").length}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Handle.filter((e) => e.type == "gamasTipeA").length}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Handle.filter((e) => e.type == "gamasTipeB").length}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Handle.filter((e) => e.type == "gamasTipeC").length}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Handle.filter((e) => e.type == "survey").length}
+                    </td>
+                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                      {e.Handle.filter((e) => e.type == "lapul").length}
+                    </td>
                   </tr>
-                )
+                );
               })
             }
-
           </thead>
           {/* AKhir head tabel */}
 

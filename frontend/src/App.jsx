@@ -1,10 +1,16 @@
-import { NavLink, Outlet, useNavigate, Navigate,Redirect } from "react-router-dom";
+import {
+  NavLink,
+  Outlet,
+  useNavigate,
+  Navigate,
+  Redirect,
+} from "react-router-dom";
 
 function App() {
   if (!localStorage.getItem("Lxpx")) {
     // window.location.href = "/login";
     return <Navigate to="/login" replace />;
-  } 
+  }
 
   return (
     <section className="flex flex-row space-x-4 p-6 text-slate-900">
@@ -19,7 +25,7 @@ function App() {
               : "hover:bg-slate-200 bg-slate-300 py-2 px-6 rounded-lg"
           }
         >
-          DASHBOARD
+          Dashboard
         </NavLink>
         <NavLink
           to="/tl-board"
@@ -29,7 +35,17 @@ function App() {
               : "hover:bg-slate-200 bg-slate-300 py-2 px-6 rounded-lg"
           }
         >
-          TL BOARD
+          TL Board
+        </NavLink>
+        <NavLink
+          to="/add-teknisi"
+          className={({ isActive }) =>
+            isActive
+              ? "bg-emerald-500 py-2 px-6 text-slate-50 rounded-lg"
+              : "hover:bg-slate-200 bg-slate-300 py-2 px-6 rounded-lg"
+          }
+        >
+          Add Teknisi
         </NavLink>
       </nav>
 

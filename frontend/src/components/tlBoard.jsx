@@ -1,61 +1,61 @@
-import React,{useEffect,useState} from "react";
-import axios from "axios"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function TlBoard() {
-  let server = "http://localhost:8887/"
-  let data = ""
-  let [user,setUser] = useState([])
-  let [type,setType] = useState()
-  let [namaTeknisi,setNamaTeknisi] = useState()
-  let [ket,setKeterangan] = useState()
-  let idGen = ""
-  if(!localStorage.getItem("Lxpx")){
-    window.location.href = "/login"
+  let server = "http://localhost:8887/";
+  let data = "";
+  let [user, setUser] = useState([]);
+  let [type, setType] = useState();
+  let [namaTeknisi, setNamaTeknisi] = useState();
+  let [ket, setKeterangan] = useState();
+  let idGen = "";
+  if (!localStorage.getItem("Lxpx")) {
+    window.location.href = "/login";
   }
-  data = JSON.parse(localStorage.getItem("Lxpx"))
-  async function getUsers(){
-    let getData = await fetch(server+"leader/teknisi",{
+  data = JSON.parse(localStorage.getItem("Lxpx"));
+  async function getUsers() {
+    let getData = await fetch(server + "leader/teknisi", {
       method: "POST",
-      headers : {
-        'Content-Type' : 'application/json',
-        credentials : 'include',                
+      headers: {
+        "Content-Type": "application/json",
+        credentials: "include",
       },
-      credentials: 'include',
-      body : JSON.stringify({
-        to : 10,
-        from : 0
-      })
-    })    
-    setUser(await getData.json())
+      credentials: "include",
+      body: JSON.stringify({
+        to: 10,
+        from: 0,
+      }),
+    });
+    setUser(await getData.json());
     //console.log(user)
   }
-  useEffect(()=>{
-    getUsers()
-  },[])
-  let NameTeknisi = user.map(e => {
-    return e.Nama 
-  })
-  let TeknisiNik = user.map(e => {
-    return e.NIK + " " + e.Nama
-  }) 
-  
-  async function submit(){
-    console.log(type,namaTeknisi,ket)
-    await fetch("http://localhost:8887/leader/addtask",{
+  useEffect(() => {
+    getUsers();
+  }, []);
+  let NameTeknisi = user.map((e) => {
+    return e.Nama;
+  });
+  let TeknisiNik = user.map((e) => {
+    return e.NIK + " " + e.Nama;
+  });
+
+  async function submit() {
+    console.log(type, namaTeknisi, ket);
+    await fetch("http://localhost:8887/leader/addtask", {
       method: "POST",
-      headers : {
-        'Content-Type' : 'application/json',
+      headers: {
+        "Content-Type": "application/json",
       },
-      credentials : 'include',
-      body : JSON.stringify({
+      credentials: "include",
+      body: JSON.stringify({
         idGenerate: "",
-        namaTeknisi: namaTeknisi, 
+        namaTeknisi: namaTeknisi,
         keterangan: ket,
-        Nik : namaTeknisi,
-        type: type
-      })
-    })
-    alert("tugas dikirim ke teknisi")
+        Nik: namaTeknisi,
+        type: type,
+      }),
+    });
+    alert("tugas dikirim ke teknisi");
   }
   return (
     <div className="flex flex-col space-y-4">
@@ -84,9 +84,13 @@ function TlBoard() {
               name="nama_teknisi"
               className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
             >
-            {user.map((e) => {  
-              return <option key={e.NIK} value={e.NIK}>{e.NIK + " " + e.Nama}</option>
-            })}
+              {user.map((e) => {
+                return (
+                  <option key={e.NIK} value={e.NIK}>
+                    {e.NIK + " " + e.Nama}
+                  </option>
+                );
+              })}
             </select>
           </div>
 
@@ -97,7 +101,7 @@ function TlBoard() {
             <label>Jenis Tugas</label>
             <select
               name="jenis_tugas"
-              onChange={e => setType(e.target.value)}
+              onChange={(e) => setType(e.target.value)}
               className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
             >
               <option value="gamasTipeA">Gamas Tipe A</option>
@@ -129,7 +133,7 @@ function TlBoard() {
               cols="30"
               rows="3"
               placeholder="Keterangan"
-              onChange={e => setKeterangan(e.target.value)}
+              onChange={(e) => setKeterangan(e.target.value)}
               className="p-2 focus:ring-2 ring-2 border-1 border-slate-900 outline-2 outline-slate-800 ring-2 ring-slate-900 rounded-md"
               name="keterangan"
               id="keterangan"
@@ -141,9 +145,11 @@ function TlBoard() {
             <button
               type="button"
               value="Submit"
-              onClick={e => submit()}
+              onClick={(e) => submit()}
               className="py-1.5 px-3 text-slate-50 rounded-lg bg-emerald-500 hover:bg-emerald-400"
-            >submit</button>
+            >
+              submit
+            </button>
           </div>
         </div>
       </div>
