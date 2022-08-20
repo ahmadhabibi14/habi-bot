@@ -17,6 +17,17 @@ function Home() {
         >
           DASHBOARD
         </NavLink>
+        {/* Navigasi Bar */}
+        <NavLink
+          to="/home/add"
+          className={({ isActive }) =>
+          isActive
+            ? "bg-emerald-500 py-2 px-6 text-slate-50"
+            : "bg-slate-300 py-2 px-6"
+          }
+        >
+          ADD TEKNISI
+        </NavLink>
         <NavLink
           to="/home/tl-board"
           className={({ isActive }) =>

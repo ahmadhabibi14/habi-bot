@@ -1,11 +1,10 @@
-import { NavLink, Outlet, useNavigate, Navigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate, Navigate,Redirect } from "react-router-dom";
 
 function App() {
   if (!localStorage.getItem("Lxpx")) {
     // window.location.href = "/login";
     return <Navigate to="/login" replace />;
-    console.log(localStorage.getItem("Lxpx"));
-  }
+  } 
 
   return (
     <section className="flex flex-row space-x-4 p-6 text-slate-900">
