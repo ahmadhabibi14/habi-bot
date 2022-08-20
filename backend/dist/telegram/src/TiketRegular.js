@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TiketRegularPerbaikan = exports.TiketRegularNamaPelanggan = exports.TiketRegularSpeedy = exports.TiketRegularInsiden = void 0;
 const telegraf_1 = require("telegraf");
 const Service_1 = require("../../src/teknisi/Service");
+const Service_2 = require("../../src/filtered/Service");
 exports.TiketRegularInsiden = new telegraf_1.Scenes.BaseScene("TiketRegularInsiden");
 exports.TiketRegularSpeedy = new telegraf_1.Scenes.BaseScene("TiketRegularSpeedy");
 exports.TiketRegularNamaPelanggan = new telegraf_1.Scenes.BaseScene("TiketRegularNamaPelanggan");
@@ -179,6 +180,9 @@ exports.TiketRegularPerbaikan.on("callback_query", (ctx) => __awaiter(void 0, vo
                                 same = true;
                                 ctx.reply("saving data...");
                                 ctx.scene.enter("Close");
+                                yield (0, Service_2.upSektor)(teknisi.Sektor, teknisi.point, "-");
+                                yield (0, Service_2.upWitel)(teknisi.Witel, teknisi.point, "-");
+                                yield (0, Service_2.upReg)(teknisi.Regional, teknisi.point, "-");
                                 break;
                             }
                         }

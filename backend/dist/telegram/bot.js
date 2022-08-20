@@ -225,6 +225,7 @@ Close.enter(ctx => {
     ctx.scene.leave();
 });
 exports.broadcast.on("send", (id, message) => {
+    console.log(id);
     bot.telegram.sendMessage(id, message);
 });
 exports.default = bot;

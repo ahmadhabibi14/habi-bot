@@ -12,10 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addTask = exports.getTeknisiTen = exports.getTeknisiData = exports.createTeknisi = exports.isLoginAndLeader = exports.logout = exports.createLeader = exports.loginWithToken = exports.getLeader = void 0;
+exports.getRegC = exports.getWitelC = exports.getSektorC = exports.addTask = exports.getTeknisiTen = exports.getTeknisiData = exports.createTeknisi = exports.isLoginAndLeader = exports.logout = exports.createLeader = exports.loginWithToken = exports.getLeader = void 0;
 const Service_1 = __importDefault(require("./Service"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const Service_2 = require("../teknisi/Service");
+const Service_3 = require("../filtered/Service");
 // LOGIN
 function getLeader(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -33,7 +34,8 @@ function getLeader(req, res) {
             }
         }
         let jwtNik = Service_1.default.jwtNik(leaderProp.NIK);
-        res.cookie("token", jwtNik);
+        res.cookie("token", jwtNik, { httpOnly: true, maxAge: 9000000 });
+        //res.cookie("token",jwtNik,{maxAge: 9000000,path:"/leader/login",sameSite: "none",secure: true})
         if (typeof Leader != "string") {
             let toSend = {
                 NIK: Leader.NIK,
@@ -90,6 +92,7 @@ exports.loginWithToken = loginWithToken;
 function createLeader(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { NIK, Nama, IDTelegram, NamaMitra, Sektor, Witel, Regional, Password, ConfirmPassword, } = req.body;
+        console.log(req.body);
         if (ConfirmPassword != Password) {
             res.status(400).json({ msg: "password not match" });
             return;
@@ -124,13 +127,20 @@ exports.logout = logout;
 // Middleware
 function isLoginAndLeader(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log(req.headers);
         if (!req.headers.cookie) {
-            res.status(404).json({ msg: "must be login first" });
+            res.status(400).json({ msg: "must be login first" });
             return;
         }
         let k;
         if (req.headers && req.headers.cookie && typeof req.headers.cookie == "string") {
-            k = jsonwebtoken_1.default.verify(req.headers.cookie.split("token=")[1], "xdxrc");
+            try {
+                k = jsonwebtoken_1.default.verify(req.headers.cookie.split("token=")[1], "xdxrc");
+            }
+            catch (_a) {
+                res.sendStatus(500);
+                return;
+            }
         }
         let nik = 0;
         if (typeof k != "string") {
@@ -179,6 +189,7 @@ exports.getTeknisiData = getTeknisiData;
 function getTeknisiTen(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { from, to } = req.body;
+        console.log(req.body);
         const teknisi = yield (0, Service_2.getAll)();
         res.json(teknisi.slice(from, to));
     });
@@ -195,3 +206,36 @@ function addTask(req, res) {
     });
 }
 exports.addTask = addTask;
+function getSektorC(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let data = yield (0, Service_3.getSektor)();
+        if (!data) {
+            res.sendStatus(404);
+            return;
+        }
+        res.json(data);
+    });
+}
+exports.getSektorC = getSektorC;
+function getWitelC(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let data = yield (0, Service_3.getWitel)();
+        if (!data) {
+            res.sendStatus(404);
+            return;
+        }
+        res.json(data);
+    });
+}
+exports.getWitelC = getWitelC;
+function getRegC(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let data = yield (0, Service_3.getReg)();
+        if (!data) {
+            res.sendStatus(404);
+            return;
+        }
+        res.json(data);
+    });
+}
+exports.getRegC = getRegC;

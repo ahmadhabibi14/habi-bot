@@ -1,6 +1,7 @@
 import {Scenes} from  "telegraf"
 import {TiketSQM} from "../../src/performansi/Model"
 import {updateHandle,getAll,updateUser} from "../../src/teknisi/Service"
+import {upSektor,upWitel,upReg} from "../../src/filtered/Service"
 
 export const TiketSQMNoInsiden = new Scenes.BaseScene<Scenes.SceneContext>("TiketSQMNoInsiden")
 export const TiketSQMNoSpeedy = new Scenes.BaseScene<Scenes.SceneContext>("TiketSQMNoSpeedy")
@@ -107,6 +108,9 @@ TiketSQMPerbaikan.on("callback_query",async ctx => {
                 same = true
                 ctx.reply("saving data...")
                 ctx.scene.enter("Close")
+                await upSektor(teknisi.Sektor,teknisi.point,"-")
+                await upWitel(teknisi.Witel,teknisi.point,"-")
+                await upReg(teknisi.Regional,teknisi.point,"-")
                 break
               }
             }

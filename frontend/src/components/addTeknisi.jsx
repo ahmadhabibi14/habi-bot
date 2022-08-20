@@ -1,7 +1,8 @@
 import React from "react"
 
 function addTeknisi(){
-  return <div>a</div>
+  
+  return ()
 }
 
 export default addTeknisi

@@ -265,6 +265,7 @@ Close.enter(ctx =>{
 })
 
 broadcast.on("send",(id,message)=>{
+  console.log(id)
   bot.telegram.sendMessage(id,message)
 })
 

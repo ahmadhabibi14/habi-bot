@@ -1,6 +1,7 @@
 import {Scenes} from  "telegraf"
 import {TiketRegular} from "../../src/performansi/Model"
 import {updateHandle,getAll,updateUser} from "../../src/teknisi/Service"
+import {upSektor,upWitel,upReg} from "../../src/filtered/Service"
 
 export const TiketRegularInsiden = new Scenes.BaseScene<Scenes.SceneContext>("TiketRegularInsiden")
 export const TiketRegularSpeedy = new Scenes.BaseScene<Scenes.SceneContext>("TiketRegularSpeedy")
@@ -184,6 +185,9 @@ TiketRegularPerbaikan.on("callback_query",async ctx=>{
                 same = true
                 ctx.reply("saving data...")
                 ctx.scene.enter("Close")
+                await upSektor(teknisi.Sektor,teknisi.point,"-")
+                await upWitel(teknisi.Witel,teknisi.point,"-")
+                await upReg(teknisi.Regional,teknisi.point,"-")
                 break
               }
             }

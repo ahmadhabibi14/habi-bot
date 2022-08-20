@@ -6,7 +6,7 @@ interface TiketRegular {
   perbaikan : string,
   done : boolean,
   date : Date,
-  point : number
+  point : number,
 }
 
 interface LaporLangsung {
