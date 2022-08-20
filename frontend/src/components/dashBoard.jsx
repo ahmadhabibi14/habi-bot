@@ -4,6 +4,18 @@ import axios from "axios";
 function Dashboard() {
   // Hooks
   const [data, setData] = useState([]);
+  // MODAL HOOK
+  const [isOpen, setIsOpen] = useState(false);
+
+  // MODAL
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  // AKHIR MODAL
 
   let server = "http://localhost:8887";
 
@@ -32,6 +44,75 @@ function Dashboard() {
 
   return (
     <div className="flex flex-col space-y-4">
+      {/* INI NTAR MODAL nya, njirrr aku bingung */}
+      {isOpen && (
+        <>
+          <div className="flex flex-col fixed w-fit border border-slate-900">
+            <div className="flex flex-row justify-end border border-slate-900">
+              <button onClick={closeModal} className="p-2">
+                X
+              </button>
+            </div>
+            <div className="p-2">
+              <table className="w-full border border-slate-900 mx-auto">
+                {/* Ket. Tabel */}
+                <thead>
+                  <tr>
+                    {[
+                      ["ID Order"],
+                      ["NIK"],
+                      ["Nama"],
+                      ["No Tiket"],
+                      ["No Speedy"],
+                      ["Keluhan"],
+                      ["Perbaikan"],
+                    ].map(([isiData]) => (
+                      <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                        {isiData}
+                      </td>
+                    ))}
+                  </tr>
+                </thead>
+                {/* AKhir head tabel */}
+
+                {/* Isi Tabel */}
+                <tbody>
+                  {data.map((user) => {
+                    return (
+                      <tr>
+                        <td className="px-2 py-1 border border-slate-900">
+                          {user.idOrder}
+                        </td>
+                        <td className="px-2 py-1 border border-slate-900">
+                          {user.nik}
+                        </td>
+                        <td className="px-2 py-1 border border-slate-900">
+                          {user.nama}
+                        </td>
+                        <td className="px-2 py-1 border border-slate-900">
+                          {user.noTiket}
+                        </td>
+                        <td className="px-2 py-1 border border-slate-900">
+                          {user.noSpeedy}
+                        </td>
+                        <td className="px-2 py-1 border border-slate-900">
+                          {user.keluhan}
+                        </td>
+                        <td className="px-2 py-1 border border-slate-900">
+                          {user.perbaikan}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+                {/* Akhir Isi Tabel */}
+              </table>
+            </div>
+          </div>
+        </>
+      )}
+      {/* AKHIR MODAL */}
+
       {/* Input Tanggal */}
       <div className="flex flex-row space-x-6 justify-end">
         <select
@@ -59,13 +140,26 @@ function Dashboard() {
           {/* Ket. Tabel */}
           <thead>
             <tr>
-              {[["Name"], ["Email"], ["Address"], ["Company"]].map(
-                ([isiData]) => (
-                  <td className="bg-slate-900 text-slate-50 px-2 py-1">
-                    {isiData}
-                  </td>
-                )
-              )}
+              {[
+                ["NIK"],
+                ["Nama"],
+                ["T1"],
+                ["T2"],
+                ["T3"],
+                ["T4"],
+                ["T5"],
+                ["T6"],
+                ["T7"],
+                ["T8"],
+                ["T9"],
+                ["T10"],
+                ["T11"],
+                ["T12"],
+              ].map(([isiData]) => (
+                <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                  {isiData}
+                </td>
+              ))}
             </tr>
           </thead>
           {/* AKhir head tabel */}
@@ -76,16 +170,47 @@ function Dashboard() {
               return (
                 <tr>
                   <td className="px-2 py-1 border border-slate-900">
-                    {user.name}
+                    {user.nik}
                   </td>
                   <td className="px-2 py-1 border border-slate-900">
-                    {user.email}
+                    {user.nama}
+                  </td>
+                  // NTAR tiap t1 sampe t2 tambahin onclick kalo di tekan
+                  <td className="px-2 py-1 border border-slate-900">
+                    {user.t1}
                   </td>
                   <td className="px-2 py-1 border border-slate-900">
-                    {user.address.street}
+                    {user.t2}
                   </td>
                   <td className="px-2 py-1 border border-slate-900">
-                    {user.company.name}
+                    {user.t3}
+                  </td>
+                  <td className="px-2 py-1 border border-slate-900">
+                    {user.t4}
+                  </td>
+                  <td className="px-2 py-1 border border-slate-900">
+                    {user.t5}
+                  </td>
+                  <td className="px-2 py-1 border border-slate-900">
+                    {user.t6}
+                  </td>
+                  <td className="px-2 py-1 border border-slate-900">
+                    {user.t7}
+                  </td>
+                  <td className="px-2 py-1 border border-slate-900">
+                    {user.t8}
+                  </td>
+                  <td className="px-2 py-1 border border-slate-900">
+                    {user.t9}
+                  </td>
+                  <td className="px-2 py-1 border border-slate-900">
+                    {user.t10}
+                  </td>
+                  <td className="px-2 py-1 border border-slate-900">
+                    {user.t11}
+                  </td>
+                  <td className="px-2 py-1 border border-slate-900">
+                    {user.t12}
                   </td>
                 </tr>
               );
