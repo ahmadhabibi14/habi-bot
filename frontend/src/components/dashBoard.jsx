@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import TablePagination from "./tablePagination.jsx";
 
 function Dashboard() {
   let datee = [];
@@ -116,7 +117,8 @@ function Dashboard() {
                 {/* AKhir head tabel */}
 
                 {/* Isi Tabel */}
-                <tbody>
+                {/* OVERFLOW INI ARTINYA NANTI BAKAL SCROLL OTOMATIS */}
+                <tbody className="overflow-y-auto h-48">
                   {currentUser.map((user) => {
                     return (
                       <tr>
@@ -218,49 +220,49 @@ function Dashboard() {
               Data.map((e) => {
                 return (
                   <tr onClick={() => openModal(e.Handle, e.Nama, e.NIK)}>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.NIK}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Nama}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.point}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Handle.filter((e) => e.type == "tiketRegular").length}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Handle.filter((e) => e.type == "LaporLangsung").length}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Handle.filter((e) => e.type == "TiketSQM").length}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Handle.filter((e) => e.type == "Proman").length}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Handle.filter((e) => e.type == "TutupODP").length}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Handle.filter((e) => e.type == "Valins").length}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Handle.filter((e) => e.type == "Unspect").length}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Handle.filter((e) => e.type == "gamasTipeA").length}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Handle.filter((e) => e.type == "gamasTipeB").length}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Handle.filter((e) => e.type == "gamasTipeC").length}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Handle.filter((e) => e.type == "survey").length}
                     </td>
-                    <td className="bg-slate-900 text-slate-50 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
                       {e.Handle.filter((e) => e.type == "lapul").length}
                     </td>
                   </tr>
@@ -269,63 +271,12 @@ function Dashboard() {
             }
           </thead>
           {/* AKhir head tabel */}
-
-          {/* Isi Tabel */}
-          <tbody>
-            {/* {data.map((user) => {
-              return (
-                <tr>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.nik}
-                  </td>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.nama}
-                  </td>
-                  // NTAR tiap t1 sampe t2 tambahin onclick kalo di tekan
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.t1}
-                  </td>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.t2}
-                  </td>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.t3}
-                  </td>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.t4}
-                  </td>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.t5}
-                  </td>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.t6}
-                  </td>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.t7}
-                  </td>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.t8}
-                  </td>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.t9}
-                  </td>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.t10}
-                  </td>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.t11}
-                  </td>
-                  <td className="px-2 py-1 border border-slate-900">
-                    {user.t12}
-                  </td>
-                </tr>
-              );
-            })}
-          */}
-          </tbody>
-          {/* Akhir Isi Tabel */}
         </table>
       </div>
+
+      {/* NTAR disini mungkin tambahin atribut atau apa, yang pasti ini function,
+    trus atribut nya pake parameter..... 😨️*/}
+      <TablePagination />
     </div>
   );
 }
