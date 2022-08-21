@@ -67,11 +67,12 @@ export async function updateHandle(Handle: Task,IdT: string): Promise<null | boo
   return true
 }
 
-export async function updateUser(User: Teknisi,IdT: string): Promise<null | boolean>{
+export async function updateUser(User: any,IdT: string): Promise<null | boolean>{
   let TeknisiOld = await getTeknisi(0,IdT)
   if(!TeknisiOld){
     return null
   }
+  delete User._id 
   let Update = await TeknisiModel.findOneAndUpdate({IDTelegram: IdT},User)
   if(!Update){
     return null 
