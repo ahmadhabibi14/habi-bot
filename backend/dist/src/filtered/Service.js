@@ -14,7 +14,9 @@ const Model_1 = require("./Model");
 function addSektor(Sk, point) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let sekName = yield Model_1.sektorModel.findOne({ nama: Sk });
+            let sekName = yield Model_1.sektorModel.findOne({ name: Sk });
+            //console.log(Sk) 
+            //console.log(sekName)
             if (!sekName) {
                 let newSekName = new Model_1.sektorModel({
                     name: Sk,
@@ -26,7 +28,7 @@ function addSektor(Sk, point) {
             }
             sekName.rata_rata = (sekName.rata_rata * sekName.jumblah + point) / sekName.jumblah + 1;
             sekName.jumblah += 1;
-            yield Model_1.sektorModel.findOneAndUpdate({ nama: Sk }, sekName);
+            yield Model_1.sektorModel.findOneAndUpdate({ name: Sk }, sekName);
         }
         catch (e) {
             return;
@@ -37,7 +39,7 @@ exports.addSektor = addSektor;
 function addWitel(Sk, point) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let witName = yield Model_1.witelModel.findOne({ nama: Sk });
+            let witName = yield Model_1.witelModel.findOne({ name: Sk });
             if (!witName) {
                 let newWitName = new Model_1.witelModel({
                     name: Sk,
@@ -60,7 +62,7 @@ exports.addWitel = addWitel;
 function addReg(Sk, point) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let regName = yield Model_1.regionalModel.findOne({ nama: Sk });
+            let regName = yield Model_1.regionalModel.findOne({ name: Sk });
             if (!regName) {
                 let newRegName = new Model_1.regionalModel({
                     name: Sk,
@@ -72,7 +74,7 @@ function addReg(Sk, point) {
             }
             regName.rata_rata = (regName.rata_rata * regName.jumblah + point) / regName.jumblah + 1;
             regName.jumblah += 1;
-            yield Model_1.regionalModel.findOneAndUpdate({ nama: Sk }, regName);
+            yield Model_1.regionalModel.findOneAndUpdate({ name: Sk }, regName);
         }
         catch (e) {
             return;
@@ -83,7 +85,7 @@ exports.addReg = addReg;
 function upSektor(Sk, point, opr) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let sekName = yield Model_1.sektorModel.findOne({ nama: Sk });
+            let sekName = yield Model_1.sektorModel.findOne({ name: Sk });
             if (!sekName) {
                 return;
             }
@@ -93,7 +95,7 @@ function upSektor(Sk, point, opr) {
             else {
                 sekName.rata_rata = (sekName.rata_rata * sekName.jumblah - point) / sekName.jumblah;
             }
-            yield Model_1.sektorModel.findOneAndUpdate({ nama: Sk }, sekName);
+            yield Model_1.sektorModel.findOneAndUpdate({ name: Sk }, sekName);
         }
         catch (e) {
             return;
@@ -104,7 +106,7 @@ exports.upSektor = upSektor;
 function upWitel(Sk, point, opr) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let witName = yield Model_1.witelModel.findOne({ nama: Sk });
+            let witName = yield Model_1.witelModel.findOne({ name: Sk });
             if (!witName) {
                 return;
             }
@@ -114,7 +116,7 @@ function upWitel(Sk, point, opr) {
             else {
                 witName.rata_rata = (witName.rata_rata * witName.jumblah - point) / witName.jumblah;
             }
-            yield Model_1.witelModel.findOneAndUpdate({ nama: Sk }, witName);
+            yield Model_1.witelModel.findOneAndUpdate({ name: Sk }, witName);
         }
         catch (e) {
             return;
@@ -125,7 +127,7 @@ exports.upWitel = upWitel;
 function upReg(Sk, point, opr) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let regName = yield Model_1.regionalModel.findOne({ nama: Sk });
+            let regName = yield Model_1.regionalModel.findOne({ name: Sk });
             if (!regName) {
                 return;
             }
@@ -135,7 +137,7 @@ function upReg(Sk, point, opr) {
             else {
                 regName.rata_rata = (regName.rata_rata * regName.jumblah - point) / regName.jumblah;
             }
-            yield Model_1.regionalModel.findOneAndUpdate({ nama: Sk }, regName);
+            yield Model_1.regionalModel.findOneAndUpdate({ name: Sk }, regName);
         }
         catch (e) {
             return;

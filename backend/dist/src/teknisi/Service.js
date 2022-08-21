@@ -46,6 +46,7 @@ function newTeknisi(Data) {
             try {
                 let baru = new Model_1.TeknisiModel(Data);
                 baru.save();
+                console.log(Data.Sektor);
                 yield (0, Service_1.addSektor)(Data.Sektor, Data.point);
                 yield (0, Service_1.addWitel)(Data.Witel, Data.point);
                 yield (0, Service_1.addReg)(Data.Regional, Data.point);

@@ -6,7 +6,9 @@ import {
 
 export async function addSektor(Sk: string,point: number){
   try {
-    let sekName = await sektorModel.findOne({nama: Sk})
+    let sekName = await sektorModel.findOne({name: Sk})
+    //console.log(Sk) 
+    //console.log(sekName)
     if(!sekName){
       let newSekName = new sektorModel({
         name : Sk,
@@ -18,7 +20,7 @@ export async function addSektor(Sk: string,point: number){
     }  
     sekName.rata_rata = ( sekName.rata_rata * sekName.jumblah + point ) / sekName.jumblah + 1
     sekName.jumblah += 1
-    await sektorModel.findOneAndUpdate({nama: Sk},sekName)
+    await sektorModel.findOneAndUpdate({name: Sk},sekName)
   } catch (e) {
     return 
   }
@@ -26,7 +28,7 @@ export async function addSektor(Sk: string,point: number){
 
 export async function addWitel(Sk: string,point: number){
   try {
-    let witName = await witelModel.findOne({nama: Sk})
+    let witName = await witelModel.findOne({name: Sk})
     if(!witName){
       let newWitName = new witelModel({
         name : Sk,
@@ -46,7 +48,7 @@ export async function addWitel(Sk: string,point: number){
 
 export async function addReg(Sk: string,point: number){
   try {
-    let regName = await regionalModel.findOne({nama: Sk})
+    let regName = await regionalModel.findOne({name: Sk})
     if(!regName){
       let newRegName = new regionalModel({
         name : Sk,
@@ -58,7 +60,7 @@ export async function addReg(Sk: string,point: number){
     }  
     regName.rata_rata = ( regName.rata_rata * regName.jumblah + point ) / regName.jumblah + 1
     regName.jumblah += 1
-    await regionalModel.findOneAndUpdate({nama: Sk},regName)
+    await regionalModel.findOneAndUpdate({name: Sk},regName)
   } catch (e) {
     return 
   }
@@ -66,7 +68,7 @@ export async function addReg(Sk: string,point: number){
 
 export async function upSektor(Sk: string,point: number,opr: "+" | "-"){
   try {
-    let sekName = await sektorModel.findOne({nama: Sk})
+    let sekName = await sektorModel.findOne({name: Sk})
     if(!sekName){
        return
     } 
@@ -75,14 +77,14 @@ export async function upSektor(Sk: string,point: number,opr: "+" | "-"){
     }else{
       sekName.rata_rata = ( sekName.rata_rata * sekName.jumblah - point ) / sekName.jumblah 
     }
-    await sektorModel.findOneAndUpdate({nama: Sk},sekName)
+    await sektorModel.findOneAndUpdate({name: Sk},sekName)
   } catch (e) {
     return 
   }
 }
 export async function upWitel(Sk: string,point: number,opr: "+" | "-"){
   try {
-    let witName = await witelModel.findOne({nama: Sk})
+    let witName = await witelModel.findOne({name: Sk})
     if(!witName){
       return
     } 
@@ -91,14 +93,14 @@ export async function upWitel(Sk: string,point: number,opr: "+" | "-"){
     }else{
       witName.rata_rata = ( witName.rata_rata * witName.jumblah - point ) / witName.jumblah 
     }
-    await witelModel.findOneAndUpdate({nama: Sk},witName)
+    await witelModel.findOneAndUpdate({name: Sk},witName)
   } catch (e) {
     return 
   }
 }
 export async function upReg(Sk: string,point: number,opr: "+" | "-"){
   try {
-    let regName = await regionalModel.findOne({nama: Sk})
+    let regName = await regionalModel.findOne({name: Sk})
     if(!regName){
       return
     }  
@@ -107,7 +109,7 @@ export async function upReg(Sk: string,point: number,opr: "+" | "-"){
     }else{
       regName.rata_rata = ( regName.rata_rata * regName.jumblah - point ) / regName.jumblah
     }
-    await regionalModel.findOneAndUpdate({nama: Sk},regName)
+    await regionalModel.findOneAndUpdate({name: Sk},regName)
   } catch (e) {
     return 
   }
