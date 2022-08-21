@@ -7,7 +7,8 @@ function Dashboard() {
   const [currentUser, setCurrentUser] = useState([]);
   let Handles = [];
   // Hooks
-  const [Data, setData] = useState([]);
+  let [Data, setData] = useState([]);
+  let [duplicateData, setDupData] = useState([])
   // MODAL HOOK
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
@@ -28,30 +29,72 @@ function Dashboard() {
   function Sektor() {
     axios
       .get(`${server}/leader/sektor`, { withCredentials: true })
-      .then((e) => {
-        console.log(e.data);
+      .then(async(e) => {
+        let sortSek = e.data;
+        sortSek = sortSek.sort((a,b) => {
+          return a.rata_rata - b.rata_rata
+        })
+        let Da = []
+        let dad = await fetchData()
+        setData(dad)
+        setData(duplicateData)
+             sortSek.forEach((e)=>{
+          let Filter = Data.filter((a)=> a.Sektor == e.name);
+          Da = [...Da,...Filter]
+        })
+        setData(Da)
       });
   }
   function Witel() {
-    axios.get(`${server}/leader/witel`, { withCredentials: true }).then((e) => {
-      console.log(e.data);
-    });
-  }
-  function Regional() {
-    axios
-      .get(`${server}/leader/regional`, { withCredentials: true })
-      .then((e) => {
-        console.log(e.data);
+   axios
+      .get(`${server}/leader/witel`, { withCredentials: true })
+      .then(async (e) => {
+        let sortSek = e.data;
+        sortSek = sortSek.sort((a,b) => {
+          return a.rata_rata - b.rata_rata
+        })
+        let Da = []
+        let dad = await fetchData()
+        setData(dad)
+        console.log(sortSek.length,sortSek)
+        sortSek.forEach((a)=>{
+            let Filter = Data.filter((e)=> a.Witel == e.name);
+            console.log(Filter)
+            Da = [...Da,...Filter]
+            console.log(Da,"")
+         })
+        setData(Da)
       });
   }
+  function Regional() {
+   axios
+      .get(`${server}/leader/regional`, { withCredentials: true })
+      .then(async(e) => {
+        let sortSek = e.data;
+        sortSek = sortSek.sort((a,b) => {
+          return a.rata_rata - b.rata_rata
+        })
+        let dad = await fetchData()
+        setData(dad)
+        console.log(Data,dad)
+        let Da = []
+        sortSek.forEach((e)=>{
+          let Filter = Data.filter((a)=> a.Regional == e.name);
+          console.log(Filter)
+        })
+        //setData(Da)
+      });
+  }
+
+  
 
   // AKHIR MODAL
 
   let server = "http://localhost:8887";
 
   // AMBIL JSON dari external
-  const fetchData = () => {
-    axios
+  const fetchData = async() => {
+    let data = await axios
       .post(
         `${server}/leader/teknisi`,
         {
@@ -62,13 +105,9 @@ function Dashboard() {
           withCredentials: true,
         }
       )
-      .then((response) => {
-        console.log(response);
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error(`Error: ${error}`);
-      });
+    data = data.data
+    setData(data)
+    return data
   };
   //console.log(datee)
   // Ini biar TABEL nya jalan otomatis saat web di load
