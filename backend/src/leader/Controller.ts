@@ -178,7 +178,7 @@ export async function getTeknisiData(req: Request,res: Response){
 
 export async function getTeknisiTen(req: Request,res: Response){
   const {from,to} = req.body
-  console.log(req.body)
+  //console.log(req.body)
   const teknisi = await getAll()
   const nameOnly = teknisi.map((e) =>{
     return {Nama : e.Nama, NIK : e.NIK}

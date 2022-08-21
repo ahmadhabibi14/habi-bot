@@ -15,6 +15,7 @@ function addSektor(Sk, point) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let sekName = yield Model_1.sektorModel.findOne({ name: Sk });
+            delete sekName._id;
             //console.log(Sk) 
             //console.log(sekName)
             if (!sekName) {
@@ -40,6 +41,7 @@ function addWitel(Sk, point) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let witName = yield Model_1.witelModel.findOne({ name: Sk });
+            delete witName._id;
             if (!witName) {
                 let newWitName = new Model_1.witelModel({
                     name: Sk,
@@ -63,6 +65,7 @@ function addReg(Sk, point) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let regName = yield Model_1.regionalModel.findOne({ name: Sk });
+            delete regName._id;
             if (!regName) {
                 let newRegName = new Model_1.regionalModel({
                     name: Sk,
@@ -86,6 +89,7 @@ function upSektor(Sk, point, opr) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let sekName = yield Model_1.sektorModel.findOne({ name: Sk });
+            delete sekName._id;
             if (!sekName) {
                 return;
             }
@@ -107,6 +111,7 @@ function upWitel(Sk, point, opr) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let witName = yield Model_1.witelModel.findOne({ name: Sk });
+            delete witName._id;
             if (!witName) {
                 return;
             }
@@ -128,6 +133,7 @@ function upReg(Sk, point, opr) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let regName = yield Model_1.regionalModel.findOne({ name: Sk });
+            delete regName._id;
             if (!regName) {
                 return;
             }

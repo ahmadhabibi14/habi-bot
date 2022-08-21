@@ -72,10 +72,11 @@ function updateHandle(Handle, IdT) {
             point += element.point;
         });
         TeknisiOld.point = point;
+        delete TeknisiOld._id;
         yield (0, Service_1.upSektor)(TeknisiOld.Sektor, TeknisiOld.point, "+");
         yield (0, Service_1.upWitel)(TeknisiOld.Witel, TeknisiOld.point, "+");
         yield (0, Service_1.upReg)(TeknisiOld.Regional, TeknisiOld.point, "+");
-        let Update = yield Model_1.TeknisiModel.findOneAndUpdate({ IDTelegram: IdT }, { Handle: TeknisiOld.Handle });
+        let Update = yield Model_1.TeknisiModel.findOneAndUpdate({ IDTelegram: IdT }, TeknisiOld);
         if (!Update) {
             return null;
         }
@@ -89,7 +90,7 @@ function updateUser(User, IdT) {
         if (!TeknisiOld) {
             return null;
         }
-        //delete User._id 
+        delete User._id;
         let Update = yield Model_1.TeknisiModel.findOneAndUpdate({ IDTelegram: IdT }, User);
         if (!Update) {
             return null;
