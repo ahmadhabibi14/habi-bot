@@ -32,6 +32,7 @@ export async function newTeknisi(Data: Teknisi): Promise<boolean> {
     try {
       let baru = new TeknisiModel(Data)
       baru.save()
+      console.log(Data.Sektor)
       await addSektor(Data.Sektor,Data.point)
       await addWitel(Data.Witel,Data.point)
       await addReg(Data.Regional,Data.point)
