@@ -189,7 +189,7 @@ exports.getTeknisiData = getTeknisiData;
 function getTeknisiTen(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { from, to } = req.body;
-        console.log(req.body);
+        //console.log(req.body)
         const teknisi = yield (0, Service_2.getAll)();
         const nameOnly = teknisi.map((e) => {
             return { Nama: e.Nama, NIK: e.NIK };
