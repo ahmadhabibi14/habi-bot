@@ -120,7 +120,7 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col space-y-4 h-full">
       {/* INI NTAR MODAL nya, njirrr aku bingung */}
       {isOpen && (
         <>
@@ -159,7 +159,7 @@ function Dashboard() {
 
                 {/* Isi Tabel */}
                 {/* OVERFLOW INI ARTINYA NANTI BAKAL SCROLL OTOMATIS */}
-                <tbody className="overflow-y-auto">
+                <tbody className="overflow-auto overflow-visible h-90">
                   {currentUser.map((user) => {
                     return (
                       <tr className="">
