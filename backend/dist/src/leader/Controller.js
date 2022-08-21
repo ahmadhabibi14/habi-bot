@@ -191,6 +191,13 @@ function getTeknisiTen(req, res) {
         const { from, to } = req.body;
         console.log(req.body);
         const teknisi = yield (0, Service_2.getAll)();
+        const nameOnly = teknisi.map((e) => {
+            return { Nama: e.Nama, NIK: e.NIK };
+        });
+        if (!to) {
+            res.json(nameOnly);
+            return;
+        }
         res.json(teknisi.slice(from, to));
     });
 }

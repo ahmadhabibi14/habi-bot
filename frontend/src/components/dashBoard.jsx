@@ -36,14 +36,16 @@ function Dashboard() {
           return a.rata_rata - b.rata_rata
         })
         let Da = []
-        let dad = await fetchData()
-        setData(dad)
-        setData(duplicateData)
-             sortSek.forEach((e)=>{
+        await fetchData()
+        //setData(dad)
+        //setData(duplicateData)
+        sortSek.forEach((e)=>{
           let Filter = Data.filter((a)=> a.Sektor == e.name);
-          Da = [...Da,...Filter]
+          Da = [...Filter,...Da]
         })
+        console.log(Data)
         setData(Da)
+        console.log(sortSek)
       });
   }
   function Witel() {
@@ -55,15 +57,11 @@ function Dashboard() {
           return a.rata_rata - b.rata_rata
         })
         let Da = []
-        let dad = await fetchData()
-        setData(dad)
-        console.log(sortSek.length,sortSek)
-        sortSek.forEach((a)=>{
-            let Filter = Data.filter((e)=> a.Witel == e.name);
-            console.log(Filter)
-            Da = [...Da,...Filter]
-            console.log(Da,"")
-         })
+        await fetchData()
+        sortSek.forEach((e)=>{
+          let Filter = Data.filter((a)=> a.Witel == e.name);
+          Da = [...Filter,...Da]
+        })
         setData(Da)
       });
   }
@@ -75,15 +73,18 @@ function Dashboard() {
         sortSek = sortSek.sort((a,b) => {
           return a.rata_rata - b.rata_rata
         })
-        let dad = await fetchData()
-        setData(dad)
-        console.log(Data,dad)
         let Da = []
+        await fetchData()
+        //if(duplicateData){
+          //setData(duplicateData)
+        //}
+        //setData(duplicateData)
         sortSek.forEach((e)=>{
           let Filter = Data.filter((a)=> a.Regional == e.name);
-          console.log(Filter)
+          Da = [...Filter,...Da]
         })
-        //setData(Da)
+        setData(Da)
+
       });
   }
 
@@ -107,6 +108,7 @@ function Dashboard() {
         }
       )
     data = data.data
+    console.log(data)
     setData(data)
     return data
   };
@@ -126,14 +128,14 @@ function Dashboard() {
       {/* INI NTAR MODAL nya, njirrr aku bingung */}
       {isOpen && (
         <>
-          <div className="flex flex-col bg-slate-900 fixed w-fit border border-slate-900">
+          <div className="flex flex-col w-full bg-slate-900 fixed w-fit border border-slate-900">
             <div className="flex flex-row justify-end border border-slate-900">
-              <button onClick={closeModal} className="p-2">
+              <button className="text-gray-200" onClick={closeModal} className="p-2">
                 X
               </button>
             </div>
             <div className="p-2">
-              <table className="w-full bg-slate-900 text-slate-50 border border-slate-900 mx-auto">
+              <table className="w-full h-full bg-slate-90 text-slate-50 border border-slate-900 mx-auto">
                 {/* Ket. Tabel */}
                 <thead>
                   <p> Nama : {name} </p>
@@ -157,10 +159,10 @@ function Dashboard() {
 
                 {/* Isi Tabel */}
                 {/* OVERFLOW INI ARTINYA NANTI BAKAL SCROLL OTOMATIS */}
-                <tbody className="overflow-y-auto h-48">
+                <tbody className="overflow-y-auto">
                   {currentUser.map((user) => {
                     return (
-                      <tr>
+                      <tr className="">
                         <td className="px-2 py-1 bg-green-800 text-gray-50 border border-slate-900">
                           {user.type}
                         </td>
@@ -315,7 +317,7 @@ function Dashboard() {
 
       {/* NTAR disini mungkin tambahin atribut atau apa, yang pasti ini function,
     trus atribut nya pake parameter..... 😨️*/}
-      <TablePagination />
+      <TablePagination Data={Data} setData={setData}/>
     </div>
   );
 }
