@@ -72,6 +72,7 @@ export async function updateUser(User: Teknisi,IdT: string): Promise<null | bool
   if(!TeknisiOld){
     return null
   }
+  delete User._id 
   let Update = await TeknisiModel.findOneAndUpdate({IDTelegram: IdT},User)
   if(!Update){
     return null 
