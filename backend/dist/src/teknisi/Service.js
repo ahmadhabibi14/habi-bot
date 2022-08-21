@@ -89,6 +89,7 @@ function updateUser(User, IdT) {
         if (!TeknisiOld) {
             return null;
         }
+        delete User._id;
         let Update = yield Model_1.TeknisiModel.findOneAndUpdate({ IDTelegram: IdT }, User);
         if (!Update) {
             return null;
