@@ -6,7 +6,8 @@ import {
 
 export async function addSektor(Sk: string,point: number){
   try {
-    let sekName = await sektorModel.findOne({name: Sk})
+    let sekName:any = await sektorModel.findOne({name: Sk})
+    delete sekName._id
     //console.log(Sk) 
     //console.log(sekName)
     if(!sekName){
@@ -28,7 +29,8 @@ export async function addSektor(Sk: string,point: number){
 
 export async function addWitel(Sk: string,point: number){
   try {
-    let witName = await witelModel.findOne({name: Sk})
+    let witName:any = await witelModel.findOne({name: Sk})
+    delete witName._id
     if(!witName){
       let newWitName = new witelModel({
         name : Sk,
@@ -48,7 +50,8 @@ export async function addWitel(Sk: string,point: number){
 
 export async function addReg(Sk: string,point: number){
   try {
-    let regName = await regionalModel.findOne({name: Sk})
+    let regName: any = await regionalModel.findOne({name: Sk})
+    delete regName._id
     if(!regName){
       let newRegName = new regionalModel({
         name : Sk,
@@ -68,7 +71,8 @@ export async function addReg(Sk: string,point: number){
 
 export async function upSektor(Sk: string,point: number,opr: "+" | "-"){
   try {
-    let sekName = await sektorModel.findOne({name: Sk})
+    let sekName: any = await sektorModel.findOne({name: Sk})
+    delete sekName._id
     if(!sekName){
        return
     } 
@@ -84,7 +88,8 @@ export async function upSektor(Sk: string,point: number,opr: "+" | "-"){
 }
 export async function upWitel(Sk: string,point: number,opr: "+" | "-"){
   try {
-    let witName = await witelModel.findOne({name: Sk})
+    let witName:any = await witelModel.findOne({name: Sk})
+    delete witName._id
     if(!witName){
       return
     } 
@@ -100,7 +105,8 @@ export async function upWitel(Sk: string,point: number,opr: "+" | "-"){
 }
 export async function upReg(Sk: string,point: number,opr: "+" | "-"){
   try {
-    let regName = await regionalModel.findOne({name: Sk})
+    let regName: any = await regionalModel.findOne({name: Sk})
+    delete regName._id
     if(!regName){
       return
     }  

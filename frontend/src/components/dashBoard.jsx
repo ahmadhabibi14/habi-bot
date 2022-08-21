@@ -127,7 +127,7 @@ function Dashboard() {
           <div className="flex flex-col w-full bg-slate-900 fixed w-fit border border-slate-900">
             <div className="flex flex-row justify-end border border-slate-900">
               <button
-                className="text-gray-200"
+                className="text-gray-200 hover:bg-green-700 hover:scale-100"
                 onClick={closeModal}
                 className="text-slate-50 p-2"
               >
@@ -300,10 +300,10 @@ function Dashboard() {
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "gamasTipeC").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "survey").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "lapul").length}
                     </td>
                   </tr>
