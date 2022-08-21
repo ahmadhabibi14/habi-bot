@@ -89,7 +89,7 @@ function updateUser(User, IdT) {
         if (!TeknisiOld) {
             return null;
         }
-        delete User._id;
+        //delete User._id 
         let Update = yield Model_1.TeknisiModel.findOneAndUpdate({ IDTelegram: IdT }, User);
         if (!Update) {
             return null;
@@ -129,9 +129,12 @@ function addLeadTask(obj) {
             console.log(e);
             return false;
         }
-        console.log(teknisi);
+        //console.log(teknisi)
         if (!teknisi) {
             return false;
+        }
+        if (teknisi._id) {
+            delete teknisi._id;
         }
         teknisi.Handle.push(newTask);
         bot_1.broadcast.emit("send", Number(teknisi.IDTelegram), "kamu mendapatkan tugas baru");

@@ -72,7 +72,7 @@ export async function updateUser(User: any,IdT: string): Promise<null | boolean>
   if(!TeknisiOld){
     return null
   }
-  delete User._id 
+  //delete User._id 
   let Update = await TeknisiModel.findOneAndUpdate({IDTelegram: IdT},User)
   if(!Update){
     return null 
@@ -112,11 +112,13 @@ export async function addLeadTask(obj : {
       console.log(e)
       return false 
     }
-    console.log(teknisi)
+    //console.log(teknisi)
     if(!teknisi){
       return false 
     }
-
+    if(teknisi._id){
+      delete teknisi._id
+    }
     teknisi.Handle.push(newTask)
     broadcast.emit("send",Number(teknisi.IDTelegram),"kamu mendapatkan tugas baru")
     await updateUser(teknisi,teknisi.IDTelegram)
