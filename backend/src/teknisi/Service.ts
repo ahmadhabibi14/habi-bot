@@ -45,7 +45,7 @@ export async function newTeknisi(Data: Teknisi): Promise<boolean> {
 }
 
 export async function updateHandle(Handle: Task,IdT: string): Promise<null | boolean>{
-  let TeknisiOld = await getTeknisi(0,IdT)
+  let TeknisiOld: any = await getTeknisi(0,IdT)
   if(!TeknisiOld){
     return null
   }
@@ -55,12 +55,12 @@ export async function updateHandle(Handle: Task,IdT: string): Promise<null | boo
     point += element.point 
   });  
   TeknisiOld.point = point
-
+  delete TeknisiOld._id
   await upSektor(TeknisiOld.Sektor,TeknisiOld.point,"+")
   await upWitel(TeknisiOld.Witel,TeknisiOld.point,"+")
   await upReg(TeknisiOld.Regional,TeknisiOld.point,"+")
 
-  let Update = await TeknisiModel.findOneAndUpdate({IDTelegram: IdT},{Handle: TeknisiOld.Handle})
+  let Update = await TeknisiModel.findOneAndUpdate({IDTelegram: IdT},TeknisiOld)
   if(!Update){
     return null 
   }
@@ -72,7 +72,7 @@ export async function updateUser(User: any,IdT: string): Promise<null | boolean>
   if(!TeknisiOld){
     return null
   }
-  //delete User._id 
+  delete User._id 
   let Update = await TeknisiModel.findOneAndUpdate({IDTelegram: IdT},User)
   if(!Update){
     return null 
