@@ -8,7 +8,8 @@ function Dashboard() {
   const [currentUser, setCurrentUser] = useState([]);
   let Handles = [];
   // Hooks
-  const [Data, setData] = useState([]);
+  let [Data, setData] = useState([]);
+  let [duplicateData, setDupData] = useState([]);
   // MODAL HOOK
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
@@ -29,20 +30,60 @@ function Dashboard() {
   function Sektor() {
     axios
       .get(`${server}/leader/sektor`, { withCredentials: true })
-      .then((e) => {
-        console.log(e.data);
+      .then(async (e) => {
+        let sortSek = e.data;
+        sortSek = sortSek.sort((a, b) => {
+          return a.rata_rata - b.rata_rata;
+        });
+        let Da = [];
+        await fetchData();
+        //setData(dad)
+        //setData(duplicateData)
+        sortSek.forEach((e) => {
+          let Filter = Data.filter((a) => a.Sektor == e.name);
+          Da = [...Filter, ...Da];
+        });
+        console.log(Data);
+        setData(Da);
+        console.log(sortSek);
       });
   }
   function Witel() {
-    axios.get(`${server}/leader/witel`, { withCredentials: true }).then((e) => {
-      console.log(e.data);
-    });
+    axios
+      .get(`${server}/leader/witel`, { withCredentials: true })
+      .then(async (e) => {
+        let sortSek = e.data;
+        sortSek = sortSek.sort((a, b) => {
+          return a.rata_rata - b.rata_rata;
+        });
+        let Da = [];
+        await fetchData();
+        sortSek.forEach((e) => {
+          let Filter = Data.filter((a) => a.Witel == e.name);
+          Da = [...Filter, ...Da];
+        });
+        setData(Da);
+      });
   }
   function Regional() {
     axios
       .get(`${server}/leader/regional`, { withCredentials: true })
-      .then((e) => {
-        console.log(e.data);
+      .then(async (e) => {
+        let sortSek = e.data;
+        sortSek = sortSek.sort((a, b) => {
+          return a.rata_rata - b.rata_rata;
+        });
+        let Da = [];
+        await fetchData();
+        //if(duplicateData){
+        //setData(duplicateData)
+        //}
+        //setData(duplicateData)
+        sortSek.forEach((e) => {
+          let Filter = Data.filter((a) => a.Regional == e.name);
+          Da = [...Filter, ...Da];
+        });
+        setData(Da);
       });
   }
 
@@ -51,25 +92,21 @@ function Dashboard() {
   let server = "http://localhost:8887";
 
   // AMBIL JSON dari external
-  const fetchData = () => {
-    axios
-      .post(
-        `${server}/leader/teknisi`,
-        {
-          to: 10,
-          from: 0,
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error(`Error: ${error}`);
-      });
+  const fetchData = async () => {
+    let data = await axios.post(
+      `${server}/leader/teknisi`,
+      {
+        to: 10,
+        from: 0,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+    data = data.data;
+    console.log(data);
+    setData(data);
+    return data;
   };
   //console.log(datee)
   // Ini biar TABEL nya jalan otomatis saat web di load
@@ -87,14 +124,18 @@ function Dashboard() {
       {/* INI NTAR MODAL nya, njirrr aku bingung */}
       {isOpen && (
         <>
-          <div className="flex flex-col bg-slate-900 fixed w-fit border border-slate-900">
+          <div className="flex flex-col w-full bg-slate-900 fixed w-fit border border-slate-900">
             <div className="flex flex-row justify-end border border-slate-900">
-              <button onClick={closeModal} className="p-2">
+              <button
+                className="text-gray-200"
+                onClick={closeModal}
+                className="text-slate-50 p-2"
+              >
                 X
               </button>
             </div>
             <div className="p-2">
-              <table className="w-full bg-slate-900 text-slate-50 border border-slate-900 mx-auto">
+              <table className="w-full h-full bg-slate-90 text-slate-50 border border-slate-900 mx-auto">
                 {/* Ket. Tabel */}
                 <thead>
                   <p> Nama : {name} </p>
@@ -118,10 +159,10 @@ function Dashboard() {
 
                 {/* Isi Tabel */}
                 {/* OVERFLOW INI ARTINYA NANTI BAKAL SCROLL OTOMATIS */}
-                <tbody className="overflow-y-auto h-48">
+                <tbody className="overflow-y-auto">
                   {currentUser.map((user) => {
                     return (
-                      <tr>
+                      <tr className="">
                         <td className="px-2 py-1 bg-green-800 text-gray-50 border border-slate-900">
                           {user.type}
                         </td>
@@ -220,43 +261,43 @@ function Dashboard() {
               Data.map((e) => {
                 return (
                   <tr onClick={() => openModal(e.Handle, e.Nama, e.NIK)}>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.NIK}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Nama}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.point}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "tiketRegular").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "LaporLangsung").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "TiketSQM").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "Proman").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "TutupODP").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "Valins").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "Unspect").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "gamasTipeA").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "gamasTipeB").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
                       {e.Handle.filter((e) => e.type == "gamasTipeC").length}
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1">
@@ -276,7 +317,7 @@ function Dashboard() {
 
       {/* NTAR disini mungkin tambahin atribut atau apa, yang pasti ini function,
     trus atribut nya pake parameter..... 😨️*/}
-      <TablePagination />
+      <TablePagination Data={Data} setData={setData} />
     </div>
   );
 }

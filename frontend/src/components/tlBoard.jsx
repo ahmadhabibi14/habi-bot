@@ -21,10 +21,6 @@ function TlBoard() {
         credentials: "include",
       },
       credentials: "include",
-      body: JSON.stringify({
-        to: 10,
-        from: 0,
-      }),
     });
     setUser(await getData.json());
     //console.log(user)

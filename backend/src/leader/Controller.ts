@@ -180,6 +180,13 @@ export async function getTeknisiTen(req: Request,res: Response){
   const {from,to} = req.body
   console.log(req.body)
   const teknisi = await getAll()
+  const nameOnly = teknisi.map((e) =>{
+    return {Nama : e.Nama, NIK : e.NIK}
+  })
+  if(!to){
+    res.json(nameOnly)
+    return
+  }
   res.json(teknisi.slice(from,to))
 }
 
