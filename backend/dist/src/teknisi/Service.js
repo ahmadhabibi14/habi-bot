@@ -75,7 +75,7 @@ function updateHandle(Handle, IdT) {
         yield (0, Service_1.upSektor)(TeknisiOld.Sektor, TeknisiOld.point, "+");
         yield (0, Service_1.upWitel)(TeknisiOld.Witel, TeknisiOld.point, "+");
         yield (0, Service_1.upReg)(TeknisiOld.Regional, TeknisiOld.point, "+");
-        let Update = yield Model_1.TeknisiModel.findOneAndUpdate({ IDTelegram: IdT }, TeknisiOld);
+        let Update = yield Model_1.TeknisiModel.findOneAndUpdate({ IDTelegram: IdT }, { Handle: TeknisiOld.Handle });
         if (!Update) {
             return null;
         }

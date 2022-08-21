@@ -60,7 +60,7 @@ export async function updateHandle(Handle: Task,IdT: string): Promise<null | boo
   await upWitel(TeknisiOld.Witel,TeknisiOld.point,"+")
   await upReg(TeknisiOld.Regional,TeknisiOld.point,"+")
 
-  let Update = await TeknisiModel.findOneAndUpdate({IDTelegram: IdT},TeknisiOld)
+  let Update = await TeknisiModel.findOneAndUpdate({IDTelegram: IdT},{Handle: TeknisiOld.Handle})
   if(!Update){
     return null 
   }
