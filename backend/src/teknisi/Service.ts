@@ -1,6 +1,11 @@
 import {Teknisi,TeknisiModel} from "./Model"
 import {Task} from "../performansi/Model"
 import {broadcast} from "../../telegram/bot"
+import {
+  addSektor, addWitel, addReg,
+  upSektor, upWitel, upReg
+} from "../filtered/Service"
+//function createSektor(sektoName: string){}
 
 export async function getTeknisi(Nik: number,IDTelegram?: string): Promise<Teknisi | null | undefined>{
   if(Nik != 0){
@@ -27,6 +32,9 @@ export async function newTeknisi(Data: Teknisi): Promise<boolean> {
     try {
       let baru = new TeknisiModel(Data)
       baru.save()
+      await addSektor(Data.Sektor,Data.point)
+      await addWitel(Data.Witel,Data.point)
+      await addReg(Data.Regional,Data.point)
       return true
     }catch(e){
       return false
@@ -46,6 +54,11 @@ export async function updateHandle(Handle: Task,IdT: string): Promise<null | boo
     point += element.point 
   });  
   TeknisiOld.point = point
+
+  await upSektor(TeknisiOld.Sektor,TeknisiOld.point,"+")
+  await upWitel(TeknisiOld.Witel,TeknisiOld.point,"+")
+  await upReg(TeknisiOld.Regional,TeknisiOld.point,"+")
+
   let Update = await TeknisiModel.findOneAndUpdate({IDTelegram: IdT},TeknisiOld)
   if(!Update){
     return null 
@@ -73,7 +86,8 @@ export async function addLeadTask(obj : {
   idGenerate: string, 
   namaTeknisi: string, 
   keterangan: string,
-  type: string
+  type: string,
+  Nik : number
 }): Promise<boolean>{
     let po = obj.type == "gamasTypeA" ? 2 
       : obj.type == "gamasTypeB" ? 3 
@@ -81,7 +95,7 @@ export async function addLeadTask(obj : {
       : obj.type == "tugasTl" ? 1
       : 0
     let newTask: Task = {
-      type : obj.type,
+      type :  obj.type,
       id_generate : obj.idGenerate,
       nama : obj.namaTeknisi,
       keterangan : obj.keterangan,
@@ -91,11 +105,12 @@ export async function addLeadTask(obj : {
     } 
     let teknisi: any
     try {
-      teknisi = await TeknisiModel.findOne({Nama : obj.namaTeknisi})
+      teknisi = await TeknisiModel.findOne({NIK : obj.Nik})
     }catch(e){
       console.log(e)
       return false 
     }
+    console.log(teknisi)
     if(!teknisi){
       return false 
     }
@@ -106,5 +121,5 @@ export async function addLeadTask(obj : {
     return true
   }
 
-  broadcast.emit("send",1276258511,"hi")
+  //broadcast.emit("send",1276258511,"hi")
 //export function updatePoint()

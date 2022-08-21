@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.addLeadTask = exports.getAll = exports.updateUser = exports.updateHandle = exports.newTeknisi = exports.getTeknisi = void 0;
 const Model_1 = require("./Model");
 const bot_1 = require("../../telegram/bot");
+const Service_1 = require("../filtered/Service");
+//function createSektor(sektoName: string){}
 function getTeknisi(Nik, IDTelegram) {
     return __awaiter(this, void 0, void 0, function* () {
         if (Nik != 0) {
@@ -44,6 +46,9 @@ function newTeknisi(Data) {
             try {
                 let baru = new Model_1.TeknisiModel(Data);
                 baru.save();
+                yield (0, Service_1.addSektor)(Data.Sektor, Data.point);
+                yield (0, Service_1.addWitel)(Data.Witel, Data.point);
+                yield (0, Service_1.addReg)(Data.Regional, Data.point);
                 return true;
             }
             catch (e) {
@@ -66,6 +71,9 @@ function updateHandle(Handle, IdT) {
             point += element.point;
         });
         TeknisiOld.point = point;
+        yield (0, Service_1.upSektor)(TeknisiOld.Sektor, TeknisiOld.point, "+");
+        yield (0, Service_1.upWitel)(TeknisiOld.Witel, TeknisiOld.point, "+");
+        yield (0, Service_1.upReg)(TeknisiOld.Regional, TeknisiOld.point, "+");
         let Update = yield Model_1.TeknisiModel.findOneAndUpdate({ IDTelegram: IdT }, TeknisiOld);
         if (!Update) {
             return null;
@@ -113,12 +121,13 @@ function addLeadTask(obj) {
         };
         let teknisi;
         try {
-            teknisi = yield Model_1.TeknisiModel.findOne({ Nama: obj.namaTeknisi });
+            teknisi = yield Model_1.TeknisiModel.findOne({ NIK: obj.Nik });
         }
         catch (e) {
             console.log(e);
             return false;
         }
+        console.log(teknisi);
         if (!teknisi) {
             return false;
         }
@@ -129,5 +138,5 @@ function addLeadTask(obj) {
     });
 }
 exports.addLeadTask = addLeadTask;
-bot_1.broadcast.emit("send", 1276258511, "hi");
+//broadcast.emit("send",1276258511,"hi")
 //export function updatePoint()

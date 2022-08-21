@@ -17,10 +17,10 @@ function Login() {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-        credentials: 'include',
-      },
-      credentials: 'include',
-      body: JSON.stringify({
+				credentials: "include",
+			},
+			credentials: "include",
+			body: JSON.stringify({
 				NIK: inputNIK,
 				Password: inputPass,
 			}),

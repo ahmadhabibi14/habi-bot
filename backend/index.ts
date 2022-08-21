@@ -15,10 +15,12 @@ ConnectToMongoDb()
 app.use(cookie())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(cors())
+app.use(cors({
+  origin:"http://localhost:3000",
+  credentials: true
+}))
 app.use(express.static("./view"))
-app.use(router)
- 
+app.use(router) 
 app.listen(port,()=>{
   console.log("your server has running",port)
   bot.launch()
