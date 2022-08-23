@@ -124,7 +124,7 @@ function Dashboard() {
       {/* INI NTAR MODAL nya, njirrr aku bingung */}
       {isOpen && (
         <>
-          <div className="flex flex-col w-full bg-slate-900 fixed w-fit border border-slate-900">
+          <div className="flex flex-col absolute bg-slate-900 fixed w-fit border border-slate-900">
             <div className="flex flex-row justify-end border border-slate-900">
               <button
                 className="text-gray-200 hover:bg-green-700 hover:scale-100"
@@ -261,49 +261,49 @@ function Dashboard() {
               Data.map((e) => {
                 return (
                   <tr onClick={() => openModal(e.Handle, e.Nama, e.NIK)}>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.NIK}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Nama}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.point}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Handle.filter((e) => e.type == "tiketRegular").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Handle.filter((e) => e.type == "LaporLangsung").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Handle.filter((e) => e.type == "TiketSQM").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Handle.filter((e) => e.type == "Proman").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Handle.filter((e) => e.type == "TutupODP").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Handle.filter((e) => e.type == "Valins").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Handle.filter((e) => e.type == "Unspect").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Handle.filter((e) => e.type == "gamasTipeA").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Handle.filter((e) => e.type == "gamasTipeB").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Handle.filter((e) => e.type == "gamasTipeC").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Handle.filter((e) => e.type == "survey").length}
                     </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer">
+                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
                       {e.Handle.filter((e) => e.type == "lapul").length}
                     </td>
                   </tr>
