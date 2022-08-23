@@ -35,7 +35,7 @@ const witelModel = mongo.model<witel>("witel",witelSchema)
 const regionalSchema = new mongo.Schema<regional>({
   rata_rata: {type: Number, required: true},
   name: {type: String, required: true},
-  witel : {type : Array}
+  witel : {type : Array},
   jumblah: {type: Number, required: true}
 })
 const regionalModel = mongo.model<regional>("regional",regionalSchema)

@@ -35,6 +35,7 @@ exports.sektorModel = sektorModel;
 const witelSchema = new mongo.Schema({
     rata_rata: { type: Number, required: true },
     name: { type: String, required: true },
+    sektor: { type: Array },
     jumblah: { type: Number, required: true }
 });
 const witelModel = mongo.model("witel", witelSchema);
@@ -42,6 +43,7 @@ exports.witelModel = witelModel;
 const regionalSchema = new mongo.Schema({
     rata_rata: { type: Number, required: true },
     name: { type: String, required: true },
+    witel: { type: Array },
     jumblah: { type: Number, required: true }
 });
 const regionalModel = mongo.model("regional", regionalSchema);

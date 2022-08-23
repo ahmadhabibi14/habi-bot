@@ -177,7 +177,7 @@ TiketRegularPerbaikan.on("callback_query",async ctx=>{
               }
               if(
                   task.no_speedy == data.no_speedy && 
-                  task.date.getTime() - Date.now() < sd && 
+                  task.date.getTime() - Date.now() < sd 
                   //task.done == false
               ){
                 //console.log("sama")

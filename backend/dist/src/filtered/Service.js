@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getReg = exports.getWitel = exports.getSektor = exports.upReg = exports.upWitel = exports.upSektor = exports.addReg = exports.addWitel = exports.addSektor = void 0;
 const Model_1 = require("./Model");
-function addSektor(Sk, point) {
+function addSektor(Sk, point, witel) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let sekName = yield Model_1.sektorModel.findOne({ name: Sk });
@@ -25,6 +25,15 @@ function addSektor(Sk, point) {
                     jumblah: 1
                 });
                 newSekName.save();
+                // Update witel
+                let Witel = yield Model_1.witelModel.findOne({ name: witel });
+                if (!Witel) {
+                    return;
+                }
+                Witel.sektor.push(Sk);
+                if (Witel._id)
+                    delete Witel._id;
+                yield Model_1.witelModel.findOneAndUpdate({ name: witel }, Witel);
                 return;
             }
             sekName.rata_rata = (sekName.rata_rata * sekName.jumblah + point) / sekName.jumblah + 1;
@@ -37,7 +46,7 @@ function addSektor(Sk, point) {
     });
 }
 exports.addSektor = addSektor;
-function addWitel(Sk, point) {
+function addWitel(Sk, point, regional) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let witName = yield Model_1.witelModel.findOne({ name: Sk });
@@ -49,6 +58,14 @@ function addWitel(Sk, point) {
                     jumblah: 1
                 });
                 newWitName.save();
+                let Regional = yield Model_1.regionalModel.findOneAndUpdate({ name: regional });
+                if (!Regional) {
+                    return;
+                }
+                Regional.witel.push(Sk);
+                if (Regional._id)
+                    delete Regional._id;
+                yield Model_1.regionalModel.findOneAndUpdate({ name: regional }, Regional);
                 return;
             }
             witName.rata_rata = (witName.rata_rata * witName.jumblah + point) / witName.jumblah + 1;

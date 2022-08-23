@@ -95,6 +95,7 @@ exports.TiketSQMPerbaikan.on("callback_query", (ctx) => __awaiter(void 0, void 0
             let teknisies = yield (0, Service_1.getAll)();
             for (let i = 0; i < teknisies.length - 1; i++) {
                 let teknisi = teknisies[i];
+                delete teknisi._id;
                 for (let task of teknisi.Handle) {
                     let sd = 1000 * 60 * 60 * 24 * 60;
                     if (task.type != "tiketRegular") {
@@ -105,6 +106,12 @@ exports.TiketSQMPerbaikan.on("callback_query", (ctx) => __awaiter(void 0, void 0
                         task.done == false) {
                         //console.log("sama")
                         teknisi.point -= 2;
+                        let nub = {
+                            type: 'nub',
+                            done: false,
+                            date: new Date()
+                        };
+                        teknisi.Handle.push(Nub);
                         yield (0, Service_1.updateUser)(teknisi, id);
                         same = true;
                         ctx.reply("saving data...");
