@@ -5,10 +5,20 @@ import {
   Navigate,
   Redirect,
 } from "react-router-dom";
-
+import axios from "axios"
 function App() {
+  axios
+    .get("http://localhost:8887/leader/login",{
+      withCredentials: true
+    })
+    .then((res) =>{
+      let user = res.data
+      localStorage.setItem("Lxpx",JSON.stringify(user))
+    }).catch(() => {
+      return <Navigate to="/login" replace />
+    })
   if (!localStorage.getItem("Lxpx")) {
-    // window.location.href = "/login";
+    window.location.href = "/login";
     return <Navigate to="/login" replace />;
   }
 
