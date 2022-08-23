@@ -224,6 +224,14 @@ function Dashboard() {
         >
           Regional
         </button>
+
+        {/* SUBMIT */}
+        <button
+          className="mr-8 py-1.5 px-4 rounded-lg bg-emerald-500 hover:bg-emerald-300 text-slate-50 font-bold border-2 border-emerald-500 hover:border-emerald-300"
+          title="SUBMIT"
+        >
+          SUBMIT
+        </button>
       </div>
 
       {/* Tempat Tabel data-data dari teknisi nya */}
