@@ -1,5 +1,5 @@
 import {Scenes} from  "telegraf"
-import {TiketSQM} from "../../src/performansi/Model"
+import {TiketSQM,Nub} from "../../src/performansi/Model"
 import {updateHandle,getAll,updateUser} from "../../src/teknisi/Service"
 import {upSektor,upWitel,upReg} from "../../src/filtered/Service"
 
@@ -92,6 +92,7 @@ TiketSQMPerbaikan.on("callback_query",async ctx => {
           let teknisies: any = await getAll()
           for(let i = 0; i < teknisies.length - 1;i++){
             let teknisi = teknisies[i]
+            delete teknisi._id
             for(let task of teknisi.Handle){
               let sd = 1000 * 60 * 60 * 24 * 60
               if(task.type != "tiketRegular"){
@@ -104,7 +105,13 @@ TiketSQMPerbaikan.on("callback_query",async ctx => {
               ){
                 //console.log("sama")
                 teknisi.point -= 2
-                await updateUser(teknisi,id)
+                let nub: Nub = {
+                  type : 'nub',
+                  done : false,
+                  date : new Date()
+                }
+                teknisi.Handle.push(Nub)
+               await updateUser(teknisi,id)
                 same = true
                 ctx.reply("saving data...")
                 ctx.scene.enter("Close")

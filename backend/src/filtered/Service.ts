@@ -4,7 +4,7 @@ import {
   regionalModel,regional
 } from "./Model"
 
-export async function addSektor(Sk: string,point: number){
+export async function addSektor(Sk: string,point: number,witel: string){
   try {
     let sekName:any = await sektorModel.findOne({name: Sk})
     delete sekName._id
@@ -16,7 +16,15 @@ export async function addSektor(Sk: string,point: number){
         rata_rata : point,
         jumblah : 1
       })
-      newSekName.save()
+      newSekName.save() 
+      // Update witel
+      let Witel: any = await witelModel.findOne({name: witel})
+      if(!Witel){
+        return 
+      }
+      Witel.sektor.push(Sk)
+      if(Witel._id) delete Witel._id
+      await witelModel.findOneAndUpdate({name: witel},Witel)
       return
     }  
     sekName.rata_rata = ( sekName.rata_rata * sekName.jumblah + point ) / sekName.jumblah + 1
@@ -27,7 +35,7 @@ export async function addSektor(Sk: string,point: number){
   }
 }
 
-export async function addWitel(Sk: string,point: number){
+export async function addWitel(Sk: string,point: number,regional: string){
   try {
     let witName:any = await witelModel.findOne({name: Sk})
     delete witName._id
@@ -38,6 +46,13 @@ export async function addWitel(Sk: string,point: number){
         jumblah : 1
       })
       newWitName.save()
+      let Regional: any = await regionalModel.findOneAndUpdate({name: regional})
+      if(!Regional){
+        return 
+      }
+      Regional.witel.push(Sk)
+      if(Regional._id) delete Regional._id
+      await regionalModel.findOneAndUpdate({name: regional},Regional)
       return
     }  
     witName.rata_rata = ( witName.rata_rata * witName.jumblah + point ) / witName.jumblah + 1

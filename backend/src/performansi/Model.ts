@@ -1,3 +1,8 @@
+interface Nub {
+  type : string,
+  done : false,
+  date : Date
+}
 interface TiketRegular {
   type : string,
   no_insiden : string,
@@ -115,8 +120,9 @@ interface TugasTL {
 }
 
 
-type Task = TiketSQM | LaporLangsung | TutupODP | TiketRegular | Proman | Unspect | Valins | GamasTypeA | GamasTypeB | GamasTypeC | TugasTL
+type Task = TiketSQM | LaporLangsung | TutupODP | TiketRegular | Proman | Unspect | Valins | GamasTypeA | GamasTypeB | GamasTypeC | TugasTL | Nub
 export {
+  Nub,
   TiketRegular,
   TutupODP,
   LaporLangsung,
