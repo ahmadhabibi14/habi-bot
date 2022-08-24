@@ -22,6 +22,7 @@ const TablePagination = (props) => {
         {
           from,
           to,
+          filter: props.filter,
         },
         { withCredentials: true }
       )
@@ -59,6 +60,7 @@ const TablePagination = (props) => {
         {
           from,
           to,
+          filter: props.filter,
         },
         { withCredentials: true }
       )

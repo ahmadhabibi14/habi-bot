@@ -36,5 +36,5 @@ const TeknisiSchema = new mongo.Schema({
     Handle: [{ type: mongo.Schema.Types.Mixed }],
     point: { type: Number, required: true }
 });
-const TeknisiModel = mongo.model('Teknisi', TeknisiSchema);
+const TeknisiModel = mongo.model('Teknisi1', TeknisiSchema);
 exports.TeknisiModel = TeknisiModel;

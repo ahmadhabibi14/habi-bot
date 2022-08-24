@@ -26,23 +26,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.regionalModel = exports.witelModel = exports.sektorModel = void 0;
 const mongo = __importStar(require("mongoose"));
 const sektorSchema = new mongo.Schema({
-    rata_rata: { type: Number, required: true },
+    //rata_rata: {type: Number, required: true},
     name: { type: String, required: true },
-    jumblah: { type: Number, required: true }
+    //jumblah: {type: Number, required: true}
 });
-const sektorModel = mongo.model("sektor", sektorSchema);
+const sektorModel = mongo.model("sektor1", sektorSchema);
 exports.sektorModel = sektorModel;
 const witelSchema = new mongo.Schema({
-    rata_rata: { type: Number, required: true },
+    //rata_rata: {type: Number, required: true},
     name: { type: String, required: true },
-    jumblah: { type: Number, required: true }
+    sektor: { type: Array },
+    //jumblah: { type: Number, required: true}
 });
-const witelModel = mongo.model("witel", witelSchema);
+const witelModel = mongo.model("witel1", witelSchema);
 exports.witelModel = witelModel;
 const regionalSchema = new mongo.Schema({
-    rata_rata: { type: Number, required: true },
+    //rata_rata: {type: Number, required: true},
     name: { type: String, required: true },
-    jumblah: { type: Number, required: true }
+    witel: { type: Array },
+    //jumblah: {type: Number, required: true}
 });
-const regionalModel = mongo.model("regional", regionalSchema);
+const regionalModel = mongo.model("regional1", regionalSchema);
 exports.regionalModel = regionalModel;

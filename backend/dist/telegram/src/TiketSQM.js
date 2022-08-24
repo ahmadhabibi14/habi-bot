@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TiketSQMPerbaikan = exports.TiketSQMNamaPelanggan = exports.TiketSQMNoSpeedy = exports.TiketSQMNoInsiden = void 0;
 const telegraf_1 = require("telegraf");
 const Service_1 = require("../../src/teknisi/Service");
-const Service_2 = require("../../src/filtered/Service");
+//import {upSektor,upWitel,upReg} from "../../src/filtered/Service"
 exports.TiketSQMNoInsiden = new telegraf_1.Scenes.BaseScene("TiketSQMNoInsiden");
 exports.TiketSQMNoSpeedy = new telegraf_1.Scenes.BaseScene("TiketSQMNoSpeedy");
 exports.TiketSQMNamaPelanggan = new telegraf_1.Scenes.BaseScene("TiketSQMNamaPelanggan");
@@ -95,6 +95,7 @@ exports.TiketSQMPerbaikan.on("callback_query", (ctx) => __awaiter(void 0, void 0
             let teknisies = yield (0, Service_1.getAll)();
             for (let i = 0; i < teknisies.length - 1; i++) {
                 let teknisi = teknisies[i];
+                delete teknisi._id;
                 for (let task of teknisi.Handle) {
                     let sd = 1000 * 60 * 60 * 24 * 60;
                     if (task.type != "tiketRegular") {
@@ -105,13 +106,20 @@ exports.TiketSQMPerbaikan.on("callback_query", (ctx) => __awaiter(void 0, void 0
                         task.done == false) {
                         //console.log("sama")
                         teknisi.point -= 2;
+                        let nub = {
+                            type: 'nub',
+                            point: 0,
+                            done: false,
+                            date: new Date()
+                        };
+                        teknisi.Handle.push(nub);
                         yield (0, Service_1.updateUser)(teknisi, id);
                         same = true;
                         ctx.reply("saving data...");
                         ctx.scene.enter("Close");
-                        yield (0, Service_2.upSektor)(teknisi.Sektor, teknisi.point, "-");
-                        yield (0, Service_2.upWitel)(teknisi.Witel, teknisi.point, "-");
-                        yield (0, Service_2.upReg)(teknisi.Regional, teknisi.point, "-");
+                        // await upSektor(teknisi.Sektor,teknisi.point,"-")
+                        // await upWitel(teknisi.Witel,teknisi.point,"-")
+                        // await upReg(teknisi.Regional,teknisi.point,"-")
                         break;
                     }
                 }
