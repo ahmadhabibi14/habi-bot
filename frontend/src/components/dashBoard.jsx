@@ -4,18 +4,18 @@ import TablePagination from "./tablePagination.jsx";
 
 function Dashboard() {
   //let datee = [];
-  let i = 0
+  let i = 0;
   const [date, setDate] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
-  const [filter,setFilter] = useState({})
+  const [filter, setFilter] = useState({});
   let Handles = [];
-  let hideme = false
+  let hideme = false;
   //Regional
-  let [regionalData,setRegional] = useState([])
-  let [witelData,setWitel] = useState([])
-  let [witelDataFull,setWitelFull] = useState([])
-  let [sektorData,setSektor] = useState([])
-  let [sektorFilt,setSektorFilt] = useState('')
+  let [regionalData, setRegional] = useState([]);
+  let [witelData, setWitel] = useState([]);
+  let [witelDataFull, setWitelFull] = useState([]);
+  let [sektorData, setSektor] = useState([]);
+  let [sektorFilt, setSektorFilt] = useState("");
   // Hooks
   let [Data, setData] = useState([]);
   //let [duplicateData, setDupData] = useState([]);
@@ -37,60 +37,67 @@ function Dashboard() {
   };
   // FILTER
   function Submit() {
-    console.log(sektorFilt)
-    if(!sektorFilt){
+    console.log(sektorFilt);
+    if (!sektorFilt) {
       axios
-        .post(`${server}/leader/teknisi`,{to: 10,from: 0,filter: {}},{withCredentials: true})
-        .then(e => {
-          setData(e.data)
-        })
-        return 
+        .post(
+          `${server}/leader/teknisi`,
+          { to: 10, from: 0, filter: {} },
+          { withCredentials: true }
+        )
+        .then((e) => {
+          setData(e.data);
+        });
+      return;
     }
-    setFilter({Sektor: sektorFilt})
+    setFilter({ Sektor: sektorFilt });
     axios
-      .post(`${server}/leader/teknisi`,{to: 10,from:0,filter: {Sektor: sektorFilt}}, { withCredentials: true })
+      .post(
+        `${server}/leader/teknisi`,
+        { to: 10, from: 0, filter: { Sektor: sektorFilt } },
+        { withCredentials: true }
+      )
       .then(async (e) => {
-        setData(e.data)
-        setFilter()
-      })
+        setData(e.data);
+        setFilter();
+      });
   }
   function Witel() {
     axios
       .get(`${server}/leader/witel`, { withCredentials: true })
       .then((res) => {
-        setWitel(res.data)
+        setWitel(res.data);
       });
   }
   function Regional() {
     axios
-      .get(`${server}/leader/regional`,{withCredentials: true})
-      .then(res => {
-        setRegional(res.data)
-      })
-
+      .get(`${server}/leader/regional`, { withCredentials: true })
+      .then((res) => {
+        setRegional(res.data);
+      });
   }
   // Update Witel
-  function upWitel(a){
-    let regionalFrom = regionalData.find(e => e.name == a )
-    if(!regionalFrom){
-      setWitel([])
-      setSektor([])
-      return 
+  function upWitel(a) {
+    let regionalFrom = regionalData.find((e) => e.name == a);
+    if (!regionalFrom) {
+      setWitel([]);
+      setSektor([]);
+      return;
     }
-    setWitel(regionalFrom.witel)
-    setSektor([])
-    axios 
-      .get(`${server}/leader/witel`,{withCredentials: true})
-      .then(res => {
-        setWitelFull(res.data)
-      })
+    setWitel(regionalFrom.witel);
+    setSektor([]);
+    axios
+      .get(`${server}/leader/witel`, { withCredentials: true })
+      .then((res) => {
+        setWitelFull(res.data);
+      });
   }
-  function upSektor(a){
-    let witelFrom = witelDataFull.find(e => e.name == a)
-    if(!witelFrom){
-      return setSektor([])
+  function upSektor(a) {
+    let witelFrom = witelDataFull.find((e) => e.name == a);
+    if (!witelFrom) {
+      return setSektor([]);
     }
-    setSektor(witelFrom.sektor)
+    setSektor(witelFrom.sektor);
   }
   // AKHIR MODAL
 
@@ -119,9 +126,9 @@ function Dashboard() {
     let ignore = false;
 
     if (!ignore) {
-      fetchData()
-      Regional()
-    };
+      fetchData();
+      Regional();
+    }
     return () => {
       ignore = true;
     };
@@ -213,68 +220,91 @@ function Dashboard() {
 
       {/* Title */}
       <h2 className="text-2xl font-bold ml-24">TABEL</h2>
-      <div className="mr-8">
-        <select
-          onChange={(e) => upWitel(e.target.value)}
-          //value="tidak ada regional di pilih"
-          className="py-1 px-2 bg-inherit border-2 mr-4 w-48 border-slate-900 rounded-lg focus:rounded-lg"
-        >
-           <option selected value="">Pilih regional</option>
-           }
-          { regionalData.map(e => { 
-            //first = false
-            return ( 
-              <option value={e.name} >
-                { e.name }  
-              </option>
-            )
-          })}
-          
-        </select>
-        <select
-          onChange={(e) => upSektor(e.target.value)}
-          className="py-1 px-2 bg-inherit border-2 mr-4 w-48 border-slate-900 rounded-lg focus:rounded-lg"
-        > 
-          { witelData.length != 0 && <option selected value="">Pilih witel</option>}
-          { witelData.length == 0 && <option>pilih nama regional terlebih dahulu</option> }
-          { witelData.map(e => {
-                  return ( 
-                    <option value={e} > { e }  </option>
-                  )
-                })}
-          
-        </select>
-        <select
-          onChange={(e) => setSektorFilt(e.target.value)}
-          className="py-1 px-2 bg-inherit border-2 mr-4 w-48 border-slate-900 rounded-lg focus:rounded-lg"
-        >
-          { sektorData.length != 0 && <option selected value="">Pilih sektor</option>}
-          { sektorData.length == 0 && <option selected value="">pilih witel terlebih dahulu</option>}
-          { sektorData.map(e => { 
-            return ( 
-              <option value={e} >
-                { e }  
-              </option>
-            )
-          })}
-          
-        </select>
 
-        {/* SUBMIT */}
-        <button
-          className="mr-4 py-1.5 px-4 rounded-lg bg-emerald-500 hover:bg-emerald-300 text-slate-50 font-bold border-2 border-emerald-500 hover:border-emerald-300"
-          title="SUBMIT"
-          onClick={() => Submit()}
-        >
-          SUBMIT
-        </button>
-        <button
-          className="mr-8 py-1.5 px-4 rounded-lg bg-emerald-500 hover:bg-emerald-300 text-slate-50 font-bold border-2 border-emerald-500 hover:border-emerald-300"
-          title="SUBMIT"
-          onClick={() => fetchData()}
-        >
-          Home
-        </button>
+      <div className="flex flex-row items-end">
+        {/* REGIONAL*/}
+        <div className="flex flex-col space-y-2 justify-center">
+          <label className="ml-2 text-lg font-bold">Regional</label>
+
+          <select
+            onChange={(e) => upWitel(e.target.value)}
+            //value="tidak ada regional di pilih"
+            className="py-1 px-2 bg-inherit border-2 mr-4 w-48 border-slate-900 rounded-lg focus:rounded-lg"
+          >
+            <option selected value="">
+              Pilih regional
+            </option>
+            }
+            {regionalData.map((e) => {
+              //first = false
+              return <option value={e.name}>{e.name}</option>;
+            })}
+          </select>
+        </div>
+
+        {/* WITEL*/}
+        <div className="flex flex-col space-y-2 justify-center">
+          <label className="ml-2 text-lg font-bold">Witel</label>
+
+          <select
+            onChange={(e) => upSektor(e.target.value)}
+            className="py-1 px-2 bg-inherit border-2 mr-4 w-48 border-slate-900 rounded-lg focus:rounded-lg"
+          >
+            {witelData.length != 0 && (
+              <option selected value="">
+                Pilih witel
+              </option>
+            )}
+            {witelData.length == 0 && (
+              <option>Pilih nama regional terlebih dahulu</option>
+            )}
+            {witelData.map((e) => {
+              return <option value={e}> {e} </option>;
+            })}
+          </select>
+        </div>
+
+        {/* SEKTOR*/}
+        <div className="flex flex-col space-y-2 justify-center">
+          <label className="ml-2 text-lg font-bold">Sektor</label>
+
+          <select
+            onChange={(e) => setSektorFilt(e.target.value)}
+            className="py-1 px-2 bg-inherit border-2 mr-4 w-48 border-slate-900 rounded-lg focus:rounded-lg"
+          >
+            {sektorData.length != 0 && (
+              <option selected value="">
+                Pilih sektor
+              </option>
+            )}
+            {sektorData.length == 0 && (
+              <option selected value="">
+                Pilih witel terlebih dahulu
+              </option>
+            )}
+            {sektorData.map((e) => {
+              return <option value={e}>{e}</option>;
+            })}
+          </select>
+        </div>
+
+        <div className="flex flex-row space-x-4">
+          {/* SUBMIT */}
+          <button
+            className="mr-4 py-1.5 px-4 rounded-lg bg-emerald-500 hover:bg-emerald-300 text-slate-50 font-bold border-2 border-emerald-500 hover:border-emerald-300"
+            title="SUBMIT"
+            onClick={() => Submit()}
+          >
+            SUBMIT
+          </button>
+          <button
+            className="mr-8 py-1.5 px-4 rounded-lg bg-emerald-500 hover:bg-emerald-300 text-slate-50 font-bold border-2 border-emerald-500 hover:border-emerald-300"
+            title="SUBMIT"
+            onClick={() => fetchData()}
+          >
+            Home
+          </button>
+        </div>
       </div>
 
       {/* Tempat Tabel data-data dari teknisi nya */}
