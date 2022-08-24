@@ -14,7 +14,9 @@ function App() {
     .then((res) =>{
       let user = res.data
       localStorage.setItem("Lxpx",JSON.stringify(user))
-    }).catch(() => {
+    }).catch((e) => {
+      // console.log(e)
+      localStorage.clear()
       return <Navigate to="/login" replace />
     })
   if (!localStorage.getItem("Lxpx")) {

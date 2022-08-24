@@ -47,9 +47,9 @@ function newTeknisi(Data) {
                 let baru = new Model_1.TeknisiModel(Data);
                 baru.save();
                 console.log(Data.Sektor);
-                yield (0, Service_1.addSektor)(Data.Sektor, Data.point, Data.Witel);
-                yield (0, Service_1.addWitel)(Data.Witel, Data.point, Data.Regional);
-                yield (0, Service_1.addReg)(Data.Regional, Data.point);
+                yield (0, Service_1.addFilter)(Data.Regional, Data.Witel, Data.Sektor);
+                // await addWitel(Data.Witel,Data.point,Data.Regional)
+                // await addReg(Data.Regional,Data.point)
                 return true;
             }
             catch (e) {
@@ -73,9 +73,11 @@ function updateHandle(Handle, IdT) {
         });
         TeknisiOld.point = point;
         delete TeknisiOld._id;
-        yield (0, Service_1.upSektor)(TeknisiOld.Sektor, TeknisiOld.point, "+");
-        yield (0, Service_1.upWitel)(TeknisiOld.Witel, TeknisiOld.point, "+");
-        yield (0, Service_1.upReg)(TeknisiOld.Regional, TeknisiOld.point, "+");
+        // await upSektor(TeknisiOld.Sektor,TeknisiOld.point,"+")
+        // await upWitel(TeknisiOld.Witel,TeknisiOld.point,"+")
+        // await upReg(TeknisiOld.Regional,TeknisiOld.point,"+")
+        let Data = TeknisiOld;
+        yield (0, Service_1.addFilter)(Data.Regional, Data.Witel, Data.Sektor);
         let Update = yield Model_1.TeknisiModel.findOneAndUpdate({ IDTelegram: IdT }, TeknisiOld);
         if (!Update) {
             return null;
@@ -99,9 +101,15 @@ function updateUser(User, IdT) {
     });
 }
 exports.updateUser = updateUser;
-function getAll() {
+function getAll(filter) {
     return __awaiter(this, void 0, void 0, function* () {
-        let Teknisies = yield Model_1.TeknisiModel.find({});
+        let Teknisies;
+        if (!filter) {
+            Teknisies = yield Model_1.TeknisiModel.find({});
+        }
+        else {
+            Teknisies = yield Model_1.TeknisiModel.find(filter);
+        }
         return Teknisies;
     });
 }

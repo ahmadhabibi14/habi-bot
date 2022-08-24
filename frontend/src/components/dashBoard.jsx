@@ -3,13 +3,22 @@ import axios from "axios";
 import TablePagination from "./tablePagination.jsx";
 
 function Dashboard() {
-  let datee = [];
+  //let datee = [];
+  let i = 0
   const [date, setDate] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
+  const [filter,setFilter] = useState({})
   let Handles = [];
+  let hideme = false
+  //Regional
+  let [regionalData,setRegional] = useState([])
+  let [witelData,setWitel] = useState([])
+  let [witelDataFull,setWitelFull] = useState([])
+  let [sektorData,setSektor] = useState([])
+  let [sektorFilt,setSektorFilt] = useState('')
   // Hooks
   let [Data, setData] = useState([]);
-  let [duplicateData, setDupData] = useState([]);
+  //let [duplicateData, setDupData] = useState([]);
   // MODAL HOOK
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
@@ -27,66 +36,62 @@ function Dashboard() {
     setIsOpen(false);
   };
   // FILTER
-  function Sektor() {
+  function Submit() {
+    console.log(sektorFilt)
+    if(!sektorFilt){
+      axios
+        .post(`${server}/leader/teknisi`,{to: 10,from: 0,filter: {}},{withCredentials: true})
+        .then(e => {
+          setData(e.data)
+        })
+        return 
+    }
+    setFilter({Sektor: sektorFilt})
     axios
-      .get(`${server}/leader/sektor`, { withCredentials: true })
+      .post(`${server}/leader/teknisi`,{to: 10,from:0,filter: {Sektor: sektorFilt}}, { withCredentials: true })
       .then(async (e) => {
-        let sortSek = e.data;
-        sortSek = sortSek.sort((a, b) => {
-          return a.rata_rata - b.rata_rata;
-        });
-        let Da = [];
-        await fetchData();
-        //setData(dad)
-        //setData(duplicateData)
-        sortSek.forEach((e) => {
-          let Filter = Data.filter((a) => a.Sektor == e.name);
-          Da = [...Filter, ...Da];
-        });
-        console.log(Data);
-        setData(Da);
-        console.log(sortSek);
-      });
+        setData(e.data)
+        setFilter()
+      })
   }
   function Witel() {
     axios
       .get(`${server}/leader/witel`, { withCredentials: true })
-      .then(async (e) => {
-        let sortSek = e.data;
-        sortSek = sortSek.sort((a, b) => {
-          return a.rata_rata - b.rata_rata;
-        });
-        let Da = [];
-        await fetchData();
-        sortSek.forEach((e) => {
-          let Filter = Data.filter((a) => a.Witel == e.name);
-          Da = [...Filter, ...Da];
-        });
-        setData(Da);
+      .then((res) => {
+        setWitel(res.data)
       });
   }
   function Regional() {
     axios
-      .get(`${server}/leader/regional`, { withCredentials: true })
-      .then(async (e) => {
-        let sortSek = e.data;
-        sortSek = sortSek.sort((a, b) => {
-          return a.rata_rata - b.rata_rata;
-        });
-        let Da = [];
-        await fetchData();
-        //if(duplicateData){
-        //setData(duplicateData)
-        //}
-        //setData(duplicateData)
-        sortSek.forEach((e) => {
-          let Filter = Data.filter((a) => a.Regional == e.name);
-          Da = [...Filter, ...Da];
-        });
-        setData(Da);
-      });
-  }
+      .get(`${server}/leader/regional`,{withCredentials: true})
+      .then(res => {
+        setRegional(res.data)
+      })
 
+  }
+  // Update Witel
+  function upWitel(a){
+    let regionalFrom = regionalData.find(e => e.name == a )
+    if(!regionalFrom){
+      setWitel([])
+      setSektor([])
+      return 
+    }
+    setWitel(regionalFrom.witel)
+    setSektor([])
+    axios 
+      .get(`${server}/leader/witel`,{withCredentials: true})
+      .then(res => {
+        setWitelFull(res.data)
+      })
+  }
+  function upSektor(a){
+    let witelFrom = witelDataFull.find(e => e.name == a)
+    if(!witelFrom){
+      return setSektor([])
+    }
+    setSektor(witelFrom.sektor)
+  }
   // AKHIR MODAL
 
   let server = "http://localhost:8887";
@@ -104,7 +109,7 @@ function Dashboard() {
       }
     );
     data = data.data;
-    console.log(data);
+    // console.log(data);
     setData(data);
     return data;
   };
@@ -113,7 +118,10 @@ function Dashboard() {
   useEffect(() => {
     let ignore = false;
 
-    if (!ignore) fetchData();
+    if (!ignore) {
+      fetchData()
+      Regional()
+    };
     return () => {
       ignore = true;
     };
@@ -206,31 +214,66 @@ function Dashboard() {
       {/* Title */}
       <h2 className="text-2xl font-bold ml-24">TABEL</h2>
       <div className="mr-8">
-        <button
-          onClick={() => Sektor()}
-          className="mr-8 py-1.5 px-4 rounded-lg hover:bg-transparent hover:text-slate-900 border-2 border-slate-900 bg-slate-900 text-slate-50"
+        <select
+          onChange={(e) => upWitel(e.target.value)}
+          //value="tidak ada regional di pilih"
+          className="py-1 px-2 bg-inherit border-2 mr-4 w-48 border-slate-900 rounded-lg focus:rounded-lg"
         >
-          Sektor
-        </button>
-        <button
-          onClick={() => Witel()}
-          className="mr-8 py-1.5 px-4 rounded-lg hover:bg-transparent hover:text-slate-900 border-2 border-slate-900 bg-slate-900 text-slate-50"
+           <option selected value="">Pilih regional</option>
+           }
+          { regionalData.map(e => { 
+            //first = false
+            return ( 
+              <option value={e.name} >
+                { e.name }  
+              </option>
+            )
+          })}
+          
+        </select>
+        <select
+          onChange={(e) => upSektor(e.target.value)}
+          className="py-1 px-2 bg-inherit border-2 mr-4 w-48 border-slate-900 rounded-lg focus:rounded-lg"
+        > 
+          { witelData.length != 0 && <option selected value="">Pilih witel</option>}
+          { witelData.length == 0 && <option>pilih nama regional terlebih dahulu</option> }
+          { witelData.map(e => {
+                  return ( 
+                    <option value={e} > { e }  </option>
+                  )
+                })}
+          
+        </select>
+        <select
+          onChange={(e) => setSektorFilt(e.target.value)}
+          className="py-1 px-2 bg-inherit border-2 mr-4 w-48 border-slate-900 rounded-lg focus:rounded-lg"
         >
-          Witel
-        </button>
-        <button
-          onClick={() => Regional()}
-          className="mr-8 py-1.5 px-4 rounded-lg hover:bg-transparent hover:text-slate-900 border-2 border-slate-900 bg-slate-900 text-slate-50"
-        >
-          Regional
-        </button>
+          { sektorData.length != 0 && <option selected value="">Pilih sektor</option>}
+          { sektorData.length == 0 && <option selected value="">pilih witel terlebih dahulu</option>}
+          { sektorData.map(e => { 
+            return ( 
+              <option value={e} >
+                { e }  
+              </option>
+            )
+          })}
+          
+        </select>
 
         {/* SUBMIT */}
         <button
-          className="mr-8 py-1.5 px-4 rounded-lg bg-emerald-500 hover:bg-emerald-300 text-slate-50 font-bold border-2 border-emerald-500 hover:border-emerald-300"
+          className="mr-4 py-1.5 px-4 rounded-lg bg-emerald-500 hover:bg-emerald-300 text-slate-50 font-bold border-2 border-emerald-500 hover:border-emerald-300"
           title="SUBMIT"
+          onClick={() => Submit()}
         >
           SUBMIT
+        </button>
+        <button
+          className="mr-8 py-1.5 px-4 rounded-lg bg-emerald-500 hover:bg-emerald-300 text-slate-50 font-bold border-2 border-emerald-500 hover:border-emerald-300"
+          title="SUBMIT"
+          onClick={() => fetchData()}
+        >
+          Home
         </button>
       </div>
 
@@ -325,7 +368,7 @@ function Dashboard() {
 
       {/* NTAR disini mungkin tambahin atribut atau apa, yang pasti ini function,
     trus atribut nya pake parameter..... 😨️*/}
-      <TablePagination Data={Data} setData={setData} />
+      <TablePagination Data={Data} setData={setData} filter={filter} />
     </div>
   );
 }

@@ -2,8 +2,7 @@ import {Teknisi,TeknisiModel} from "./Model"
 import {Task} from "../performansi/Model"
 import {broadcast} from "../../telegram/bot"
 import {
-  addSektor, addWitel, addReg,
-  upSektor, upWitel, upReg
+  addFilter
 } from "../filtered/Service"
 //function createSektor(sektoName: string){}
 
@@ -33,9 +32,9 @@ export async function newTeknisi(Data: Teknisi): Promise<boolean> {
       let baru = new TeknisiModel(Data)
       baru.save()
       console.log(Data.Sektor)
-      await addSektor(Data.Sektor,Data.point,Data.Witel)
-      await addWitel(Data.Witel,Data.point,Data.Regional)
-      await addReg(Data.Regional,Data.point)
+      await addFilter(Data.Regional,Data.Witel,Data.Sektor)
+      // await addWitel(Data.Witel,Data.point,Data.Regional)
+      // await addReg(Data.Regional,Data.point)
       return true
     }catch(e){
       return false
@@ -56,10 +55,11 @@ export async function updateHandle(Handle: Task,IdT: string): Promise<null | boo
   });  
   TeknisiOld.point = point
   delete TeknisiOld._id
-  await upSektor(TeknisiOld.Sektor,TeknisiOld.point,"+")
-  await upWitel(TeknisiOld.Witel,TeknisiOld.point,"+")
-  await upReg(TeknisiOld.Regional,TeknisiOld.point,"+")
-
+  // await upSektor(TeknisiOld.Sektor,TeknisiOld.point,"+")
+  // await upWitel(TeknisiOld.Witel,TeknisiOld.point,"+")
+  // await upReg(TeknisiOld.Regional,TeknisiOld.point,"+")
+  let Data = TeknisiOld
+  await addFilter(Data.Regional,Data.Witel,Data.Sektor)
   let Update = await TeknisiModel.findOneAndUpdate({IDTelegram: IdT},TeknisiOld)
   if(!Update){
     return null 
@@ -79,8 +79,13 @@ export async function updateUser(User: any,IdT: string): Promise<null | boolean>
   }
   return true
 }
-export async function getAll(): Promise<Teknisi[]> {
-  let Teknisies = await TeknisiModel.find({})
+export async function getAll(filter?: undefined | object): Promise<Teknisi[]> {
+  let Teknisies: any
+  if(!filter){
+    Teknisies = await TeknisiModel.find({})
+  }else {
+    Teknisies = await TeknisiModel.find(filter)
+  }
   return Teknisies
 }
 

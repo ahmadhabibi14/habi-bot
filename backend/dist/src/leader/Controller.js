@@ -188,9 +188,9 @@ function getTeknisiData(req, res) {
 exports.getTeknisiData = getTeknisiData;
 function getTeknisiTen(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { from, to } = req.body;
+        const { from, to, filter } = req.body;
         //console.log(req.body)
-        const teknisi = yield (0, Service_2.getAll)();
+        const teknisi = yield (0, Service_2.getAll)(filter);
         const nameOnly = teknisi.map((e) => {
             return { Nama: e.Nama, NIK: e.NIK };
         });

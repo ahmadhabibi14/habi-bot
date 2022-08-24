@@ -1,4 +1,5 @@
 interface Nub {
+  point: number,
   type : string,
   done : false,
   date : Date
