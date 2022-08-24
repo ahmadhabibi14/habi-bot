@@ -42,11 +42,11 @@ const TablePagination = (props) => {
   function Prev() {
     console.log(from);
     if (i == 1) {
-      alert("HALAM Pertama");
+      alert("halaman Pertama");
       return;
     }
     if (props.Data.length < 10) {
-      to -= 7 - props.Data.length;
+      to -= 1 - props.Data.length;
     } else {
       to -= 10;
     }

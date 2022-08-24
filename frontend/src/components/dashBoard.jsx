@@ -39,15 +39,7 @@ function Dashboard() {
   function Submit() {
     console.log(sektorFilt);
     if (!sektorFilt) {
-      axios
-        .post(
-          `${server}/leader/teknisi`,
-          { to: 10, from: 0, filter: {} },
-          { withCredentials: true }
-        )
-        .then((e) => {
-          setData(e.data);
-        });
+      alert('tolong pilih sektor')
       return;
     }
     setFilter({ Sektor: sektorFilt });
@@ -175,6 +167,7 @@ function Dashboard() {
                 {/* Isi Tabel */}
                 {/* OVERFLOW INI ARTINYA NANTI BAKAL SCROLL OTOMATIS */}
                 <tbody className="overflow-auto overflow-visible h-90">
+                  {currentUser.length == 0 && <span>Nothing to show</span>}
                   {currentUser.map((user) => {
                     return (
                       <tr className="">
@@ -328,7 +321,7 @@ function Dashboard() {
                 "T9",
                 "T10",
                 "T11",
-                "T12",
+              
               ].map((isiData) => {
                 return (
                   <td className="bg-slate-900 text-slate-50 px-2 py-1">
@@ -382,10 +375,7 @@ function Dashboard() {
                       {e.Handle.filter((e) => e.type == "gamasTipeC").length}
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "survey").length}
-                    </td>
-                    <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "lapul").length}
+                      {e.Handle.filter((e) => e.type == "nub").length}
                     </td>
                   </tr>
                 );
