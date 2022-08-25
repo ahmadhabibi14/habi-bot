@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.min-wh-80 {
+	min-height: 80%;
+	min-width: 80%;
+	max-height: 80%;
+}
