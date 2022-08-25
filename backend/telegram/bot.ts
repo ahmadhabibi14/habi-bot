@@ -265,8 +265,12 @@ Close.enter(ctx =>{
 })
 
 broadcast.on("send",(id,message)=>{
-  console.log(id)
-  bot.telegram.sendMessage(id,message)
+  //console.log(id)
+  try {
+    bot.telegram.sendMessage(id,message)
+  } catch(e){
+    console.log("couldn't send message to id { "+id+" }")
+  }
 })
 
 export default bot

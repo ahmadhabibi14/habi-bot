@@ -23,7 +23,9 @@ export async function addFilter(regional: string, witel: string, sektor: string)
     newRegionalData.save()
   } else {
     // assign witel to this regional
-    regionalData.witel.push(witel)
+    if(!regionalData.witel.find( (e: string) => e == witel)){
+     regionalData.witel.push(witel)
+    }
     let regionalDataWithoutId = {
       name : regionalData.name,
       witel : regionalData.witel
@@ -41,7 +43,9 @@ export async function addFilter(regional: string, witel: string, sektor: string)
     })
     newWitelData.save()
   }else {
-    witelData.sektor.push(sektor)
+    if(!witelData.sektor.find( (e: string) => e == sektor)){
+      witelData.sektor.push(sektor)
+    }
     let witelDataWithoutId = {
       name : witelData.name,
       sektor : witelData.sektor
