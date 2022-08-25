@@ -39,7 +39,7 @@ function Dashboard() {
   function Submit() {
     console.log(sektorFilt);
     if (!sektorFilt) {
-      alert('tolong pilih sektor')
+      alert("tolong pilih sektor");
       return;
     }
     setFilter({ Sektor: sektorFilt });
@@ -131,61 +131,77 @@ function Dashboard() {
       {/* INI NTAR MODAL nya, njirrr aku bingung */}
       {isOpen && (
         <>
-          <div className="flex flex-col absolute bg-slate-900 fixed w-fit border border-slate-900">
-            <div className="flex flex-row justify-end border border-slate-900">
+          <div className="flex flex-col absolute bg-slate-100 w-fit border-2 rounded-lg border-slate-700 fixed top-1/2 left-1/2 min-wh-80 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="flex flex-row justify-end border-b border-slate-700">
               <button
-                className="text-gray-200 hover:bg-green-700 hover:scale-100"
+                className="text-gray-200 hover:bg-red-400 bg-red-500 hover:scale-100 p-2"
                 onClick={closeModal}
-                className="text-slate-50 p-2"
+                title="Close"
               >
-                X
+                <img src="/images/x.svg" width="10" />
               </button>
             </div>
-            <div className="p-2">
-              <table className="w-full h-full bg-slate-90 text-slate-50 border border-slate-900 mx-auto">
-                {/* Ket. Tabel */}
-                <thead>
-                  <p> Nama : {name} </p>
-                  <p> Nik : {nik} </p>
-                  <p> Tugas : </p>
-                  <tr>
-                    {[
-                      ["Jenis"],
-                      ["Status"],
-                      ["Date"],
-                      //["Keluhan"],
-                      //["Perbaikan"],
-                    ].map(([isiData]) => (
-                      <td className="bg-slate-900 text-slate-50 px-2 py-1">
-                        {isiData}
-                      </td>
-                    ))}
-                  </tr>
-                </thead>
-                {/* AKhir head tabel */}
 
-                {/* Isi Tabel */}
-                {/* OVERFLOW INI ARTINYA NANTI BAKAL SCROLL OTOMATIS */}
-                <tbody className="overflow-auto overflow-visible h-90">
-                  {currentUser.length == 0 && <span>Nothing to show</span>}
-                  {currentUser.map((user) => {
-                    return (
-                      <tr className="">
-                        <td className="px-2 py-1 bg-green-800 text-gray-50 border border-slate-900">
-                          {user.type}
+            <div className="p-4 flex flex-col space-y-2">
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row space-x-2">
+                  <span className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg">
+                    {" "}
+                    NAMA : {name}{" "}
+                  </span>
+                  <span className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg">
+                    {" "}
+                    NIK : {nik}{" "}
+                  </span>
+                </div>
+                <span className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg">
+                  TUGAS
+                </span>
+              </div>
+
+              <div className="overflow-y-scroll h-80">
+                <table className="table-auto w-full h-full bg-slate-90border border-slate-900 mx-auto">
+                  {/* Ket. Tabel */}
+                  <thead>
+                    <tr className="bg-slate-800">
+                      {[
+                        ["Jenis"],
+                        ["Status"],
+                        ["Date"],
+                        //["Keluhan"],
+                        //["Perbaikan"],
+                      ].map(([isiData]) => (
+                        <td className="text-slate-50 px-2 py-1 border border-slate-700">
+                          {isiData}
                         </td>
-                        <td className="px-2 py-1 bg-green-800 text-gray-50 border border-slate-900">
-                          {user.done ? "sudah" : "belum"}
-                        </td>
-                        <td className="px-2 py-1  bg-green-800 text-gray-50 border border-slate-900">
-                          {user.date}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-                {/* Akhir Isi Tabel */}
-              </table>
+                      ))}
+                    </tr>
+                  </thead>
+                  {/* AKhir head tabel */}
+
+                  {/* Isi Tabel */}
+                  {/* OVERFLOW INI ARTINYA NANTI BAKAL SCROLL OTOMATIS */}
+                  <tbody>
+                    {currentUser.length == 0 && <span>Nothing to show</span>}
+                    {currentUser.map((user) => {
+                      return (
+                        <tr>
+                          <td className="px-2 py-1 border border-slate-900">
+                            {user.type}
+                          </td>
+                          <td className="px-2 py-1 border border-slate-900">
+                            {user.done ? "sudah" : "belum"}
+                          </td>
+                          <td className="px-2 py-1 border border-slate-900">
+                            {user.date}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                  {/* Akhir Isi Tabel */}
+                </table>
+              </div>
             </div>
           </div>
         </>
@@ -321,7 +337,6 @@ function Dashboard() {
                 "T9",
                 "T10",
                 "T11",
-              
               ].map((isiData) => {
                 return (
                   <td className="bg-slate-900 text-slate-50 px-2 py-1">
