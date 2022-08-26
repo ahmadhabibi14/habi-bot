@@ -131,7 +131,7 @@ function Dashboard() {
       {/* INI NTAR MODAL nya, njirrr aku bingung */}
       {isOpen && (
         <>
-          <div className="flex flex-col absolute bg-slate-100 w-fit border-2 rounded-lg border-slate-700 fixed top-1/2 left-1/2 min-wh-80 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="flex flex-col absolute bg-slate-100 w-fit border-2 rounded-lg border-slate-700 fixed top-1/2 left-1/2 min-wh-80 transform -translate-x-1/2 -translate-y-1/2 shadow-lg shadow-slate-400">
             <div className="flex flex-row justify-end border-b border-slate-700">
               <button
                 className="text-gray-200 hover:bg-red-400 bg-red-500 hover:scale-100 p-2"
@@ -160,7 +160,7 @@ function Dashboard() {
               </div>
 
               <div className="overflow-y-scroll h-80">
-                <table className="table-auto w-full h-full bg-slate-90border border-slate-900 mx-auto">
+                <table className="w-full h-full bg-slate-90border border-slate-900 mx-auto">
                   {/* Ket. Tabel */}
                   <thead>
                     <tr className="bg-slate-800">

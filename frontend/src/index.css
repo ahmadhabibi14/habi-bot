@@ -7,3 +7,7 @@
 	min-width: 80%;
 	max-height: 80%;
 }
+
+html {
+	font-family: Arial, sans-serif;
+}

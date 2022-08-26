@@ -5,20 +5,21 @@ import {
   Navigate,
   Redirect,
 } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 function App() {
   axios
-    .get("http://localhost:8887/leader/login",{
-      withCredentials: true
+    .get("http://localhost:8887/leader/login", {
+      withCredentials: true,
     })
-    .then((res) =>{
-      let user = res.data
-      localStorage.setItem("Lxpx",JSON.stringify(user))
-    }).catch((e) => {
+    .then((res) => {
+      let user = res.data;
+      localStorage.setItem("Lxpx", JSON.stringify(user));
+    })
+    .catch((e) => {
       // console.log(e)
-      localStorage.clear()
-      return <Navigate to="/login" replace />
-    })
+      localStorage.clear();
+      return <Navigate to="/login" replace />;
+    });
   if (!localStorage.getItem("Lxpx")) {
     window.location.href = "/login";
     return <Navigate to="/login" replace />;
@@ -57,7 +58,7 @@ function App() {
               : "hover:bg-slate-200 bg-slate-300 py-2 px-6 rounded-lg"
           }
         >
-          Add Teknisi
+          Teknisi
         </NavLink>
       </nav>
 
