@@ -44,13 +44,14 @@ function AddTeknisi() {
   }
 
   return (
-    <div className="flex flex-row justify-between justify-items-stretch">
-      <form className="flex flex-col space-y-3 p-4">
+    <div className="flex flex-row">
+      {/* TAMBAH TEKNISI*/}
+      <form className="flex flex-col space-y-3 p-3 basis-1/2">
         {/* KOLOM 1*/}
         <div className="flex flex-row space-x-2">
           {/* BIKIN NIK */}
           <div className="flex flex-col space-y-2">
-            <label className="text-slate-900">NIK</label>
+            <label className="font-bold">NIK</label>
             <input
               type="text"
               name="nik"
@@ -61,7 +62,7 @@ function AddTeknisi() {
           </div>
           {/* BIKIN NIK */}
           <div className="flex flex-col space-y-2">
-            <label className="text-slate-900">Nama</label>
+            <label className="font-bold">Nama</label>
             <input
               type="text"
               name="nik"
@@ -76,7 +77,7 @@ function AddTeknisi() {
         <div className="flex flex-row space-x-2">
           {/* BIKIN NIK */}
           <div className="flex flex-col space-y-2">
-            <label className="text-slate-900">ID Telegram</label>
+            <label className="font-bold">ID Telegram</label>
             <input
               type="text"
               name="nik"
@@ -87,7 +88,7 @@ function AddTeknisi() {
           </div>
           {/* BIKIN NIK */}
           <div className="flex flex-col space-y-2">
-            <label className="text-slate-900">Nama Mitra</label>
+            <label className="font-bold">Nama Mitra</label>
             <input
               type="text"
               name="nik"
@@ -102,7 +103,7 @@ function AddTeknisi() {
         <div className="flex flex-row space-x-2">
           {/* BIKIN NIK */}
           <div className="flex flex-col space-y-2">
-            <label className="text-slate-900">Sektor</label>
+            <label className="font-bold">Sektor</label>
             <input
               type="text"
               name="nik"
@@ -113,7 +114,7 @@ function AddTeknisi() {
           </div>
           {/* BIKIN NIK */}
           <div className="flex flex-col space-y-2">
-            <label className="text-slate-900">Witel</label>
+            <label className="font-bold">Witel</label>
             <input
               type="text"
               name="nik"
@@ -128,7 +129,7 @@ function AddTeknisi() {
         <div className="flex flex-row space-x-2">
           {/* BIKIN NIK */}
           <div className="flex flex-col space-y-2">
-            <label className="text-slate-900">Regional</label>
+            <label className="font-bold">Regional</label>
             <input
               type="text"
               name="nik"
@@ -140,21 +141,81 @@ function AddTeknisi() {
         </div>
 
         {/* TOMBOL DAFTAR */}
-        <div>
+        <div className="pt-3">
           <button
-            className="flex flex-row items-center space-x-1.5 font-bold py-1 px-3 bg-blue-400 rounded-lg hover:bg-blue-300 text-slate-50"
+            className="font-bold py-2 px-3 bg-blue-500 rounded-lg hover:bg-blue-400 text-slate-50"
             type="button"
             onClick={(e) => Daftar()}
             title="Tambah Teknisi"
           >
-            <span className="text-2xl">+</span>
-            <span>Teknisi</span>
+            Tambah Teknisi
           </button>
         </div>
       </form>
 
-      <div>
-        <p>NTAR DISINI DELETE TEKNISI</p>
+      {/* DELETE TEKNISI */}
+      <div className="flex flex-col space-y-3 p-3 basis-1/2">
+        {/* KOLOM 1*/}
+        <div className="flex flex-row space-x-2 w-full">
+          {/*PILIH REGIONAL*/}
+          <div className="flex flex-col basis-1/2">
+            <label className="font-bold px-2 py-1.5">Pilih Regional</label>
+            <select
+              name="nama_teknisi"
+              className="w-full rounded-lg py-1.5 px-3 border-2 border-slate-400 bg-inherit focus:rounded-lg"
+            >
+              <option>Pilih Regional</option>
+            </select>
+          </div>
+
+          {/*PILIH Witel*/}
+          <div className="flex flex-col basis-1/2">
+            <label className="font-bold px-2 py-1.5">Pilih Witel</label>
+            <select
+              name="nama_teknisi"
+              className="w-full rounded-lg py-1.5 px-3 border-2 border-slate-400 bg-inherit focus:rounded-lg"
+            >
+              <option>Pilih Witel</option>
+            </select>
+          </div>
+        </div>
+
+        {/* KOLOM 2*/}
+        <div className="flex flex-row space-x-2 w-full">
+          {/*PILIH Sektor*/}
+          <div className="flex flex-col basis-1/2">
+            <label className="font-bold px-2 py-1.5">Pilih Sektor</label>
+            <select
+              name="nama_teknisi"
+              className="w-full rounded-lg py-1.5 px-3 border-2 border-slate-400 bg-inherit focus:rounded-lg"
+            >
+              <option>Pilih Sektor</option>
+            </select>
+          </div>
+
+          {/*Nama Teknisi*/}
+          <div className="flex flex-col basis-1/2">
+            <label className="font-bold px-2 py-1.5">Nama Teknisi</label>
+            <select
+              name="nama_teknisi"
+              className="w-full rounded-lg py-1.5 px-3 border-2 border-slate-400 bg-inherit focus:rounded-lg"
+            >
+              <option>Nama Teknisi</option>
+            </select>
+          </div>
+        </div>
+
+        {/* BUTTON */}
+        <div className="pt-3">
+          <button
+            className="font-bold py-2 px-3 bg-red-500 rounded-lg hover:bg-red-400 text-slate-50"
+            type="button"
+            // onClick={(e) => Daftar()}
+            title="Hapus Teknisi"
+          >
+            Hapus Teknisi
+          </button>
+        </div>
       </div>
     </div>
   );

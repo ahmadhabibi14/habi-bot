@@ -26,7 +26,7 @@ function App() {
   }
 
   return (
-    <section className="flex flex-row space-x-4 p-6 text-slate-900">
+    <section className="flex flex-row space-x-4 p-4 text-slate-900">
       {/* Navigasi Bar */}
       <nav className="flex flex-col space-y-3 mt-6">
         <NavLink
@@ -63,7 +63,7 @@ function App() {
       </nav>
 
       {/* Dashboard */}
-      <main className="w-full rounded-lg border-2 border-slate-900 mt-2 p-4 min-h-max">
+      <main className="w-full rounded-lg border-2 border-slate-900 p-3 min-h-max">
         {/*LAin route*/}
         <Outlet />
       </main>

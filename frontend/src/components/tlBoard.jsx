@@ -85,7 +85,6 @@ function TlBoard() {
                   className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
                 >
                   <option>Pilih Regional</option>
-                  ); })}
                 </select>
               </div>
 
@@ -97,7 +96,6 @@ function TlBoard() {
                   className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
                 >
                   <option>Pilih Witel</option>
-                  ); })}
                 </select>
               </div>
 
@@ -109,7 +107,6 @@ function TlBoard() {
                   className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
                 >
                   <option>Pilih Sektor</option>
-                  ); })}
                 </select>
               </div>
 
