@@ -66,28 +66,68 @@ function TlBoard() {
       <h2 className="text-2xl font-bold ml-24">TL BOARD</h2>
 
       {/* Tempat Tabel data-data dari teknisi nya */}
-      <div className="min-w-8/12 border-2 border-slate-900 flex flex-col w-8/12 ml-10">
+      <div className="min-w-8/12 border-2 border-slate-900 flex flex-col w-10/12 ml-10">
         <h3 className="text-slate-50 bg-slate-900 px-4 py-2">
           Input Performansi
         </h3>
 
         <div className="flex flex-col p-8 space-y-3.5">
           {/*// NIK / Nama Teknisi*/}
-          <div className="flex flex-row justify-between items-start">
+          <div className="flex flex-row justify-between items-center content-center">
             <label>NIK / Nama Teknisi</label>
-            <select
-              onChange={(e) => setNamaTeknisi(e.target.value)}
-              name="nama_teknisi"
-              className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
-            >
-              {user.map((e) => {
-                return (
-                  <option key={e.NIK} value={e.NIK}>
-                    {e.NIK + " " + e.Nama}
-                  </option>
-                );
-              })}
-            </select>
+
+            <div className="flex flex-row w-fit">
+              {/* PILIH REGIONAL */}
+              <div className="flex flex-col ml-2">
+                <label className="font-bold px-2 py-1.5">Pilih Regional</label>
+                <select
+                  name="nama_teknisi"
+                  className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
+                >
+                  <option>Pilih Regional</option>
+                </select>
+              </div>
+
+              {/* PILIH Witel */}
+              <div className="flex flex-col ml-2">
+                <label className="font-bold px-2 py-1.5">Pilih Witel</label>
+                <select
+                  name="nama_teknisi"
+                  className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
+                >
+                  <option>Pilih Witel</option>
+                </select>
+              </div>
+
+              {/* PILIH Sektor */}
+              <div className="flex flex-col ml-2">
+                <label className="font-bold px-2 py-1.5">Pilih Sektor</label>
+                <select
+                  name="nama_teknisi"
+                  className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
+                >
+                  <option>Pilih Sektor</option>
+                </select>
+              </div>
+
+              {/* NAMA TEKNISI */}
+              <div className="flex flex-col ml-2">
+                <label className="font-bold px-2 py-1.5">Nama Teknisi</label>
+                <select
+                  onChange={(e) => setNamaTeknisi(e.target.value)}
+                  name="nama_teknisi"
+                  className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
+                >
+                  {user.map((e) => {
+                    return (
+                      <option key={e.NIK} value={e.NIK}>
+                        {e.NIK + " " + e.Nama}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            </div>
           </div>
 
           <hr />
@@ -109,19 +149,6 @@ function TlBoard() {
 
           <hr />
 
-          {/*// Jumlah nilai yang akan di asign
-          <div className="flex flex-row justify-between items-start">
-            <label>Jumlah nilai yang akan di asign</label>
-            <input
-              className="w-16 py-1 px-2 focus:px-2 focus:py-1 focus:ring-2 ring-2 border-1 border-slate-900 outline-2 outline-slate-800 ring-2 ring-slate-900 rounded-md"
-              type="number"
-              name="number"
-              min="1"
-            />
-          </div>
-
-          <hr />
-          */}
           {/*// Keterangan*/}
           <div className="flex flex-row justify-between items-start">
             <label>Keterangan</label>
