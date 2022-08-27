@@ -181,7 +181,7 @@ export async function getTeknisiTen(req: Request,res: Response){
   //console.log(req.body)
   const teknisi = await getAll(filter)
   const nameOnly = teknisi.map((e) =>{
-    return {Nama : e.Nama, NIK : e.NIK}
+    return { Nama : e.Nama, NIK : e.NIK, Sektor: e.Sektor }
   })
   if(!to){
     res.json(nameOnly)
