@@ -11,6 +11,9 @@ function Dashboard() {
   let Handles = [];
   let hideme = false;
   //Regional
+  let [selectSektor, setSelectSektor] = useState('')
+  let [selectRegional, setSelectRegional ] = useState('')
+  let [selectWitel, setSelectWitel] = useState("")
   let [regionalData, setRegional] = useState([]);
   let [witelData, setWitel] = useState([]);
   let [witelDataFull, setWitelFull] = useState([]);
@@ -72,15 +75,21 @@ function Dashboard() {
       .get(`${server}/leader/regional`, { withCredentials: true })
       .then((res) => {
         setRegional(res.data);
+        //setWitel([])
+        //setSektor([])
       });
   }
   // Update Witel
   function upWitel(a) {
+    setSelectRegional(a)
     let regionalFrom = regionalData.find((e) => e.name == a);
     if (!regionalFrom) {
       setWitel([]);
       setSektor([]);
       return;
+    }
+    if(witelData){
+      setWitel([])
     }
     setWitel(regionalFrom.witel);
     setSektor([]);
@@ -91,6 +100,7 @@ function Dashboard() {
       });
   }
   function upSektor(a) {
+    setSelectWitel(a)
     let witelFrom = witelDataFull.find((e) => e.name == a);
     if (!witelFrom) {
       return setSektor([]);
@@ -243,7 +253,7 @@ function Dashboard() {
 
           <select
             onChange={(e) => upWitel(e.target.value)}
-            //value="tidak ada regional di pilih"
+            value={selectRegional}
             className="py-1 px-2 bg-inherit border-2 mr-4 w-48 border-slate-900 rounded-lg focus:rounded-lg"
           >
             <option selected value="">
@@ -263,6 +273,7 @@ function Dashboard() {
 
           <select
             onChange={(e) => upSektor(e.target.value)}
+            value={selectWitel}
             className="py-1 px-2 bg-inherit border-2 mr-4 w-48 border-slate-900 rounded-lg focus:rounded-lg"
           >
             {witelData.length != 0 && (
