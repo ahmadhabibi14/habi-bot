@@ -192,7 +192,7 @@ function getTeknisiTen(req, res) {
         //console.log(req.body)
         const teknisi = yield (0, Service_2.getAll)(filter);
         const nameOnly = teknisi.map((e) => {
-            return { Nama: e.Nama, NIK: e.NIK };
+            return { Nama: e.Nama, NIK: e.NIK, Sektor: e.Sektor };
         });
         if (!to) {
             res.json(nameOnly);

@@ -18,7 +18,7 @@ function Dashboard() {
   let [sektorFilt, setSektorFilt] = useState("");
   // Hooks
   let [Data, setData] = useState([]);
-  //let [duplicateData, setDupData] = useState([]);
+  // let [duplicateData, setDupData] = useState([]);
   // MODAL HOOK
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
@@ -38,6 +38,12 @@ function Dashboard() {
   // FILTER
   function Submit() {
     console.log(sektorFilt);
+    setSektor([])
+    setWitel([])
+    setRegional([])
+    setWitelFull([])
+    Regional()
+    setSektorFilt([])
     if (!sektorFilt) {
       alert("tolong pilih sektor");
       return;
@@ -311,7 +317,7 @@ function Dashboard() {
             title="SUBMIT"
             onClick={() => fetchData()}
           >
-            Home
+            HOME
           </button>
         </div>
       </div>
