@@ -9,6 +9,12 @@ function TlBoard() {
   let [type, setType] = useState();
   let [namaTeknisi, setNamaTeknisi] = useState();
   let [ket, setKeterangan] = useState();
+
+  // INI HOOK NGEH 
+  let [selectReginal, setSelectRegional] = useState("")
+  let [selectWitel, setSelectWitel] = useState("")
+  let [selectSektor, setSelectSektor] = useState("")
+
   let idGen = "";
   if (!localStorage.getItem("Lxpx")) {
     window.location.href = "/login";
@@ -37,8 +43,9 @@ function TlBoard() {
   let TeknisiNik = user.map((e) => {
     return e.NIK + " " + e.Nama;
   });
-  function setNamaTeknisiHandle(e){
+  function setNamaTeknisiHandle(e){ 
     setNamaTeknisi(e)
+    getUsers()
     setWitel([])
     setRegional([])
     setWitelFull([])
@@ -63,10 +70,11 @@ function TlBoard() {
     });
     alert("tugas dikirim ke teknisi");
   }
-  function recover(){
-    getUsers()
+  async function recover(){
+    await getUsers()
   }
   async function filter(sektor){
+    setSelectSektor(sektor)
     if(!sektor){
       return 
     }
@@ -84,6 +92,7 @@ function TlBoard() {
   //Function Handler
 
   function updateSektor(a){
+    setSelectWitel(a)
     getUsers()
     // console.log(a + "/sd")
     let sektor = witelFull.find(e => e.name == a)
@@ -94,6 +103,9 @@ function TlBoard() {
     setSektor(sektor.sektor)
   }
   function updateWitel(a){
+    setSelectRegional(a)
+    setSektor([])
+    alert(a)
     let witel = Regional.find(e => e.name == a )
     // console.log(witel)
     if(!witel){
@@ -108,6 +120,7 @@ function TlBoard() {
       .catch(e => console.log(e))
   }
   function getRegional(){
+    setSelectWitel('')
     axios
       .get("http://localhost:8887"+'/leader/regional',{
         withCredentials: true
@@ -172,6 +185,7 @@ function TlBoard() {
                 <label className="font-bold px-2 py-1.5">Pilih Witel</label>
                 <select
                   name="nama_teknisi"
+                  value={selectWitel}
                   onChange={e => updateSektor(e.target.value)}
                   className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
                 >
@@ -192,6 +206,7 @@ function TlBoard() {
                 <label className="font-bold px-2 py-1.5">Pilih Sektor</label>
                 <select
                   name="nama_teknisi"
+                  value={selectSektor}
                   onChange={e => filter(e.target.value)}
                   className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
                 >
