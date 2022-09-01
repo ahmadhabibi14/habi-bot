@@ -11,9 +11,9 @@ function Dashboard() {
   let Handles = [];
   let hideme = false;
   //Regional
-  let [selectSektor, setSelectSektor] = useState('')
-  let [selectRegional, setSelectRegional ] = useState('')
-  let [selectWitel, setSelectWitel] = useState("")
+  let [selectSektor, setSelectSektor] = useState("");
+  let [selectRegional, setSelectRegional] = useState("");
+  let [selectWitel, setSelectWitel] = useState("");
   let [regionalData, setRegional] = useState([]);
   let [witelData, setWitel] = useState([]);
   let [witelDataFull, setWitelFull] = useState([]);
@@ -41,12 +41,12 @@ function Dashboard() {
   // FILTER
   function Submit() {
     console.log(sektorFilt);
-    setSektor([])
-    setWitel([])
-    setRegional([])
-    setWitelFull([])
-    Regional()
-    setSektorFilt([])
+    setSektor([]);
+    setWitel([]);
+    setRegional([]);
+    setWitelFull([]);
+    Regional();
+    setSektorFilt([]);
     if (!sektorFilt) {
       alert("tolong pilih sektor");
       return;
@@ -81,15 +81,15 @@ function Dashboard() {
   }
   // Update Witel
   function upWitel(a) {
-    setSelectRegional(a)
+    setSelectRegional(a);
     let regionalFrom = regionalData.find((e) => e.name == a);
     if (!regionalFrom) {
       setWitel([]);
       setSektor([]);
       return;
     }
-    if(witelData){
-      setWitel([])
+    if (witelData) {
+      setWitel([]);
     }
     setWitel(regionalFrom.witel);
     setSektor([]);
@@ -100,7 +100,7 @@ function Dashboard() {
       });
   }
   function upSektor(a) {
-    setSelectWitel(a)
+    setSelectWitel(a);
     let witelFrom = witelDataFull.find((e) => e.name == a);
     if (!witelFrom) {
       return setSektor([]);
@@ -170,6 +170,12 @@ function Dashboard() {
                     NIK : {nik}{" "}
                   </span>
                 </div>
+                <select
+                  name="pilih_tanggal"
+                  className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
+                >
+                  <option>Pilih Tanggal</option>
+                </select>
                 <span className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg">
                   TUGAS
                 </span>
