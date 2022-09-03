@@ -226,11 +226,8 @@ Close.enter(ctx => {
 });
 exports.broadcast.on("send", (id, message) => {
     //console.log(id)
-    try {
-        bot.telegram.sendMessage(id, message);
-    }
-    catch (e) {
+    bot.telegram.sendMessage(id, message).catch((e) => {
         console.log("couldn't send message to id { " + id + " }");
-    }
+    });
 });
 exports.default = bot;

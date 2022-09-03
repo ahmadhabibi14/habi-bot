@@ -9,11 +9,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addLeadTask = exports.getAll = exports.updateUser = exports.updateHandle = exports.newTeknisi = exports.getTeknisi = void 0;
+exports.addLeadTask = exports.getAll = exports.updateUser = exports.updateHandle = exports.newTeknisi = exports.getTeknisi = exports.deleteTeknisi = void 0;
 const Model_1 = require("./Model");
+const Model_2 = require("../filtered/Model");
 const bot_1 = require("../../telegram/bot");
 const Service_1 = require("../filtered/Service");
 //function createSektor(sektoName: string){}
+function deleteTeknisi(nik) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let isDelete = yield Model_1.TeknisiModel.findOneAndDelete({ NIK: nik });
+            let deletedRegional;
+            if (isDelete && isDelete.Regional) {
+                deletedRegional = isDelete.Regional;
+                let getUserOnRegional = yield Model_1.TeknisiModel.findOne({ Regional: deletedRegional });
+                if (!getUserOnRegional) {
+                    yield Model_2.regionalModel.findOneAndDelete({ name: deletedRegional });
+                }
+            }
+            if (isDelete) {
+                return true;
+            }
+            return false;
+        }
+        catch (e) {
+            console.log(e);
+            return false;
+        }
+    });
+}
+exports.deleteTeknisi = deleteTeknisi;
 function getTeknisi(Nik, IDTelegram) {
     return __awaiter(this, void 0, void 0, function* () {
         if (Nik != 0) {
