@@ -5,7 +5,7 @@ const TablePagination = (props) => {
   let from = 0;
   let to = 10;
   let [i, setI] = useState(1);
-  let server = "http://localhost:8887";
+  let server = "";
   function Next() {
     from += 10;
     to += 10;

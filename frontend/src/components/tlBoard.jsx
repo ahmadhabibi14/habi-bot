@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function TlBoard() {
-  let server = "http://localhost:8887/";
+  let server = "";
   let data = "";
   let [user, setUser] = useState([]);
   let [userOld, setUserOld ] = useState([])
@@ -21,7 +21,7 @@ function TlBoard() {
   }
   data = JSON.parse(localStorage.getItem("Lxpx"));
   async function getUsers() {
-    let getData = await fetch(server + "leader/teknisi", {
+    let getData = await fetch(server + "/leader/teknisi", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +54,7 @@ function TlBoard() {
   }
   async function submit() {
     //console.log(type, namaTeknisi, ket);
-    await fetch("http://localhost:8887/leader/addtask", {
+    await fetch(server+"/leader/addtask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -115,14 +115,14 @@ function TlBoard() {
     }
     setWitel(witel.witel)
     axios
-      .get("http://localhost:8887"+"/leader/witel",{withCredentials: true})
+      .get(server+"/leader/witel",{withCredentials: true})
       .then(e => setWitelFull(e.data))
       .catch(e => console.log(e))
   }
   function getRegional(){
     setSelectWitel('')
     axios
-      .get("http://localhost:8887"+'/leader/regional',{
+      .get(server+'/leader/regional',{
         withCredentials: true
       })
       .then(e => {

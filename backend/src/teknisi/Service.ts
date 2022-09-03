@@ -1,11 +1,31 @@
 import {Teknisi,TeknisiModel} from "./Model"
+import {regionalModel} from "../filtered/Model"
 import {Task} from "../performansi/Model"
 import {broadcast} from "../../telegram/bot"
 import {
   addFilter
 } from "../filtered/Service"
 //function createSektor(sektoName: string){}
-
+export async function deleteTeknisi(nik: number): Promise<boolean> {
+  try{
+    let isDelete = await TeknisiModel.findOneAndDelete({NIK: nik})
+    let deletedRegional: string 
+    if(isDelete && isDelete.Regional){ 
+      deletedRegional = isDelete.Regional 
+      let getUserOnRegional = await TeknisiModel.findOne({Regional: deletedRegional})
+      if(!getUserOnRegional){
+        await regionalModel.findOneAndDelete({name: deletedRegional})
+      }
+    }
+    if(isDelete){
+      return true 
+    }
+    return false
+  }catch(e){
+    console.log(e)
+    return false 
+  }
+}
 export async function getTeknisi(Nik: number,IDTelegram?: string): Promise<Teknisi | null | undefined>{
   if(Nik != 0){
     let teknisi: Teknisi | null

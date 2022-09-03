@@ -1,8 +1,26 @@
 import {Response,Request} from "express"
 import Service from "./Service"
 import jwt from "jsonwebtoken"
-import {getTeknisi,newTeknisi,addLeadTask,getAll} from "../teknisi/Service"
+import {getTeknisi,newTeknisi,addLeadTask,getAll,deleteTeknisi} from "../teknisi/Service"
 import {getSektor,getWitel,getReg} from "../filtered/Service"
+// Delete By NIk 
+export async function deleteTeknisiByNik(req: Request,res: Response){
+  //console.log(req.params)
+  if(!req.params.id){
+    //console.log(req.params)
+    res.sendStatus(404)
+    return 
+  }
+  try {
+    let deleted = await deleteTeknisi(parseInt(req.params.id))
+    if(!deleted){
+      res.status(404).json({msg: "teknisi not found "})
+    }
+    res.json({msg: "hello world"})
+  }catch(e){
+    res.sendStatus(500)
+  }
+}
 // LOGIN
 export async function getLeader(req: Request,res: Response){
   const leaderProp = req.body
@@ -125,7 +143,7 @@ export async function logout(req: Request,res: Response) {
 
 // Middleware
 export async function isLoginAndLeader(req: Request,res: Response,next: ()=> void){
-  console.log(req.headers)
+  //console.log(req.headers)
   if(!req.headers.cookie){
     res.status(400).json({msg:"must be login first"})
     return 
