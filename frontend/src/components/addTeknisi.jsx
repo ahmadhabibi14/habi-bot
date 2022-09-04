@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import axios from "axios";
 
 function AddTeknisi() {
+  let server = ""
   let newTeknisi = {
     NIK: 0,
     Nama: "",
@@ -31,15 +32,17 @@ function AddTeknisi() {
     newTeknisi.Witel = witel;
     newTeknisi.Regional = regional;
     axios
-      .post("http://localhost:8887" + "/leader/create/teknisi", newTeknisi, {
+      .post(server + "/leader/create/teknisi", newTeknisi, {
         withCredentials: true,
       })
       .then((r) => {
         console.log(r);
         alert("teknisi ditambahkan");
+        window.location.reload();
       })
       .catch((res) => {
         alert("nik sudah ada tidak bisa menambahkan");
+        window.location.reload();
       });
   }
   // DELETE TEKNISI HANDLE
@@ -64,7 +67,7 @@ function AddTeknisi() {
   }
   // function in here 
   async function getRegional(){
-    axios.get('http://localhost:8887'+'/leader/regional',{withCredentials: true})
+    axios.get(server+'/leader/regional',{withCredentials: true})
       .then((e)=>{
         //console.log(e)
         setRegionalFD(e.data)
@@ -78,12 +81,22 @@ function AddTeknisi() {
       return alert('pilih teknisi terlebih dahulu')
     }
     // Progess
+    ///alert(teknisiNik)
+    axios
+      .get(server+'/leader/delete/teknisi/'+teknisiNik,{withCredentials: true})
+      .then(e => {
+        alert("sukses menghapus teknisi")
+        window.location.reload();
+      }).catch(e => {
+        alert("gagal menghapus teknisi")
+        window.location.reload();
+      })
   }
   function updateTeknisi(v){
     setTeknisiNik(v)
   }
   function getUsers() {
-    axios.post('http://localhost:8887/leader/teknisi',{},{withCredentials: true})
+    axios.post(server+'/leader/teknisi',{},{withCredentials: true})
     .then(e => {
       console.log(e)
       setUser(e.data)
@@ -125,7 +138,7 @@ function AddTeknisi() {
     setWitelD(_.witel) 
     // console.log(witelD)
     // Frint 
-    axios.get("http://localhost:8887/leader/witel",{withCredentials: true})
+    axios.get(server+"/leader/witel",{withCredentials: true})
     .then(e => {
       setWitelFD(e.data)
     }).catch(e => {
@@ -351,7 +364,7 @@ function AddTeknisi() {
           <button
             className="font-bold py-2 px-3 bg-red-500 rounded-lg hover:bg-red-400 text-slate-50"
             type="button"
-            // onClick={(e) => Daftar()}
+            onClick={(e) => removeTeknisi()}
             title="Hapus Teknisi"
           >
             Hapus Teknisi

@@ -26,9 +26,14 @@ function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [nik, setNik] = useState("");
+  let pickedUser = {}
   // MODAL
   const openModal = (data, Nama, NIK) => {
     setCurrentUser(data);
+    setTaskList(data)
+    setDateFilterValue('')
+    setDateFunc(data)
+    pickedUser = data
     setName(Nama);
     setNik(NIK);
     //console.log(data)
@@ -54,7 +59,7 @@ function Dashboard() {
     setFilter({ Sektor: sektorFilt });
     axios
       .post(
-        `${server}/leader/teknisi`,
+        `${server}leader/teknisi`,
         { to: 10, from: 0, filter: { Sektor: sektorFilt } },
         { withCredentials: true }
       )
@@ -65,14 +70,14 @@ function Dashboard() {
   }
   function Witel() {
     axios
-      .get(`${server}/leader/witel`, { withCredentials: true })
+      .get(`${server}leader/witel`, { withCredentials: true })
       .then((res) => {
         setWitel(res.data);
       });
   }
   function Regional() {
     axios
-      .get(`${server}/leader/regional`, { withCredentials: true })
+      .get(`${server}leader/regional`, { withCredentials: true })
       .then((res) => {
         setRegional(res.data);
         //setWitel([])
@@ -94,7 +99,7 @@ function Dashboard() {
     setWitel(regionalFrom.witel);
     setSektor([]);
     axios
-      .get(`${server}/leader/witel`, { withCredentials: true })
+      .get(`${server}leader/witel`, { withCredentials: true })
       .then((res) => {
         setWitelFull(res.data);
       });
@@ -109,12 +114,12 @@ function Dashboard() {
   }
   // AKHIR MODAL
 
-  let server = "http://localhost:8887";
+  let server = "/";
 
   // AMBIL JSON dari external
   const fetchData = async () => {
     let data = await axios.post(
-      `${server}/leader/teknisi`,
+      `${server}leader/teknisi`,
       {
         to: 10,
         from: 0,
@@ -141,7 +146,31 @@ function Dashboard() {
       ignore = true;
     };
   }, []);
-
+  
+  // WORK HERE At 12.04
+   
+  // HOOK 
+  let [taskList,setTaskList] = useState([])
+  let [taskDate,setTaskDate] = useState([])
+  let [dateFilterValue, setDateFilterValue] = useState('')
+  function doFilterByDate(date){
+    setDateFilterValue(date) 
+    //localStorage.setItem('currentUser-boundary982736',JSON.stringify(currentUser))
+    let filtered = currentUser.filter(e => e.date.includes(date.slice(0,10)))
+    setTaskList(filtered)
+  }
+  function setDateFunc(TASK){
+    let arrWithoutDuplicate = []
+    let arrWithoutDateProp = []
+    TASK.forEach(e => {
+      if(arrWithoutDateProp.indexOf(e.date.slice(0,10)) == -1){
+        arrWithoutDuplicate.push(e.date)
+        arrWithoutDateProp.push(e.date.slice(0,10))
+      }
+    })
+    console.log(arrWithoutDuplicate)
+    setTaskDate(arrWithoutDuplicate)
+  }
   return (
     <div className="flex flex-col space-y-4 h-full">
       {/* INI NTAR MODAL nya, njirrr aku bingung */}
@@ -170,11 +199,18 @@ function Dashboard() {
                     NIK : {nik}{" "}
                   </span>
                 </div>
+
+                {/* WORK HERE AT 12.04 */}
                 <select
                   name="pilih_tanggal"
+                  value={dateFilterValue}
+                  onChange={e => doFilterByDate(e.target.value)}
                   className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
                 >
-                  <option>Pilih Tanggal</option>
+                  <option value=''>Semua</option>
+                  { taskDate.map(e => {
+                    return <option value={e}>{e.slice(0,10)}</option>
+                  })}
                 </select>
                 <span className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg">
                   TUGAS
@@ -204,8 +240,8 @@ function Dashboard() {
                   {/* Isi Tabel */}
                   {/* OVERFLOW INI ARTINYA NANTI BAKAL SCROLL OTOMATIS */}
                   <tbody>
-                    {currentUser.length == 0 && <span>Nothing to show</span>}
-                    {currentUser.map((user) => {
+                    {taskList.length == 0 && <span>Nothing to show</span>}
+                    {taskList.map((user) => {
                       return (
                         <tr>
                           <td className="px-2 py-1 border border-slate-900">
@@ -215,7 +251,7 @@ function Dashboard() {
                             {user.done ? "sudah" : "belum"}
                           </td>
                           <td className="px-2 py-1 border border-slate-900">
-                            {user.date}
+                            Pada {user.date.slice(0,10)} Pukul {user.date.split('T')[1].slice(0,8)}
                           </td>
                         </tr>
                       );

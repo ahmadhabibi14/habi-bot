@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-	let server = "http://localhost:8887";
+	let server = "";
 	let inputNIK = "";
 	let error = "";
 	let inputPass = "";

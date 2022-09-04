@@ -12,11 +12,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRegC = exports.getWitelC = exports.getSektorC = exports.addTask = exports.getTeknisiTen = exports.getTeknisiData = exports.createTeknisi = exports.isLoginAndLeader = exports.logout = exports.createLeader = exports.loginWithToken = exports.getLeader = void 0;
+exports.getRegC = exports.getWitelC = exports.getSektorC = exports.addTask = exports.getTeknisiTen = exports.getTeknisiData = exports.createTeknisi = exports.isLoginAndLeader = exports.logout = exports.createLeader = exports.loginWithToken = exports.getLeader = exports.deleteTeknisiByNik = void 0;
 const Service_1 = __importDefault(require("./Service"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const Service_2 = require("../teknisi/Service");
 const Service_3 = require("../filtered/Service");
+// Delete By NIk 
+function deleteTeknisiByNik(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        //console.log(req.params)
+        if (!req.params.id) {
+            //console.log(req.params)
+            res.sendStatus(404);
+            return;
+        }
+        try {
+            let deleted = yield (0, Service_2.deleteTeknisi)(parseInt(req.params.id));
+            if (!deleted) {
+                res.status(404).json({ msg: "teknisi not found " });
+            }
+            res.json({ msg: "hello world" });
+        }
+        catch (e) {
+            res.sendStatus(500);
+        }
+    });
+}
+exports.deleteTeknisiByNik = deleteTeknisiByNik;
 // LOGIN
 function getLeader(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -127,7 +149,7 @@ exports.logout = logout;
 // Middleware
 function isLoginAndLeader(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(req.headers);
+        //console.log(req.headers)
         if (!req.headers.cookie) {
             res.status(400).json({ msg: "must be login first" });
             return;

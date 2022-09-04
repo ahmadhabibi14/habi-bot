@@ -2,6 +2,7 @@ import {LeaderModel,Leader} from "./Model"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 
+
 async function getLeaderByNik(Nik: number): Promise<Leader | string> {
   let leader: Leader | null
   try {

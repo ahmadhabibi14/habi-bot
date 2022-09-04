@@ -15,6 +15,7 @@ function LeaderRoute(Router) {
     // LEADER CRUD
     Router.post("/leader/create/teknisi", Controller_1.isLoginAndLeader, Controller_1.createTeknisi);
     Router.post("/leader/info/teknisi", Controller_1.isLoginAndLeader, Controller_1.getTeknisiData);
+    Router.get("/leader/delete/teknisi/:id", Controller_1.isLoginAndLeader, Controller_1.deleteTeknisiByNik);
     // POST ADD TASK
     Router.post("/leader/addtask", Controller_1.isLoginAndLeader, Controller_1.addTask);
     // Router.delete("/leader/remove/teknisi")

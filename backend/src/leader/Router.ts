@@ -10,7 +10,8 @@ import {
   addTask,
   getSektorC,
   getWitelC,
-  getRegC
+  getRegC,
+  deleteTeknisiByNik
 } from "./Controller"
 
 export function LeaderRoute(Router:any ){
@@ -26,6 +27,7 @@ export function LeaderRoute(Router:any ){
   // LEADER CRUD
   Router.post("/leader/create/teknisi",isLoginAndLeader,createTeknisi)
   Router.post("/leader/info/teknisi",isLoginAndLeader,getTeknisiData)
+  Router.get("/leader/delete/teknisi/:id",isLoginAndLeader,deleteTeknisiByNik)
   // POST ADD TASK
   Router.post("/leader/addtask",isLoginAndLeader,addTask)
   // Router.delete("/leader/remove/teknisi")

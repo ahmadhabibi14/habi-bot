@@ -14,7 +14,7 @@ function Signup() {
   const [firmPass,confirmPass] = useState("")
 	const navigate = useNavigate();
 
-	let server = "http://localhost:8887";
+	let server = "";
 
 	function Daftar() {
 		axios
