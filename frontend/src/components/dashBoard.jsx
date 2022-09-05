@@ -114,7 +114,7 @@ function Dashboard() {
   }
   // AKHIR MODAL
 
-  let server = "/";
+  let server = "";
 
   // AMBIL JSON dari external
   const fetchData = async () => {
@@ -171,6 +171,33 @@ function Dashboard() {
     console.log(arrWithoutDuplicate)
     setTaskDate(arrWithoutDuplicate)
   }
+  function convertToInt(date){
+    console.log(Date.parse(date.slice(0,10)), date.slice(0,10))
+    return Date.parse(date.slice(0,10))
+  }
+  function isValid(startDate,endDate,taskDate){
+    return ( convertToInt(startDateInt) < convertToInt(taskDate) && convertToInt(endDateInt) > convertToInt(taskDate)) //+ "start " + startDateInt + "end " + endDateInt
+    //alert(startDate)
+    //return convertToInt(startDate) < convertToInt(taskDate) && convertToInt(taskDate) < convertToInt(endDate) 
+  }
+
+  // HOOK for Date 
+  let [startDateInt,setStartDateInt] = useState('')
+  let [endDateInt,setEndDateInt] = useState('')
+  function doAFilterWithDate(v,ind){
+    alert("start "+startDateInt+",end "+endDateInt)
+    //alert(v)
+    //console.log(startDateInt,v)
+    let hasFilter = []
+    currentUser.forEach(e => {
+      console.log(startDateInt,endDateInt,e.date)
+      if(isValid(startDateInt,endDateInt,e.date)){
+        hasFilter.push(e)
+      }
+    })
+    console.log(hasFilter)
+    setTaskList(hasFilter)
+  }
   return (
     <div className="flex flex-col space-y-4 h-full">
       {/* INI NTAR MODAL nya, njirrr aku bingung */}
@@ -198,10 +225,39 @@ function Dashboard() {
                     {" "}
                     NIK : {nik}{" "}
                   </span>
-                </div>
-
+                {/* Intervall Date */}
+                
+                {/* start here */} 
+                <span className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg"> 
+                  <span className="mr-4"> Start </span>
+                  <input 
+                    onChange={e => {
+                      //alert(e.target.value)
+                      setStartDateInt(e.target.value)
+                      
+                    }}
+                    max={endDateInt}
+                    className="px-2 text-gray-900 rounded" 
+                    type='date' 
+                  /> 
+                </span>
+                {/* end here */}
+                <span 
+                  className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg"
+                > 
+                  <span className="mr-4"> End </span> 
+                  <input 
+                    onChange={e => { 
+                      setEndDateInt(e.target.value) 
+                    }}
+                    type='date' 
+                    min={startDateInt}
+                    className="px-2 text-gray-900 rounded" /> 
+                </span>
+                <button onClick={e => doAFilterWithDate() } className="px-6 py-2 bg-green-500 text-slate-50 rounded-lg" > Submit </button>
                 {/* WORK HERE AT 12.04 */}
-                <select
+                </div>
+                { /* <select
                   name="pilih_tanggal"
                   value={dateFilterValue}
                   onChange={e => doFilterByDate(e.target.value)}
@@ -212,6 +268,7 @@ function Dashboard() {
                     return <option value={e}>{e.slice(0,10)}</option>
                   })}
                 </select>
+                */}
                 <span className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg">
                   TUGAS
                 </span>
