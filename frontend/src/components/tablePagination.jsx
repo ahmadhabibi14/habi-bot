@@ -6,13 +6,24 @@ const TablePagination = (props) => {
   let to = 10;
   let [i, setI] = useState(1);
   let server = "";
+  useEffect(() => {
+    //alert(to)
+  
+    if(props.i == 1){
+      props.i = 0
+      console.log(props.i,i)
+      setI(1)
+    }
+    //to <= 10 //&& setI(1)
+  })
   function Next() {
     from += 10;
     to += 10;
     if (props.Data.length < 10) {
       from -= 10;
       to -= 10;
-      console.log(i);
+      //console.log(i);
+      //setI(1)
       alert("Page Terakhir");
       return;
     }
