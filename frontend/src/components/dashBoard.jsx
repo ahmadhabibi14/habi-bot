@@ -5,6 +5,7 @@ import TablePagination from "./tablePagination.jsx";
 function Dashboard() {
   //let datee = [];
   let i = 0;
+  let [dataI,setDataI] = useState(0)
   const [date, setDate] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
   const [filter, setFilter] = useState({});
@@ -66,6 +67,7 @@ function Dashboard() {
       .then(async (e) => {
         setData(e.data);
         setFilter();
+        setDataI(1)
       });
   }
   function Witel() {
@@ -96,7 +98,7 @@ function Dashboard() {
     if (witelData) {
       setWitel([]);
     }
-    setWitel(regionalFrom.witel);
+    setWitel(regionalFrom.witel.filter((e,i) => regionalFrom.witel.indexOf(e) === i));
     setSektor([]);
     axios
       .get(`${server}leader/witel`, { withCredentials: true })
@@ -110,13 +112,31 @@ function Dashboard() {
     if (!witelFrom) {
       return setSektor([]);
     }
-    setSektor(witelFrom.sektor);
+    setSektor(witelFrom.sektor.filter((e,i) => witelFrom.sektor.indexOf(e) === i));
   }
   // AKHIR MODAL
 
   let server = "";
 
   // AMBIL JSON dari external
+  const fetchDataHome = async () => {
+    let data = await axios.post(
+      `${server}leader/teknisi`,
+      {
+        to: 10,
+        from: 0,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+    data = data.data;
+    // console.log(data);
+    setDataI(1)
+    setData(data);
+    return data;
+  };
+
   const fetchData = async () => {
     let data = await axios.post(
       `${server}leader/teknisi`,
@@ -130,6 +150,8 @@ function Dashboard() {
     );
     data = data.data;
     // console.log(data);
+    //
+    setDataI(0)
     setData(data);
     return data;
   };
@@ -185,7 +207,7 @@ function Dashboard() {
   let [startDateInt,setStartDateInt] = useState('')
   let [endDateInt,setEndDateInt] = useState('')
   function doAFilterWithDate(v,ind){
-    alert("start "+startDateInt+",end "+endDateInt)
+    // alert("start "+startDateInt+",end "+endDateInt)
     //alert(v)
     //console.log(startDateInt,v)
     let hasFilter = []
@@ -422,14 +444,7 @@ function Dashboard() {
           >
             SUBMIT
           </button>
-          <button
-            className="mr-8 py-1.5 px-4 rounded-lg bg-emerald-500 hover:bg-emerald-300 text-slate-50 font-bold border-2 border-emerald-500 hover:border-emerald-300"
-            title="SUBMIT"
-            onClick={() => fetchData()}
-          >
-            HOME
-          </button>
-        </div>
+          </div>
       </div>
 
       {/* Tempat Tabel data-data dari teknisi nya */}
@@ -519,7 +534,7 @@ function Dashboard() {
 
       {/* NTAR disini mungkin tambahin atribut atau apa, yang pasti ini function,
     trus atribut nya pake parameter..... 😨️*/}
-      <TablePagination Data={Data} setData={setData} filter={filter} />
+      <TablePagination Data={Data} i={dataI} setData={setData} filter={filter} />
     </div>
   );
 }

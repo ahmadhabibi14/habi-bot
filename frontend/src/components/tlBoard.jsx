@@ -100,7 +100,7 @@ function TlBoard() {
       setSektor([])
       return 
     }
-    setSektor(sektor.sektor)
+    setSektor(sektor.sektor.filter((e,i) => sektor.sektor.indexOf(e) == i))
   }
   function updateWitel(a){
     setSelectRegional(a)
@@ -113,7 +113,7 @@ function TlBoard() {
       setSektor([])
       return 
     }
-    setWitel(witel.witel)
+    setWitel(witel.witel.filter((e,i) => witel.witel.indexOf(e) == i))
     axios
       .get(server+"/leader/witel",{withCredentials: true})
       .then(e => setWitelFull(e.data))

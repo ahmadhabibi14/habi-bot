@@ -98,7 +98,6 @@ function AddTeknisi() {
   function getUsers() {
     axios.post(server+'/leader/teknisi',{},{withCredentials: true})
     .then(e => {
-      console.log(e)
       setUser(e.data)
       setUserD(e.data)
     }).catch(e => {
@@ -119,7 +118,9 @@ function AddTeknisi() {
       return setSektorD([])
     }
     let _ = witelFD.find(e => e.name == v)
-    setSektorD(_.sektor)
+    setSektorD(_.sektor.filter((e,i) => _.sektor.indexOf(e) == i))
+    //console.log(_.sektor.filter((e,i) => _.sektor.indexOf(e) == i))
+
   }
   function updateWitel(v){
     setSektorV("")
@@ -135,7 +136,7 @@ function AddTeknisi() {
     }
     let _ = regionalFD.find(e => e.name == v)
     // console.log(_,v)
-    setWitelD(_.witel) 
+    setWitelD(_.witel.filter((e,i) => _.witel.indexOf(e) === i)) 
     // console.log(witelD)
     // Frint 
     axios.get(server+"/leader/witel",{withCredentials: true})
