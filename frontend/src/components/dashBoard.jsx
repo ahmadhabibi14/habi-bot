@@ -5,7 +5,7 @@ import TablePagination from "./tablePagination.jsx";
 function Dashboard() {
   //let datee = [];
   let i = 0;
-  let [dataI,setDataI] = useState(0)
+  let [dataI, setDataI] = useState(0);
   const [date, setDate] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
   const [filter, setFilter] = useState({});
@@ -27,14 +27,14 @@ function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [nik, setNik] = useState("");
-  let pickedUser = {}
+  let pickedUser = {};
   // MODAL
   const openModal = (data, Nama, NIK) => {
     setCurrentUser(data);
-    setTaskList(data)
-    setDateFilterValue('')
-    setDateFunc(data)
-    pickedUser = data
+    setTaskList(data);
+    setDateFilterValue("");
+    setDateFunc(data);
+    pickedUser = data;
     setName(Nama);
     setNik(NIK);
     //console.log(data)
@@ -67,7 +67,7 @@ function Dashboard() {
       .then(async (e) => {
         setData(e.data);
         setFilter();
-        setDataI(1)
+        setDataI(1);
       });
   }
   function Witel() {
@@ -98,7 +98,9 @@ function Dashboard() {
     if (witelData) {
       setWitel([]);
     }
-    setWitel(regionalFrom.witel.filter((e,i) => regionalFrom.witel.indexOf(e) === i));
+    setWitel(
+      regionalFrom.witel.filter((e, i) => regionalFrom.witel.indexOf(e) === i)
+    );
     setSektor([]);
     axios
       .get(`${server}leader/witel`, { withCredentials: true })
@@ -112,7 +114,9 @@ function Dashboard() {
     if (!witelFrom) {
       return setSektor([]);
     }
-    setSektor(witelFrom.sektor.filter((e,i) => witelFrom.sektor.indexOf(e) === i));
+    setSektor(
+      witelFrom.sektor.filter((e, i) => witelFrom.sektor.indexOf(e) === i)
+    );
   }
   // AKHIR MODAL
 
@@ -132,7 +136,7 @@ function Dashboard() {
     );
     data = data.data;
     // console.log(data);
-    setDataI(1)
+    setDataI(1);
     setData(data);
     return data;
   };
@@ -151,7 +155,7 @@ function Dashboard() {
     data = data.data;
     // console.log(data);
     //
-    setDataI(0)
+    setDataI(0);
     setData(data);
     return data;
   };
@@ -168,57 +172,57 @@ function Dashboard() {
       ignore = true;
     };
   }, []);
-  
+
   // WORK HERE At 12.04
-   
-  // HOOK 
-  let [taskList,setTaskList] = useState([])
-  let [taskDate,setTaskDate] = useState([])
-  let [dateFilterValue, setDateFilterValue] = useState('')
-  function doFilterByDate(date){
-    setDateFilterValue(date) 
+
+  // HOOK
+  let [taskList, setTaskList] = useState([]);
+  let [taskDate, setTaskDate] = useState([]);
+  let [dateFilterValue, setDateFilterValue] = useState("");
+  function doFilterByDate(date) {
+    setDateFilterValue(date);
     //localStorage.setItem('currentUser-boundary982736',JSON.stringify(currentUser))
-    let filtered = currentUser.filter(e => e.date.includes(date.slice(0,10)))
-    setTaskList(filtered)
+    let filtered = currentUser.filter((e) =>
+      e.date.includes(date.slice(0, 10))
+    );
+    setTaskList(filtered);
   }
-  function setDateFunc(TASK){
-    let arrWithoutDuplicate = []
-    let arrWithoutDateProp = []
-    TASK.forEach(e => {
-      if(arrWithoutDateProp.indexOf(e.date.slice(0,10)) == -1){
-        arrWithoutDuplicate.push(e.date)
-        arrWithoutDateProp.push(e.date.slice(0,10))
+  function setDateFunc(TASK) {
+    let arrWithoutDuplicate = [];
+    let arrWithoutDateProp = [];
+    TASK.forEach((e) => {
+      if (arrWithoutDateProp.indexOf(e.date.slice(0, 10)) == -1) {
+        arrWithoutDuplicate.push(e.date);
+        arrWithoutDateProp.push(e.date.slice(0, 10));
       }
-    })
-    console.log(arrWithoutDuplicate)
-    setTaskDate(arrWithoutDuplicate)
+    });
+    console.log(arrWithoutDuplicate);
+    setTaskDate(arrWithoutDuplicate);
   }
-  function convertToInt(date){
-    console.log(Date.parse(date.slice(0,10)), date.slice(0,10))
-    return Date.parse(date.slice(0,10))
+  function convertToInt(date) {
+    console.log(Date.parse(date.slice(0, 10)), date.slice(0, 10));
+    return Date.parse(date.slice(0, 10));
   }
-  function isValid(startDate,endDate,taskDate){
-    return ( convertToInt(startDateInt) < convertToInt(taskDate) && convertToInt(endDateInt) > convertToInt(taskDate)) //+ "start " + startDateInt + "end " + endDateInt
-    //alert(startDate)
-    //return convertToInt(startDate) < convertToInt(taskDate) && convertToInt(taskDate) < convertToInt(endDate) 
+  function isValid(startDate, endDate, taskDate) {
+    return (
+      convertToInt(startDateInt) < convertToInt(taskDate) &&
+      convertToInt(endDateInt) > convertToInt(taskDate)
+    );
   }
 
-  // HOOK for Date 
-  let [startDateInt,setStartDateInt] = useState('')
-  let [endDateInt,setEndDateInt] = useState('')
-  function doAFilterWithDate(v,ind){
-    // alert("start "+startDateInt+",end "+endDateInt)
-    //alert(v)
-    //console.log(startDateInt,v)
-    let hasFilter = []
-    currentUser.forEach(e => {
-      console.log(startDateInt,endDateInt,e.date)
-      if(isValid(startDateInt,endDateInt,e.date)){
-        hasFilter.push(e)
+  // HOOK for Date
+  let [startDateInt, setStartDateInt] = useState("");
+  let [endDateInt, setEndDateInt] = useState("");
+  function doAFilterWithDate(v, ind) {
+    let hasFilter = [];
+    currentUser.forEach((e) => {
+      console.log(startDateInt, endDateInt, e.date);
+      if (isValid(startDateInt, endDateInt, e.date)) {
+        hasFilter.push(e);
       }
-    })
-    console.log(hasFilter)
-    setTaskList(hasFilter)
+    });
+    console.log(hasFilter);
+    setTaskList(hasFilter);
   }
   return (
     <div className="flex flex-col space-y-4 h-full">
@@ -247,50 +251,8 @@ function Dashboard() {
                     {" "}
                     NIK : {nik}{" "}
                   </span>
-                {/* Intervall Date */}
-                
-                {/* start here */} 
-                <span className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg"> 
-                  <span className="mr-4"> Start </span>
-                  <input 
-                    onChange={e => {
-                      //alert(e.target.value)
-                      setStartDateInt(e.target.value)
-                      
-                    }}
-                    max={endDateInt}
-                    className="px-2 text-gray-900 rounded" 
-                    type='date' 
-                  /> 
-                </span>
-                {/* end here */}
-                <span 
-                  className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg"
-                > 
-                  <span className="mr-4"> End </span> 
-                  <input 
-                    onChange={e => { 
-                      setEndDateInt(e.target.value) 
-                    }}
-                    type='date' 
-                    min={startDateInt}
-                    className="px-2 text-gray-900 rounded" /> 
-                </span>
-                <button onClick={e => doAFilterWithDate() } className="px-6 py-2 bg-green-500 text-slate-50 rounded-lg" > Submit </button>
-                {/* WORK HERE AT 12.04 */}
+                  {/* Intervall Date */}
                 </div>
-                { /* <select
-                  name="pilih_tanggal"
-                  value={dateFilterValue}
-                  onChange={e => doFilterByDate(e.target.value)}
-                  className="py-1 px-2 bg-inherit border-2 border-slate-900 rounded-lg focus:rounded-lg"
-                >
-                  <option value=''>Semua</option>
-                  { taskDate.map(e => {
-                    return <option value={e}>{e.slice(0,10)}</option>
-                  })}
-                </select>
-                */}
                 <span className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg">
                   TUGAS
                 </span>
@@ -330,7 +292,8 @@ function Dashboard() {
                             {user.done ? "sudah" : "belum"}
                           </td>
                           <td className="px-2 py-1 border border-slate-900">
-                            Pada {user.date.slice(0,10)} Pukul {user.date.split('T')[1].slice(0,8)}
+                            Pada {user.date.slice(0, 10)} Pukul{" "}
+                            {user.date.split("T")[1].slice(0, 8)}
                           </td>
                         </tr>
                       );
@@ -345,27 +308,29 @@ function Dashboard() {
       )}
       {/* AKHIR MODAL */}
 
-      {/* Input Tanggal 
-      <div className="flex flex-row space-x-6 justify-end">
-        <select
-          name="Dates"
-          id="SelectDates"
-          className="py-2 px-3 bg-inherit border-2 border-slate-900 rounded-lg"
-        >
-        {
-          date.map((e)=> {
-            return <option value={e} onChange={e => setData(Data.filter(a => a.includes ))}>{e != undefined? e.slice(0,10) : "selasa"}</option>
-          })
-        }
-        </select> }
+      {/* Header Dashboard */}
+      <div className="flex justify-around">
+        <h2 className="text-2xl font-bold">TABEL</h2>
 
-    {//<button className="py-1.5 px-4 rounded-lg hover:bg-transparent hover:text-slate-900 border-2 border-slate-900 bg-slate-900 text-slate-50">Filter</button>
-    }
+        {/*DISINI FILTER TANGGAL NYA*/}
+        {/*FILTER TANGGAL*/}
+        <div className="flex flex-row space-x-1.5">
+          <div className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg">
+            <span className="mr-4"> Start </span>
+            <input className="px-2 text-gray-900 rounded" type="date" />
+          </div>
+
+          <div className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg">
+            <span className="mr-4"> End </span>
+            <input type="date" className="px-2 text-gray-900 rounded" />
+          </div>
+          <button className="px-6 py-2 bg-emerald-500 hover:bg-emerald-300 text-slate-50 rounded-lg">
+            {" "}
+            Submit{" "}
+          </button>
+        </div>
+        {/*AKHIR FILTER FUCKING TANGGAL*/}
       </div>
-      {/* END */}
-
-      {/* Title */}
-      <h2 className="text-2xl font-bold ml-24">TABEL</h2>
 
       <div className="flex flex-row items-end">
         {/* REGIONAL*/}
@@ -444,7 +409,7 @@ function Dashboard() {
           >
             SUBMIT
           </button>
-          </div>
+        </div>
       </div>
 
       {/* Tempat Tabel data-data dari teknisi nya */}
@@ -532,9 +497,20 @@ function Dashboard() {
         </table>
       </div>
 
+      <div className="flex">
+        <span className="py-1 px-3 border-2 border-slate-900 rounded-lg">
+          RATA - RATA : 19.87
+        </span>
+      </div>
+
       {/* NTAR disini mungkin tambahin atribut atau apa, yang pasti ini function,
     trus atribut nya pake parameter..... 😨️*/}
-      <TablePagination Data={Data} i={dataI} setData={setData} filter={filter} />
+      <TablePagination
+        Data={Data}
+        i={dataI}
+        setData={setData}
+        filter={filter}
+      />
     </div>
   );
 }
