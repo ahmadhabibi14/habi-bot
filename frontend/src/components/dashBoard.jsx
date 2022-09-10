@@ -3,6 +3,13 @@ import axios from "axios";
 import TablePagination from "./tablePagination.jsx";
 
 function Dashboard() {
+  let [range,setRange] = useState([])
+
+  function select(field,arrayOfteknisi) {
+    arrayOfteknisi
+      .filter(e => range(e.date).of(field))
+  }
+
   //let datee = [];
   let i = 0;
   let [dataI, setDataI] = useState(0);
@@ -24,6 +31,8 @@ function Dashboard() {
   let [Data, setData] = useState([]);
   // let [duplicateData, setDupData] = useState([]);
   // MODAL HOOK
+  let RataRata = "-"
+  let [rata_rata,set_rata_rata] = useState(0)
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [nik, setNik] = useState("");
@@ -44,6 +53,14 @@ function Dashboard() {
   const closeModal = () => {
     setIsOpen(false);
   };
+  // Do Calc for rata rata 
+  function getSumX(arr){
+    let pointAll = 0
+    for(let teknisi of arr){
+      pointAll += teknisi.point 
+    }
+    return pointAll/arr.length
+  }
   // FILTER
   function Submit() {
     console.log(sektorFilt);
@@ -53,7 +70,7 @@ function Dashboard() {
     setWitelFull([]);
     Regional();
     setSektorFilt([]);
-    if (!sektorFilt) {
+    if (!sektorFilt || sektorFilt == "") {
       alert("tolong pilih sektor");
       return;
     }
@@ -66,7 +83,10 @@ function Dashboard() {
       )
       .then(async (e) => {
         setData(e.data);
+        let sumx = getSumX(e.data) 
+        set_rata_rata(sumx)
         setFilter();
+        setDataDump(e.data.sort((a,e) => e.point - a.point))
         setDataI(1);
       });
   }
@@ -137,6 +157,7 @@ function Dashboard() {
     data = data.data;
     // console.log(data);
     setDataI(1);
+    setDataDump(data)
     setData(data);
     return data;
   };
@@ -155,7 +176,9 @@ function Dashboard() {
     data = data.data;
     // console.log(data);
     //
+    //console.log(sum(data))
     setDataI(0);
+    setDataDump(data.sort((e,a) => a.point - e.point))
     setData(data);
     return data;
   };
@@ -176,6 +199,7 @@ function Dashboard() {
   // WORK HERE At 12.04
 
   // HOOK
+  let [DataDump,setDataDump] = useState([])
   let [taskList, setTaskList] = useState([]);
   let [taskDate, setTaskDate] = useState([]);
   let [dateFilterValue, setDateFilterValue] = useState("");
@@ -196,33 +220,49 @@ function Dashboard() {
         arrWithoutDateProp.push(e.date.slice(0, 10));
       }
     });
-    console.log(arrWithoutDuplicate);
+    //console.log(arrWithoutDuplicate);
     setTaskDate(arrWithoutDuplicate);
   }
   function convertToInt(date) {
-    console.log(Date.parse(date.slice(0, 10)), date.slice(0, 10));
+    //console.log(Date.parse(date.slice(0, 10)), date.slice(0, 10));
     return Date.parse(date.slice(0, 10));
   }
   function isValid(startDate, endDate, taskDate) {
-    return (
+    return  (
       convertToInt(startDateInt) < convertToInt(taskDate) &&
       convertToInt(endDateInt) > convertToInt(taskDate)
     );
-  }
 
+  }
+  function sumPoint(...points){
+    let po = 0
+    for(let i of points){
+      console.log(i,  typeof i)
+      po += i
+    }
+    return po
+  }
   // HOOK for Date
   let [startDateInt, setStartDateInt] = useState("");
   let [endDateInt, setEndDateInt] = useState("");
   function doAFilterWithDate(v, ind) {
-    let hasFilter = [];
-    currentUser.forEach((e) => {
-      console.log(startDateInt, endDateInt, e.date);
-      if (isValid(startDateInt, endDateInt, e.date)) {
-        hasFilter.push(e);
-      }
-    });
-    console.log(hasFilter);
-    setTaskList(hasFilter);
+    let newData = Data.map(e => {
+      let currentUsers = {...e}
+      let hasFilter = currentUsers.Handle.filter((e) => {
+        //console.log(startDateInt, endDateInt, e.date);
+        return isValid(startDateInt, endDateInt, e.date)
+      });
+      console.log(hasFilter);
+      currentUsers.Handle = hasFilter
+      let points = hasFilter.map(e => e.point)
+      currentUsers.point = sumPoint(...points)
+      return currentUsers
+      //console.log(currentUser)
+    })
+    //fetchData()
+    console.log(newData)
+    setDataDump(newData.sort((a,e)=> e.point - a.point))
+    //console.log(Data)
   }
   return (
     <div className="flex flex-col space-y-4 h-full">
@@ -312,20 +352,25 @@ function Dashboard() {
       <div className="flex justify-around">
         <h2 className="text-2xl font-bold">TABEL</h2>
 
-        {/*DISINI FILTER TANGGAL NYA*/}
+        {/*DISINI FILTER TANGGAL NYA : IYA BI AKU UDAH LIAT*/}
         {/*FILTER TANGGAL*/}
         <div className="flex flex-row space-x-1.5">
           <div className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg">
             <span className="mr-4"> Start </span>
-            <input className="px-2 text-gray-900 rounded" type="date" />
+            <input 
+              onChange={e => setStartDateInt(e.target.value)}
+              max={endDateInt}
+              className="px-2 text-gray-900 rounded" type="date" 
+            />
           </div>
 
           <div className="px-6 py-2 bg-slate-800 text-slate-50 rounded-lg">
             <span className="mr-4"> End </span>
-            <input type="date" className="px-2 text-gray-900 rounded" />
+            <input min={startDateInt} onChange={e => setEndDateInt(e.target.value)} type="date" className="px-2 text-gray-900 rounded" />
           </div>
-          <button className="px-6 py-2 bg-emerald-500 hover:bg-emerald-300 text-slate-50 rounded-lg">
+          <button onClick={e => doAFilterWithDate()} className="px-6 py-2 bg-emerald-500 hover:bg-emerald-300 text-slate-50 rounded-lg">
             {" "}
+            
             Submit{" "}
           </button>
         </div>
@@ -443,7 +488,7 @@ function Dashboard() {
             </tr>
             {
               //{/*USER MAPPED*/}
-              Data.map((e) => {
+              DataDump.map((e) => {
                 return (
                   <tr onClick={() => openModal(e.Handle, e.Nama, e.NIK)}>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
@@ -456,37 +501,37 @@ function Dashboard() {
                       {e.point}
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "tiketRegular").length}
+                      {e.Handle.filter((e) => e.type == "tiketRegular").length * 1 }
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "LaporLangsung").length}
+                      {e.Handle.filter((e) => e.type == "LaporLangsung").length * 1}
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "TiketSQM").length}
+                      {e.Handle.filter((e) => e.type == "TiketSQM").length * 0.5}
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "Proman").length}
+                      {e.Handle.filter((e) => e.type == "Proman").length * 0.5}
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "TutupODP").length}
+                      {e.Handle.filter((e) => e.type == "TutupODP").length * 0.25}
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "Valins").length}
+                      {e.Handle.filter((e) => e.type == "Valins").length * 0.25}
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "Unspect").length}
+                      {e.Handle.filter((e) => e.type == "Unspect").length * 0.7}
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "gamasTipeA").length}
+                      {e.Handle.filter((e) => e.type == "gamasTipeA").length * 2}
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "gamasTipeB").length}
+                      {e.Handle.filter((e) => e.type == "gamasTipeB").length * 3}
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "gamasTipeC").length}
+                      {e.Handle.filter((e) => e.type == "gamasTipeC").length * 4}
                     </td>
                     <td className="border border-slate-900 text-slate-900 px-2 py-1 cursor-pointer hover:bg-slate-400">
-                      {e.Handle.filter((e) => e.type == "nub").length}
+                      {e.Handle.filter((e) => e.type == "nub").length * -2}
                     </td>
                   </tr>
                 );
@@ -499,7 +544,7 @@ function Dashboard() {
 
       <div className="flex">
         <span className="py-1 px-3 border-2 border-slate-900 rounded-lg">
-          RATA - RATA : 19.87
+          RATA - RATA : {rata_rata}
         </span>
       </div>
 
@@ -507,6 +552,8 @@ function Dashboard() {
     trus atribut nya pake parameter..... 😨️*/}
       <TablePagination
         Data={Data}
+        DataDump={DataDump}
+        setDataDump={setDataDump}
         i={dataI}
         setData={setData}
         filter={filter}

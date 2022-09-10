@@ -40,6 +40,7 @@ const TablePagination = (props) => {
       .then((e) => {
         if (e.data.length < 10) {
           props.setData(e.data);
+          props.setDataDump(e.data.sort((a,e) => e.point - a.point))
           setI(i + 1);
           //console.log(i)
           //alert("Page Terakhir")
@@ -51,13 +52,13 @@ const TablePagination = (props) => {
       });
   }
   function Prev() {
-    console.log(from);
+    //console.log(from);
     if (i == 1) {
       alert("halaman Pertama");
       return;
     }
     if (props.Data.length < 10) {
-      to -= 1 - props.Data.length;
+      to -= 3 - props.Data.length;
     } else {
       to -= 10;
     }
@@ -76,7 +77,8 @@ const TablePagination = (props) => {
         { withCredentials: true }
       )
       .then((e) => {
-        props.setData(e.data);
+        props.setData(e.data)
+        props.setDataDump(e.data.sort((a,e) => e.point - a.point))
         //console.log(e.data)
         setI(i - 1);
       })

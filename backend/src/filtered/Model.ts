@@ -1,8 +1,6 @@
 import * as mongo from "mongoose"
 interface sektor {
-  //rata_rata : number,
   name : string,
-  //jumblah : number
 }
 interface witel {
   //rata_rata : number,
